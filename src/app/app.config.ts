@@ -7,8 +7,9 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { errorInterceptor } from './core/interceptors/error/error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHotToastConfig } from '@ngneat/hot-toast';
+import { headersInterceptor } from './core/interceptors/headers/headers.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay())
-    , provideHttpClient(withFetch(), withInterceptors([errorInterceptor])), provideToastr(), provideAnimations(), provideHotToastConfig()
+    , provideHttpClient(withFetch(), withInterceptors([errorInterceptor , headersInterceptor])), provideToastr(), provideAnimations(), provideHotToastConfig()
   ]
 };

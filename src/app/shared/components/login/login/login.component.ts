@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule],
@@ -11,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent {
   private readonly authService = inject(AuthService)
   private readonly toastrService = inject(ToastrService)
+  private readonly router = inject(Router)
   isLoading: boolean = false;
   LoginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -25,6 +27,8 @@ export class LoginComponent {
           if (res.status === 'success') {
             this.toastrService.success(res.message, 'ThreeDos')
             localStorage.setItem('userToken', res.data.access_token);
+            localStorage.setItem('UserName', res.data.user.name);
+            this.router.navigate(['/Admin']);
           }
           this.isLoading = false;
         },

@@ -1,0 +1,32 @@
+:host {
+    display: block;
+}
+
+// Custom scrollbar for a cleaner sidebar/main area
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 10px;
+
+    &:hover {
+        background: #D1D5DB;
+    }
+}
+
+// Optional: Smooth animation for the chart bars
+@keyframes growUp {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 100%;
+    }
+}

@@ -1,0 +1,85 @@
+<div class="flex min-h-screen bg-[#F9FAFB] font-sans">
+    <main class="flex-1  w-full">
+        <div class="p-6 lg:p-10 space-y-10">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ UserName }}</h1>
+                    <p class="text-gray-500">Here is your daily overview and performance metrics.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button
+                        class="px-6 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-2xl flex-1 sm:flex-none hover:bg-gray-50 transition-colors">Report</button>
+                    <button
+                        class="px-6 py-3 bg-[#7C69EF] text-white font-semibold rounded-2xl shadow-lg shadow-[#7C69EF]/30 flex items-center justify-center gap-2 flex-1 sm:flex-none hover:bg-[#6b58dc]">
+                        <i class="fas fa-plus"></i> New Task
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div *ngFor="let metric of metrics"
+                    class="bg-white p-6 rounded-[32px] shadow-sm border border-gray-50 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div [class]="metric.iconBg + ' ' + metric.iconColor"
+                            class="p-3 rounded-2xl w-12 h-12 flex items-center justify-center">
+                            <i [class]="metric.iconClass" class="text-lg"></i>
+                        </div>
+                        <span [class]="metric.trendBg + ' ' + metric.trendColor"
+                            class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i class="fas fa-arrow-trend-up"></i> {{metric.trend}}
+                        </span>
+                    </div>
+                    <p class="text-gray-500 font-medium mb-1">{{metric.label}}</p>
+                    <h3 class="text-3xl font-bold text-gray-900">{{metric.value}}</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                <div class="xl:col-span-8 bg-white p-8 rounded-[32px] shadow-sm border border-gray-50">
+                    <div class="flex justify-between items-center mb-10">
+                        <h3 class="text-xl font-bold text-gray-900">Sessions Overview</h3>
+                        <div class="bg-gray-50 p-1.5 rounded-xl flex gap-1">
+                            <button
+                                class="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-semibold shadow-sm">Week</button>
+                            <button class="px-4 py-2 text-gray-400 text-sm font-semibold">Month</button>
+                        </div>
+                    </div>
+                    <div class="h-64 flex items-end justify-between px-2">
+                        <div *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']"
+                            class="flex flex-col items-center gap-4 group flex-1">
+                            <div class="w-2 h-32 bg-gray-50 rounded-full relative overflow-hidden">
+                                <div
+                                    class="absolute bottom-0 w-full bg-[#7C69EF]/20 h-2/3 group-hover:h-full transition-all">
+                                </div>
+                            </div>
+                            <span class="text-xs font-medium text-gray-400">{{day}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-gray-50">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="text-xl font-bold text-gray-900">Recent Tasks</h3>
+                        <a href="#" class="text-[#7C69EF] text-sm font-bold">View All</a>
+                    </div>
+                    <div class="space-y-6">
+                        <div *ngFor="let task of tasks" class="flex items-center justify-between group cursor-pointer">
+                            <div class="flex items-center gap-4 overflow-hidden">
+                                <div
+                                    class="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-[#F4F2FF] transition-colors text-[#7C69EF]">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="truncate">
+                                    <h4 class="font-bold text-gray-900 text-sm truncate">{{task.title}}</h4>
+                                    <p class="text-xs text-gray-400 truncate">{{task.user}}</p>
+                                </div>
+                            </div>
+                            <span [class]="task.statusColor"
+                                class="px-2 py-1 rounded-lg text-[10px] font-bold uppercase whitespace-nowrap">{{task.status}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
