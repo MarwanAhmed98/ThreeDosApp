@@ -5,6 +5,7 @@ import { SeetingsComponent } from './shared/components/seetings/seetings/seeting
 import { DashboardComponent } from './shared/components/dashboard/dashboard/dashboard.component';
 import { UsersComponent } from './shared/components/users/users/users.component';
 import { TasksmangementComponent } from './shared/components/tasksmangement/tasksmangement/tasksmangement.component';
+import { SessionsComponent } from './shared/components/sessions/sessions/sessions.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -20,6 +21,7 @@ export const routes: Routes = [
             { path: 'settings', component: SeetingsComponent , title: 'Settings' },
             { path: 'Users', component: UsersComponent , title: 'User Management'},
             { path: 'Tasks', component: TasksmangementComponent , title: 'Task Management'},
+            { path: 'Sessions', component: SessionsComponent , title: 'Sessions Management'},
             { path: '', redirectTo: 'Dashboard', pathMatch: 'full' }
         ]
     }

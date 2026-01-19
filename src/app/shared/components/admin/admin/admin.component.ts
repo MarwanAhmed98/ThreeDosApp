@@ -18,7 +18,7 @@ export class AdminComponent {
     { label: 'Dashboard', route: '/Admin/Dashboard', iconClass: 'fas fa-th-large' },
     { label: 'User Management', route: '/Admin/Users', iconClass: 'fas fa-users' },
     { label: 'Tasks', route: '/Admin/Tasks', iconClass: 'fas fa-tasks' },
-    { label: 'Projects', route: '/Admin/projects', iconClass: 'fas fa-folder' },
+    { label: 'Sessions', route: '/Admin/Sessions', iconClass: 'fas fa-calendar-alt' },
     { label: 'Settings', route: '/Admin/settings', iconClass: 'fas fa-cog' }
   ];
   LogoutBtn(): void {
