@@ -1,0 +1,110 @@
+<div class="p-8 bg-gray-50 min-h-screen font-sans">
+    <!-- Top Bar -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div class="relative flex-1 max-w-2xl">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </span>
+            <input [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" type="text"
+                placeholder="Search for tasks, deadlines..."
+                class="w-full pl-12 pr-4 py-3 rounded-full border-none bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button
+                class="flex items-center justify-between px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-700 min-w-[180px]">
+                <span>Filter by Status</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+
+            <button
+                class="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-medium">Create Task</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-50">
+                    <th class="px-8 py-5">Task Name</th>
+                    <th class="px-6 py-5">Deadline</th>
+                    <th class="px-6 py-5">Council</th>
+                    <th class="px-6 py-5">Status</th>
+                    <th class="px-8 py-5 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @for (task of filteredTasks(); track task.id) {
+                <tr class="hover:bg-gray-50/50 transition-colors group">
+                    <td class="px-8 py-5">
+                        <div class="flex items-center gap-4">
+                            <div
+                                [class]="'w-10 h-10 rounded-xl flex items-center justify-center text-lg ' + task.iconBg">
+                                {{task.icon}}
+                            </div>
+                            <span class="font-semibold text-gray-800">{{task.name}}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-5">
+                        <div class="flex items-center gap-2 text-indigo-900/70 font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            {{task.deadline}}
+                        </div>
+                    </td>
+                    <td class="px-6 py-5">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm font-medium text-gray-700 border border-gray-50">
+                            <span [class]="'w-2 h-2 rounded-full ' + task.councilColor"></span>
+                            {{task.council}}
+                        </div>
+                    </td>
+                    <td class="px-6 py-5">
+                        <span [class]="'px-4 py-1 rounded-full text-sm font-bold ' + getStatusClass(task.status)">
+                            {{task.status}}
+                        </span>
+                    </td>
+                    <td class="px-8 py-5 text-right">
+                        <button class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8 flex items-center justify-between text-sm text-gray-500 px-2">
+        <p>Showing <span class="font-bold text-gray-800">5</span> of <span class="font-bold text-gray-800">24</span>
+            tasks</p>
+
+        <div class="flex items-center gap-2">
+            <button class="px-4 py-2 border border-gray-200 rounded-xl hover:bg-white transition-all">Previous</button>
+            <button
+                class="w-10 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-xl font-bold shadow-md shadow-indigo-100">1</button>
+            <button
+                class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-xl hover:bg-white transition-all">2</button>
+            <button
+                class="px-4 py-2 border border-gray-200 rounded-xl hover:bg-white transition-all font-medium">Next</button>
+        </div>
+    </div>
+</div>

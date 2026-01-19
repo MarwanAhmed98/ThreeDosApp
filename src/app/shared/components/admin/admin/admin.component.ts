@@ -16,8 +16,8 @@ export class AdminComponent {
   isMobileMenuOpen = false;
   navItems = [
     { label: 'Dashboard', route: '/Admin/Dashboard', iconClass: 'fas fa-th-large' },
-    { label: 'Analytics', route: '/Admin/analytics', iconClass: 'fas fa-chart-line' },
-    { label: 'Team', route: '/Admin/team', iconClass: 'fas fa-users' },
+    { label: 'User Management', route: '/Admin/Users', iconClass: 'fas fa-users' },
+    { label: 'Tasks', route: '/Admin/Tasks', iconClass: 'fas fa-tasks' },
     { label: 'Projects', route: '/Admin/projects', iconClass: 'fas fa-folder' },
     { label: 'Settings', route: '/Admin/settings', iconClass: 'fas fa-cog' }
   ];

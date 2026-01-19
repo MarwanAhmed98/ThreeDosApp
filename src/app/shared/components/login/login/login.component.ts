@@ -27,7 +27,7 @@ export class LoginComponent {
           if (res.status === 'success') {
             this.toastrService.success(res.message, 'ThreeDos')
             localStorage.setItem('userToken', res.data.access_token);
-            localStorage.setItem('UserName', res.data.user.name);
+            localStorage.setItem('UserName', res.data.user_name);
             this.router.navigate(['/Admin']);
           }
           this.isLoading = false;
