@@ -1,15 +1,15 @@
-<div class="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+<div class="min-h-screen bg-slate-50 p-3 md:p-8 font-sans text-slate-900">
     <div class="max-w-7xl mx-auto">
 
         <!-- Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">Sessions Management</h1>
                 <p class="text-slate-500 mt-1 text-sm md:text-base">View and manage scheduled council sessions and
                     attendance.</p>
             </div>
             <button
-                class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-medium flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-200">
+                class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-100 active:scale-95">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14" />
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Search & Filters -->
-        <div class="flex flex-col lg:flex-row gap-4 mb-6">
+        <div class="flex flex-col lg:flex-row gap-3 mb-6">
             <div class="relative flex-1">
                 <span class="absolute inset-y-0 left-4 flex items-center text-slate-400">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -29,29 +29,22 @@
                         <path d="m21 21-4.3-4.3" />
                     </svg>
                 </span>
-                <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
-                    placeholder="Search sessions..."
-                    class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                <input [(ngModel)]="text" type="text" placeholder="Search Sessions..."
+                    class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm">
             </div>
 
-            <div class="flex gap-2 sm:gap-4">
+            <div class="flex gap-2">
                 <button
-                    class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 hover:bg-slate-50 transition-all text-sm">
+                    class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-700 hover:bg-slate-50 transition-all text-sm font-medium shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                     </svg>
-                    <span class="hidden sm:inline">Filter by Council</span>
-                    <span class="sm:hidden">Filter</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="ml-2 opacity-50">
-                        <path d="m6 9 6 6 6-6" />
-                    </svg>
+                    <span>Filter</span>
                 </button>
 
                 <button
-                    class="p-3 bg-white border border-slate-200 rounded-2xl text-slate-700 hover:bg-slate-50 transition-all">
+                    class="p-3 bg-white border border-slate-200 rounded-2xl text-slate-700 hover:bg-slate-50 transition-all shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
@@ -63,150 +56,113 @@
             </div>
         </div>
 
-        <!-- Table Container -->
-        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse min-w-[600px] md:min-w-full">
-                    <thead>
-                        <tr class="border-b border-slate-100 bg-slate-50/50">
-                            <th class="px-4 md:px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                Date & Time</th>
-                            <th class="px-4 md:px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                Session Name</th>
-                            <th
-                                class="hidden lg:table-cell px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                Council</th>
-                            <th
-                                class="hidden md:table-cell px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                Type</th>
-                            <th class="px-4 md:px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                Status</th>
-                            <th
-                                class="px-4 md:px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">
-                                Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        @for (session of filteredSessions(); track session.id) {
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="px-4 md:px-6 py-4 md:py-6">
-                                <div class="text-sm font-bold text-slate-900">{{ session.date }}</div>
-                                <div class="text-xs text-slate-500 mt-0.5">{{ session.time }}</div>
-                            </td>
-                            <td class="px-4 md:px-6 py-4 md:py-6">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        [class]="'hidden sm:flex w-9 h-9 rounded-full items-center justify-center flex-shrink-0 ' + session.iconBg">
-                                        <svg *ngIf="session.icon === 'trending-up'" xmlns="http://www.w3.org/2000/svg"
-                                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                            <polyline points="16 7 22 7 22 13" />
-                                        </svg>
-                                        <svg *ngIf="session.icon === 'dollar-sign'" xmlns="http://www.w3.org/2000/svg"
-                                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="12" y1="1" x2="12" y2="23" />
-                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                        </svg>
-                                        <svg *ngIf="session.icon === 'code'" xmlns="http://www.w3.org/2000/svg"
-                                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="16 18 22 12 16 6" />
-                                            <polyline points="8 6 2 12 8 18" />
-                                        </svg>
-                                        <svg *ngIf="session.icon === 'megaphone'" xmlns="http://www.w3.org/2000/svg"
-                                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m3 11 18-5v12L3 13v-2Z" />
-                                            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
-                                        </svg>
-                                    </div>
-                                    <span
-                                        class="text-sm font-bold text-slate-900 truncate max-w-[120px] md:max-w-none">{{
-                                        session.name }}</span>
-                                </div>
-                            </td>
-                            <td class="hidden lg:table-cell px-6 py-6 text-sm text-slate-600 font-medium">{{
-                                session.council }}</td>
-                            <td class="hidden md:table-cell px-6 py-6 text-sm text-slate-500">{{ session.type }}</td>
-                            <td class="px-4 md:px-6 py-4 md:py-6">
-                                <span [ngClass]="{
-                                    'bg-emerald-50 text-emerald-700 ring-emerald-600/10': session.status === 'Confirmed',
-                                    'bg-indigo-50 text-indigo-700 ring-indigo-600/10': session.status === 'Scheduled',
-                                    'bg-amber-50 text-amber-700 ring-amber-600/10': session.status === 'Pending Approval'
-                                    }"
-                                    class="inline-flex items-center gap-1.5 px-2 md:px-3 py-1 rounded-full text-[10px] md:text-xs font-bold ring-1 ring-inset">
-                                    <span [ngClass]="{
-                                        'bg-emerald-500': session.status === 'Confirmed',
-                                        'bg-indigo-500': session.status === 'Scheduled',
-                                        'bg-amber-500': session.status === 'Pending Approval'
-                                    }" class="w-1.5 h-1.5 rounded-full"></span>
-                                    {{ session.status }}
-                                </span>
-                            </td>
-                            <td class="px-4 md:px-6 py-4 md:py-6 text-right">
-                                <div class="flex items-center justify-end gap-2 md:gap-3">
-                                    @if (!session.isLocked) {
-                                    <button
-                                        class="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-indigo-200 text-indigo-600 text-[10px] md:text-xs font-bold hover:bg-indigo-50 transition-all whitespace-nowrap">
-                                        <svg class="hidden sm:block" xmlns="http://www.w3.org/2000/svg" width="14"
-                                            height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m9 11 3 3L22 4" />
-                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                                        </svg>
-                                        Attend
-                                    </button>
-                                    } @else {
-                                    <button
-                                        class="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl bg-slate-100 text-slate-400 text-[10px] md:text-xs font-bold cursor-not-allowed">
-                                        <svg class="hidden sm:block" xmlns="http://www.w3.org/2000/svg" width="14"
-                                            height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                        </svg>
-                                        Locked
-                                    </button>
-                                    }
-                                    <button
-                                        class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="1" />
-                                            <circle cx="12" cy="5" r="1" />
-                                            <circle cx="12" cy="19" r="1" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+        <!-- Responsive Table -->
+        <div
+            class="bg-transparent md:bg-white md:rounded-3xl md:border md:border-slate-200 overflow-hidden md:shadow-sm">
+            <table class="w-full text-left border-collapse block md:table">
+                <!-- Desktop Header (Hidden on Mobile) -->
+                <thead class="hidden md:table-header-group">
+                    <tr class="border-b border-slate-100 bg-slate-50/50">
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Date & Time
+                        </th>
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Session Name
+                        </th>
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Council</th>
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Description
+                        </th>
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Material
+                        </th>
+                        <th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">
+                            Actions</th>
+                    </tr>
+                </thead>
+
+                <!-- Content -->
+                <tbody class="block md:table-row-group space-y-4 md:space-y-0">
+                    @for (session of SessionList | searchsessions:text ; track session.id) {
+                    <tr
+                        class="block md:table-row bg-white md:bg-transparent rounded-2xl border border-slate-200 md:border-none hover:bg-slate-50/50 transition-colors group shadow-sm md:shadow-none">
+
+                        <!-- Date -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-slate-50 md:border-none">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider">Date</span>
+                            <div class="text-sm font-bold text-slate-900">{{ session.date | date:'mediumDate'}}</div>
+                        </td>
+
+                        <!-- Name -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-slate-50 md:border-none">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider">Session</span>
+                            <div class="text-sm font-bold text-indigo-600 md:text-slate-900">{{ session.title }}</div>
+                        </td>
+
+                        <!-- Council -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-slate-50 md:border-none">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider">Council</span>
+                            <div
+                                class="text-sm text-slate-600 font-medium bg-slate-100 md:bg-transparent px-2 py-1 md:p-0 rounded-lg">
+                                {{ session.council }}</div>
+                        </td>
+
+                        <!-- Description -->
+                        <td
+                            class="flex flex-col md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-slate-50 md:border-none">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Description</span>
+                            <div class="text-sm text-slate-500 leading-relaxed">{{ session.description }}</div>
+                        </td>
+
+                        <!-- Material -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-slate-50 md:border-none">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider">Material</span>
+                            <div class="text-sm text-slate-500"> <a href="{{ session.material }}"> {{session.title}}
+                                </a> </div>
+                        </td>
+
+                        <!-- Actions -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 text-right">
+                            <span
+                                class="md:hidden text-[11px] font-bold text-slate-400 uppercase tracking-wider">Actions</span>
+                            <button
+                                class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
 
             <!-- Footer / Pagination -->
             <div
-                class="px-6 py-4 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100">
-                <div class="text-sm text-slate-500 text-center sm:text-left">
-                    Showing <span class="font-bold text-slate-900">1</span> to <span
-                        class="font-bold text-slate-900">4</span> of <span class="font-bold text-slate-900">24</span>
+                class="mt-4 md:mt-0 px-6 py-4 bg-white md:bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-200 md:border-none md:border-t rounded-2xl md:rounded-none shadow-sm md:shadow-none">
+                <div class="text-sm text-slate-500 text-center sm:text-left order-2 sm:order-1">
+                    Showing <span class="font-bold text-slate-900">{{currentPage}}</span> of <span
+                        class="font-bold text-slate-900">{{lastpage}}</span>
                     results
                 </div>
-                <div class="flex gap-2 w-full sm:w-auto">
-                    <button
-                        class="flex-1 sm:flex-none px-4 py-2 text-sm font-bold text-slate-400 border border-slate-200 rounded-xl hover:bg-white hover:text-slate-600 transition-all flex items-center justify-center gap-2">
+                <div class="flex gap-2 w-full sm:w-auto order-1 sm:order-2">
+                    <button (click)="changePage(currentPage-1)"
+                        class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-slate-400 border border-slate-200 rounded-xl bg-white hover:text-slate-600 transition-all flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m15 18-6-6 6-6" />
                         </svg>
-                        Previous
+                        Prev
                     </button>
-                    <button
-                        class="flex-1 sm:flex-none px-4 py-2 text-sm font-bold text-slate-600 border border-slate-200 rounded-xl hover:bg-white hover:border-slate-300 transition-all flex items-center justify-center gap-2 bg-white shadow-sm">
+                    <button (click)="changePage(currentPage+1)"
+                        class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-slate-600 border border-slate-200 rounded-xl bg-white hover:border-slate-300 transition-all flex items-center justify-center gap-2 shadow-sm">
                         Next
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

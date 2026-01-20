@@ -1,11 +1,10 @@
-export interface Itask {
+export interface ISession {
   id: string
   title: string
+  date: string
   description: string
-  status: string
+  material: string
+  council: string
   created_at: string
   updated_at: string
-  council_session: string
-  council_name: string
 }
-

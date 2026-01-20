@@ -16,18 +16,22 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
+
     <nav class="flex-1 px-4 space-y-2">
-      <a *ngFor="let item of navItems" [routerLink]="item.route" routerLinkActive="bg-[#F4F2FF] text-[#7C69EF]"
-        [routerLinkActiveOptions]="{exact: true}"
+      <a *ngFor="let item of navItems" [routerLink]="item.route" (click)="currentTitle = item.label"
+        routerLinkActive="bg-[#F4F2FF] text-[#7C69EF]" [routerLinkActiveOptions]="{exact: true}"
         class="flex items-center gap-4 px-4 py-4 rounded-2xl font-medium transition-all group text-gray-500 hover:bg-gray-50">
+
         <div class="w-6 flex justify-center">
           <i [class]="item.iconClass" class="text-lg"></i>
         </div>
         {{item.label}}
       </a>
     </nav>
+
     <div class="p-8 border-t border-gray-100">
-      <button (click)="LogoutBtn()" class="flex items-center gap-4 text-red-500 font-medium hover:opacity-80 transition-opacity">
+      <button (click)="LogoutBtn()"
+        class="flex items-center gap-4 text-red-500 font-medium hover:opacity-80 transition-opacity">
         <i class="fas fa-sign-out-alt text-lg"></i>
         Logout
       </button>
@@ -40,10 +44,11 @@
         <button (click)="isMobileMenuOpen = true" class="lg:hidden p-2 text-gray-600 bg-gray-100 rounded-lg">
           <i class="fas fa-bars text-xl"></i>
         </button>
+
         <div class="hidden sm:flex items-center gap-2 text-sm">
-          <span class="text-gray-400">Home</span>
+          <span class="text-gray-400">Admin</span>
           <span class="text-gray-300">/</span>
-          <span class="text-gray-900 font-medium">Overview</span>
+          <span class="text-gray-900 font-medium">{{ currentTitle }}</span>
         </div>
       </div>
 
@@ -53,18 +58,20 @@
             class="bg-gray-100 border-none rounded-full py-2.5 pl-12 pr-6 w-48 lg:w-72 text-sm focus:ring-2 focus:ring-[#7C69EF]/20 outline-none">
           <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
         </div>
+
         <div
           class="relative w-10 h-10 flex items-center justify-center text-gray-500 bg-gray-50 rounded-full cursor-pointer">
           <i class="fas fa-bell"></i>
           <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
         </div>
-        <img src="https://ui-avatars.com/api/?name=Admin&background=fdf2f8&color=db2777" class="w-10 h-10 rounded-full"
-          alt="Avatar">
+
+        <img [src]="'https://ui-avatars.com/api/?name=' + UserName + '&background=fdf2f8&color=db2777'"
+          class="w-10 h-10 rounded-full" alt="Avatar">
       </div>
     </header>
+
     <div class="p-6 lg:p-10">
       <router-outlet></router-outlet>
     </div>
-
   </main>
 </div>

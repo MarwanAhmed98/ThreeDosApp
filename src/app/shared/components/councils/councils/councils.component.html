@@ -1,0 +1,103 @@
+<div class="min-h-screen bg-slate-50 p-4 sm:p-8 font-sans text-slate-900">
+    <!-- Header Section -->
+    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Councils Management</h1>
+            <p class="mt-1 text-sm sm:text-base text-slate-500">Manage governance councils, locations, and membership.
+            </p>
+        </div>
+        <button
+            class="flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 w-full sm:w-auto">
+            <span class="text-lg">+</span> Create Council
+        </button>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="relative w-full max-w-md">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input [(ngModel)]="text" type="text" placeholder="Search by Council Name ..."
+                class="w-full rounded-full border-none bg-white py-3 pl-11 pr-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-indigo-600">
+        </div>
+
+        <button
+            class="flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 hover:bg-slate-50 w-full sm:w-auto">
+            <svg class="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+            </svg>
+            Filter
+        </button>
+    </div>
+
+    <!-- Councils Table Container (Horizontal Scroll for Mobile) -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50/50">
+                    <tr>
+                        <th
+                            class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 whitespace-nowrap">
+                            Name</th>
+                        <th
+                            class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 whitespace-nowrap">
+                            Description</th>
+                        <th
+                            class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 whitespace-nowrap">
+                            Head</th>
+                        <!-- Hide Last Updated on small mobile screens to save space -->
+                        <th
+                            class="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 whitespace-nowrap">
+                            Last Updated</th>
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                    @for (council of CouncilList | searchcouncils:text ; track council.id) {
+                    <tr class="hover:bg-slate-50/50 transition-colors">
+                        <!-- Name & ID -->
+                        <td class="px-6 py-5">
+                            <div class="font-bold text-slate-900 truncate max-w-[150px] sm:max-w-none">{{ council.name
+                                }}</div>
+                            <div class="text-xs text-slate-400">ID: {{ council.id }}</div>
+                        </td>
+
+                        <!-- Location -->
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-2 whitespace-nowrap">
+                                <span class="text-sm text-slate-600">{{ council.description }}</span>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-2 whitespace-nowrap">
+                                <span class="text-sm text-slate-600">{{ council.head }}</span>
+                            </div>
+                        </td>
+                        <!-- Last Updated (Hidden on mobile) -->
+                        <td class="hidden sm:table-cell px-6 py-5 text-sm text-slate-500 whitespace-nowrap">
+                            {{ council.updated_at | date:'mediumDate' }}
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="px-6 py-5 text-right">
+                            <button class="text-slate-400 hover:text-slate-600 p-1">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="p-4 md:p-8 bg-gray-50 min-h-screen font-sans">
     <!-- Header Section -->
     <div class="mb-6 md:mb-8">
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">User Management</h1>
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">Tasks Management</h1>
         <p class="text-slate-500 mt-1 text-sm md:text-base">Manage access, roles, and permissions for your team members.
         </p>
     </div>
@@ -16,8 +16,7 @@
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
             </span>
-            <input [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" type="text"
-                placeholder="Search for tasks..."
+            <input [(ngModel)]="text" type="text" placeholder="Search for tasks..."
                 class="w-full pl-12 pr-4 py-3 rounded-2xl md:rounded-full border-none bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all text-sm md:text-base">
         </div>
 
@@ -50,22 +49,18 @@
                 <thead>
                     <tr class="text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-50">
                         <th class="px-8 py-5">Task Name</th>
-                        <th class="px-6 py-5">Deadline</th>
+                        <th class="px-6 py-5">Description</th>
                         <th class="px-6 py-5">Council</th>
                         <th class="px-6 py-5">Status</th>
                         <th class="px-8 py-5 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
-                    @for (task of filteredTasks(); track task.id) {
+                    @for (task of TasksList | searchtasks:text; track task.id) {
                     <tr class="hover:bg-gray-50/50 transition-colors group">
                         <td class="px-8 py-5">
                             <div class="flex items-center gap-4">
-                                <div
-                                    [class]="'w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 ' + task.iconBg">
-                                    {{task.icon}}
-                                </div>
-                                <span class="font-semibold text-gray-800">{{task.name}}</span>
+                                <span class="font-semibold text-gray-800">{{task.title}}</span>
                             </div>
                         </td>
                         <td class="px-6 py-5">
@@ -75,18 +70,19 @@
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                     </path>
                                 </svg>
-                                {{task.deadline}}
+                                {{task.description}}
                             </div>
                         </td>
                         <td class="px-6 py-5">
                             <div
                                 class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm font-medium text-gray-700 border border-gray-50">
-                                <span [class]="'w-2 h-2 rounded-full ' + task.councilColor"></span>
-                                {{task.council}}
+                                <!-- <span [class]="'w-2 h-2 rounded-full ' + task.councilColor"></span> -->
+                                {{task.council_name}}
                             </div>
                         </td>
                         <td class="px-6 py-5">
-                            <span [class]="'px-4 py-1 rounded-full text-sm font-bold ' + getStatusClass(task.status)">
+                            <span
+                                [class]="'px-4 py-1 rounded-full text-sm font-bold capitalize ' + getStatusClass(task.status)">
                                 {{task.status}}
                             </span>
                         </td>
@@ -106,16 +102,14 @@
 
         <!-- Mobile Card View (Visible only on small screens) -->
         <div class="md:hidden divide-y divide-gray-100">
-            @for (task of filteredTasks(); track task.id) {
+            @for (task of TasksList | searchtasks:text; track task.id) {
             <div class="p-5 flex flex-col gap-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <div [class]="'w-10 h-10 rounded-xl flex items-center justify-center text-lg ' + task.iconBg">
-                            {{task.icon}}
-                        </div>
                         <div>
-                            <h3 class="font-bold text-gray-800">{{task.name}}</h3>
-                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">{{task.council}}</p>
+                            <h3 class="font-bold text-gray-800">{{task.title}}</h3>
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">
+                                {{task.council_name}}</p>
                         </div>
                     </div>
                     <button class="text-gray-400 p-1">
@@ -133,9 +127,10 @@
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                             </path>
                         </svg>
-                        {{task.deadline}}
+                        {{task.description}}
                     </div>
-                    <span [class]="'px-3 py-1 rounded-full text-xs font-bold ' + getStatusClass(task.status)">
+                    <span
+                        [class]="'px-3 py-1 rounded-full text-xs font-bold capitalize ' + getStatusClass(task.status)">
                         {{task.status}}
                     </span>
                 </div>
@@ -146,17 +141,13 @@
 
     <!-- Pagination -->
     <div class="mt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-gray-500 px-2">
-        <p class="order-2 md:order-1">Showing <span class="font-bold text-gray-800">5</span> of <span
-                class="font-bold text-gray-800">24</span> tasks</p>
+        <p class="order-2 md:order-1">Showing <span class="font-bold text-gray-800">{{currentPage}}</span> of <span
+                class="font-bold text-gray-800">{{lastpage}}</span> tasks</p>
 
         <div class="flex items-center gap-2 order-1 md:order-2 w-full md:w-auto justify-center">
-            <button
+            <button (click)="changePage(currentPage-1)"
                 class="flex-1 md:flex-none px-4 py-2 border border-gray-200 rounded-xl hover:bg-white transition-all">Prev</button>
-            <button
-                class="w-10 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-xl font-bold shadow-md shadow-indigo-100">1</button>
-            <button
-                class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-xl hover:bg-white transition-all">2</button>
-            <button
+            <button (click)="changePage(currentPage+1)"
                 class="flex-1 md:flex-none px-4 py-2 border border-gray-200 rounded-xl hover:bg-white transition-all font-medium">Next</button>
         </div>
     </div>

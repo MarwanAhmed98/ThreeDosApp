@@ -6,10 +6,10 @@ import { environments } from '../../../shared/environments';
 @Injectable({
   providedIn: 'root'
 })
-export class SessionsService {
+export class CouncilsService {
 
   constructor(private httpClient: HttpClient) { }
-  GetSessionlList(pagenumber: number): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/sessions?pageIndex=${pagenumber}&pageSize=5&search=`)
+  GetCouncilList(): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/councils?pageIndex=1&pageSize=10`)
   }
 }

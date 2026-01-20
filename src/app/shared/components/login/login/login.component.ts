@@ -32,7 +32,9 @@ export class LoginComponent {
           }
           this.isLoading = false;
         },
-
+        error: (err) => {
+          this.isLoading = false;
+        }
       })
     }
   }
