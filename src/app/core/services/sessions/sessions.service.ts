@@ -12,4 +12,16 @@ export class SessionsService {
   GetSessionlList(pagenumber: number): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/sessions?pageIndex=${pagenumber}&pageSize=5&search=`)
   }
+  GetSessionById(id: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/sessions/${id}`)
+  }
+  AddSession(session: any): Observable<any> {
+    return this.httpClient.post(`${environments.baseUrl}/sessions`, session)
+  }
+  UpdateSession(id: string, session: any): Observable<any> {
+    return this.httpClient.put(`${environments.baseUrl}/sessions/${id}`, session)
+  }
+  DeleteSession(id: string): Observable<any> {
+    return this.httpClient.delete(`${environments.baseUrl}/sessions/${id}`)
+  }
 }
