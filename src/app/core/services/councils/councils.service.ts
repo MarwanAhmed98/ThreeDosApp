@@ -9,7 +9,7 @@ import { environments } from '../../../shared/environments';
 export class CouncilsService {
 
   constructor(private httpClient: HttpClient) { }
-  GetCouncilList(pageIndex: number): Observable<any> {
+  GetCouncilList(): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/councils?pageIndex=${pageIndex}&pageSize=10`)
   }
   GetCouncilById(councilId: string): Observable<any> {
