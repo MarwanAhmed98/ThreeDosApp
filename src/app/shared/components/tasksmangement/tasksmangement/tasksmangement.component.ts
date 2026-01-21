@@ -30,7 +30,7 @@ export class TasksmangementComponent implements OnInit {
     }
   }
   GetTasksList(): void {
-    this.tasksService.GetUserList(this.currentPage).subscribe({
+    this.tasksService.GetTaskList(this.currentPage).subscribe({
       next: (res) => {
         console.log(res);
         this.TasksList = res.data.data;
