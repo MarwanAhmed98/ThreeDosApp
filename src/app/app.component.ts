@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FlowbiteService } from './core/services/flowbite/flowbite.service';
 import { initFlowbite } from 'flowbite/lib/esm/components';
+import { NgxSpinnerComponent } from 'ngx-spinner';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet ],
+  imports: [RouterOutlet, NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
