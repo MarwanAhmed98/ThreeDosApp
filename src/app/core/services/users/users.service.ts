@@ -12,4 +12,16 @@ export class UsersService {
   GetUserList(pageIndex: number): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users?pageIndex=${pageIndex}&pageSize=10`)
   }
+  GetUserById(userId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/users/${userId}`)
+  }
+  AddUser(user: any): Observable<any> {
+    return this.httpClient.post(`${environments.baseUrl}/users`, user)
+  }
+  UpdateUser(user: any): Observable<any> {
+    return this.httpClient.put(`${environments.baseUrl}/users`, user)
+  }
+  DeleteUser(userId: string): Observable<any> {
+    return this.httpClient.delete(`${environments.baseUrl}/users/${userId}`)
+  }
 }
