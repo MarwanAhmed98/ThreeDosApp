@@ -10,7 +10,8 @@ export const headersInterceptor: HttpInterceptorFn = (req, next) => {
   if (isBrowser && localStorage.getItem('userToken')) {
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       }
     });
   }

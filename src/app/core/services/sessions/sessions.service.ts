@@ -18,8 +18,8 @@ export class SessionsService {
   AddSession(session: any): Observable<any> {
     return this.httpClient.post(`${environments.baseUrl}/sessions`, session)
   }
-  UpdateSession(session: any): Observable<any> {
-    return this.httpClient.put(`${environments.baseUrl}/sessions`, session)
+  UpdateSession(sessionId: string, session: any): Observable<any> {
+    return this.httpClient.put(`${environments.baseUrl}/sessions/${sessionId}`, session)
   }
   DeleteSession(sessionId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/sessions/${sessionId}`)

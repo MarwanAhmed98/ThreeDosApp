@@ -11,15 +11,18 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   SendLoginForm(data: object): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/login`, data, {
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return this.httpClient.post(`${environments.baseUrl}/login`, data)
   }
   Logout(): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/logout`,
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    )
+    return this.httpClient.post(`${environments.baseUrl}/logout`, {})
+  }
+  GetMe(): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/me`)
+  }
+  ForgetPassword(email: string): Observable<any> {
+    return this.httpClient.post(`${environments.baseUrl}/forget-password`, { email })
+  }
+  GetInstance(): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/instance`)
   }
 }
