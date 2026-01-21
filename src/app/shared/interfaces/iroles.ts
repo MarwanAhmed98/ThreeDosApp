@@ -1,7 +1,13 @@
+// export interface IRole {
+//   id?: string;
+//   name: string;
+//   created_at?: string;
+//   updated_at?: string;
+// }
 export interface IRole {
-  id?: string;
-  name: string;
-  permissions?: string[];
-  created_at?: string;
-  updated_at?: string;
+  id: string
+  name: string
+  created_at: string
+  updated_at: string
 }
+

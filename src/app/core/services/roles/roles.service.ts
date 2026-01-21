@@ -14,16 +14,24 @@ export class RolesService {
     return this.httpClient.get(`${environments.baseUrl}/roles`)
   }
 
-  AddRole(role: { name: string }): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/roles`, role)
+  AddRole(role: string): Observable<any> {
+    return this.httpClient.post(`${environments.baseUrl}/roles`,
+      {
+        "name": role
+      }
+    )
   }
 
   GetRoleById(roleId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/roles/${roleId}`)
   }
 
-  UpdateRole(roleId: string, role: { name: string }): Observable<any> {
-    return this.httpClient.put(`${environments.baseUrl}/roles/${roleId}`, role)
+  UpdateRole(roleId: string, role: string): Observable<any> {
+    return this.httpClient.put(`${environments.baseUrl}/roles/${roleId}`,
+      {
+        "name": role
+      }
+    )
   }
 
   DeleteRole(roleId: string): Observable<any> {

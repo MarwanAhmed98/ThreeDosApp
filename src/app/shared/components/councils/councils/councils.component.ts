@@ -6,7 +6,7 @@ import { Icouncils } from '../../../interfaces/icouncils';
 import { SearchcouncilsPipe } from '../../../pipes/searchcouncils/searchcouncils.pipe';
 @Component({
   selector: 'app-councils',
-  imports: [CommonModule, FormsModule , DatePipe , SearchcouncilsPipe],
+  imports: [CommonModule, FormsModule, DatePipe , SearchcouncilsPipe],
   templateUrl: './councils.component.html',
   styleUrl: './councils.component.scss'
 })
@@ -23,7 +23,7 @@ export class CouncilsComponent {
         console.log(res);
         this.CouncilList = res.data;
         console.log(this.CouncilList);
-      }
+    }
     })
-  }
+}
 }

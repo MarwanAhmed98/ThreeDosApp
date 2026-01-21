@@ -10,7 +10,7 @@ export class CouncilsService {
 
   constructor(private httpClient: HttpClient) { }
   GetCouncilList(): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/councils?pageSize=10`)
+    return this.httpClient.get(`${environments.baseUrl}/councils?pageIndex=1&pageSize=8`)
   }
   GetCouncilById(councilId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/councils/${councilId}`)
