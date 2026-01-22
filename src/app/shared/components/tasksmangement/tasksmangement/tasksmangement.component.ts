@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Itask } from '../../../interfaces/itask';
 import { TasksService } from '../../../../core/services/tasks/tasks.service';
+import { SessionsService } from '../../../../core/services/sessions/sessions.service';
+import { ISession } from '../../../interfaces/isession';
 import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
 @Component({
   selector: 'app-tasksmangement',
@@ -12,14 +14,39 @@ import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
 })
 export class TasksmangementComponent implements OnInit {
   private readonly tasksService = inject(TasksService);
+  private readonly sessionsService = inject(SessionsService);
   text: string = "";
   currentPage: number = 1;
   lastpage: number = 1;
   perPages: number = 1;
   totalTasks: number = 1;
   TasksList: Itask[] = [];
+  SessionList: ISession[] = [];
+
+  // Modal State
+  isModalOpen: boolean = false;
+  isEditMode: boolean = false;
+  selectedTaskId: string | null = null;
+
+  // Form Data
+  taskData = {
+    title: '',
+    description: '',
+    status: 'Pending',
+    council_session: ''
+  };
+
   ngOnInit(): void {
     this.GetTasksList();
+    this.GetSessions();
+  }
+  GetSessions(): void {
+    // Fetching all sessions for dropdown, might need pagination logic if too many
+    this.sessionsService.GetSessionlList(1).subscribe({
+      next: (res) => {
+        this.SessionList = res.data.data;
+      }
+    });
   }
   getStatusClass(status: string) {
     switch (status) {
@@ -32,10 +59,7 @@ export class TasksmangementComponent implements OnInit {
   GetTasksList(): void {
     this.tasksService.GetTaskList(this.currentPage).subscribe({
       next: (res) => {
-        console.log(res);
         this.TasksList = res.data.data;
-        console.log(this.TasksList);
-        // this.currentPage = res.data.current_page;
         this.perPages = res.data.pagination.per_page;
         this.lastpage = res.data.pagination.last_page;
         this.totalTasks = res.data.pagination.total;
@@ -46,6 +70,57 @@ export class TasksmangementComponent implements OnInit {
     if (page >= 1 && page <= this.lastpage) {
       this.currentPage = page;
       this.GetTasksList();
+    }
+  }
+
+  openAddModal(): void {
+    this.isEditMode = false;
+    this.selectedTaskId = null;
+    this.taskData = { title: '', description: '', status: 'Pending', council_session: '' };
+    this.isModalOpen = true;
+  }
+
+  openEditModal(task: Itask): void {
+    this.isEditMode = true;
+    this.selectedTaskId = task.id;
+    this.taskData = {
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      council_session: task.council_session
+    };
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
+  onSubmit(): void {
+    if (this.isEditMode && this.selectedTaskId) {
+      this.tasksService.UpdateTask(this.selectedTaskId, this.taskData).subscribe({
+        next: () => {
+          this.GetTasksList();
+          this.closeModal();
+        }
+      });
+    } else {
+      this.tasksService.AddTask(this.taskData).subscribe({
+        next: () => {
+          this.GetTasksList();
+          this.closeModal();
+        }
+      });
+    }
+  }
+
+  deleteTask(id: string): void {
+    if (confirm('Are you sure you want to delete this task?')) {
+      this.tasksService.DeleteTask(id).subscribe({
+        next: () => {
+          this.GetTasksList();
+        }
+      });
     }
   }
 }
