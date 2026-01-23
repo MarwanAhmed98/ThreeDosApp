@@ -1,1 +1,99 @@
-<p>delegatesdashboard works!</p>
+<div class="space-y-10 animate-in fade-in duration-500">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-main mb-2">
+                Welcome back, {{ UserName }}
+            </h1>
+            <p class="text-muted">
+                Here is your academic progress and student activity overview.
+            </p>
+        </div>
+        <div class="flex gap-3">
+            <button
+                class="px-6 py-3 bg-app border border-main text-main font-semibold rounded-2xl flex-1 sm:flex-none hover:bg-brand-purple/5 transition-colors">
+                View Grades
+            </button>
+            <button
+                class="px-6 py-3 bg-brand-purple text-white font-semibold rounded-2xl shadow-lg shadow-brand-purple/30 flex items-center justify-center gap-2 flex-1 sm:flex-none hover:bg-opacity-90 transition-all active:scale-95">
+                <i class="fas fa-plus"></i> Log Activity
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        @for (metric of metrics; track metric.label) {
+        <div
+            class="bg-surface p-6 rounded-[32px] shadow-sm border border-main hover:shadow-xl hover:-translate-y-1 transition-all group">
+            <div class="flex justify-between items-start mb-6">
+                <div [class]="metric.iconBg + ' ' + metric.iconColor"
+                    class="p-3 rounded-2xl w-12 h-12 flex items-center justify-center shadow-inner">
+                    <i [class]="metric.iconClass" class="text-lg"></i>
+                </div>
+                <span [class]="metric.trendBg + ' ' + metric.trendColor"
+                    class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                    <i class="fas fa-arrow-trend-up"></i> {{ metric.trend }}
+                </span>
+            </div>
+            <p class="text-muted font-medium mb-1">{{ metric.label }}</p>
+            <h3 class="text-3xl font-bold text-main">{{ metric.value }}</h3>
+        </div>
+        }
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+        <!-- Study Hours / Session Overview -->
+        <div class="xl:col-span-8 bg-surface p-8 rounded-[32px] shadow-sm border border-main">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-xl font-bold text-main">Study Hours Overview</h3>
+                <div class="bg-app p-1.5 rounded-xl flex gap-1 border border-main">
+                    <button
+                        class="px-4 py-2 bg-surface text-main rounded-lg text-sm font-semibold shadow-sm border border-main">Week</button>
+                    <button class="px-4 py-2 text-muted text-sm font-semibold">Month</button>
+                </div>
+            </div>
+            <div class="h-64 flex items-end justify-between px-2">
+                @for (day of ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; track day) {
+                <div class="flex flex-col items-center gap-4 group flex-1">
+                    <div class="w-2 h-40 bg-app rounded-full relative overflow-hidden border border-main">
+                        <div
+                            class="absolute bottom-0 w-full bg-brand-purple/40 h-2/3 group-hover:h-full transition-all duration-500">
+                        </div>
+                    </div>
+                    <span class="text-xs font-medium text-muted">{{ day }}</span>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- My Upcoming Tasks -->
+        <div class="xl:col-span-4 bg-surface p-8 rounded-[32px] shadow-sm border border-main">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-xl font-bold text-main">My Tasks</h3>
+                <a routerLink="/Student/Tasks" class="text-brand-purple text-sm font-bold hover:underline">View All</a>
+            </div>
+            <div class="space-y-6">
+                @for (task of tasks; track task.title) {
+                <div
+                    class="flex items-center justify-between group cursor-pointer hover:bg-brand-purple/5 p-2 rounded-2xl transition-all">
+                    <div class="flex items-center gap-4 overflow-hidden">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-app border border-main flex items-center justify-center group-hover:bg-brand-purple/10 transition-colors text-brand-purple">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="truncate">
+                            <h4 class="font-bold text-main text-sm truncate">{{ task.title }}</h4>
+                            <p class="text-xs text-muted truncate">{{ task.group }}</p>
+                        </div>
+                    </div>
+                    <span [class]="task.statusColor"
+                        class="px-2 py-1 rounded-lg text-[10px] font-bold uppercase whitespace-nowrap">
+                        {{ task.status }}
+                    </span>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

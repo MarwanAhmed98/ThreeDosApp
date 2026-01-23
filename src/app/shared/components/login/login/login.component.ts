@@ -30,7 +30,7 @@ export class LoginComponent {
             this.toastrService.success(res.message, 'ThreeDos')
             localStorage.setItem('userToken', res.data.access_token);
             localStorage.setItem('UserName', res.data.user_name);
-            if (res.data.role === 'Head' || res.data.role === 'Instructor') {
+            if (res.data.role === 'Head' || res.data.role === 'Instructor' || res.data.role === 'VicePresident') {
               this.router.navigate(['/Admin']);
             }
             else {
