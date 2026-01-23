@@ -116,8 +116,9 @@ export class AttendanceComponent implements OnInit {
     // But based on user description, it has 'student' and 'session' names.
     // I may need to find the IDs or the API might return them in a full object.
     this.attendanceData = {
-      user_id: attendance.user_id || '',
-      council_session_id: attendance.council_session_id || '',
+      user_id: attendance.student_id || '',
+      council_session_id: attendance.session_id || '',
+   
       status: attendance.status
     };
     this.isModalOpen = true;
