@@ -1,0 +1,521 @@
+<div class="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+    >
+      <div>
+        <h1
+          class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900"
+        >
+          Attendance Management
+        </h1>
+        <p class="text-slate-500 mt-1 text-sm md:text-base">
+          Track and manage student attendance for council sessions.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <button
+          (click)="openBulkModal()"
+          class="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl font-bold text-slate-600 hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          Bulk Import
+        </button>
+        <button
+          (click)="openAddModal()"
+          class="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-indigo-100 active:scale-95 hover:bg-indigo-700"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="19" y1="8" x2="19" y2="14" />
+            <line x1="16" y1="11" x2="22" y2="11" />
+          </svg>
+          Mark Attendance
+        </button>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="flex flex-col lg:flex-row gap-4 mb-8">
+      <div class="relative flex-1">
+        <span
+          class="absolute inset-y-0 left-4 flex items-center text-slate-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </span>
+        <input
+          [(ngModel)]="text"
+          type="text"
+          placeholder="Search by Student or Session..."
+          class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm"
+        />
+      </div>
+    </div>
+
+    <!-- Attendance Table -->
+    <div
+      class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
+    >
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/50 border-b border-slate-100">
+              <th
+                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider"
+              >
+                Student
+              </th>
+              <th
+                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider"
+              >
+                Session
+              </th>
+              <th
+                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center"
+              >
+                Date
+              </th>
+              <th
+                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center"
+              >
+                Status
+              </th>
+              <th
+                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-right"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            @for (
+              record of AttendanceList | searchattendance: text;
+              track record.id
+            ) {
+              <tr class="hover:bg-slate-50/50 transition-colors group">
+                <td class="px-6 py-5">
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-9 h-9 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-sm"
+                    >
+                      {{ record.student?.charAt(0) || "U" }}
+                    </div>
+                    <div class="font-bold text-slate-900">
+                      {{ record.student || "Unknown Student" }}
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-5">
+                  <div class="text-sm font-bold text-slate-700">
+                    {{ record.session || "Unknown Session" }}
+                  </div>
+                </td>
+                <td class="px-6 py-5 text-center">
+                  <div class="text-sm text-slate-500">
+                    {{ record.created_at | date: "mediumDate" }}
+                  </div>
+                </td>
+                <td class="px-6 py-5 text-center">
+                  <span
+                    [class]="
+                      'px-3.5 py-1.5 rounded-full text-xs font-bold capitalize transition-all ' +
+                      getStatusClass(record.status)
+                    "
+                  >
+                    {{ record.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-5 text-right">
+                  <div class="flex justify-end gap-1">
+                    <button
+                      (click)="openEditModal(record)"
+                      class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                        />
+                        <path
+                          d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      (click)="deleteAttendance(record.id)"
+                      class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                        <line x1="10" y1="11" x2="10" y2="17" />
+                        <line x1="14" y1="11" x2="14" y2="17" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div
+        class="px-6 py-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4"
+      >
+        <div class="text-sm text-slate-500 font-medium">
+          Showing
+          <span class="text-slate-900 font-bold">{{ currentPage }}</span> of
+          <span class="text-slate-900 font-bold">{{ lastPage }}</span> pages
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+            class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
+          >
+            Previous
+          </button>
+          <button
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage === lastPage"
+            class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+@if (isModalOpen) {
+  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div
+      class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+      (click)="closeModal()"
+    ></div>
+
+    <div
+      class="relative w-full max-w-lg bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+    >
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-slate-900">
+            {{ isEditMode ? "Update Record" : "Mark New Attendance" }}
+          </h3>
+          <button
+            (click)="closeModal()"
+            class="text-slate-400 hover:text-slate-600 p-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" class="space-y-5">
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2"
+              >Student</label
+            >
+            <select
+              [(ngModel)]="attendanceData.user_id"
+              name="user_id"
+              required
+              [disabled]="isEditMode"
+              class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-medium disabled:opacity-50"
+            >
+              <option value="" disabled>Select Student</option>
+              @for (user of UserList; track user.id) {
+                <option [value]="user.id">{{ user.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2"
+              >Session</label
+            >
+            <select
+              [(ngModel)]="attendanceData.council_session_id"
+              name="council_session_id"
+              required
+              [disabled]="isEditMode"
+              class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-medium disabled:opacity-50"
+            >
+              <option value="" disabled>Select Session</option>
+              @for (session of SessionList; track session.id) {
+                <option [value]="session.id">{{ session.title }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2"
+              >Status</label
+            >
+            <div class="grid grid-cols-3 gap-3">
+              <button
+                type="button"
+                (click)="attendanceData.status = 'present'"
+                [class]="
+                  attendanceData.status === 'present'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                "
+                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
+              >
+                Present
+              </button>
+              <button
+                type="button"
+                (click)="attendanceData.status = 'absent'"
+                [class]="
+                  attendanceData.status === 'absent'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                "
+                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
+              >
+                Absent
+              </button>
+              <button
+                type="button"
+                (click)="attendanceData.status = 'late'"
+                [class]="
+                  attendanceData.status === 'late'
+                    ? 'bg-orange-600 text-white'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                "
+                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
+              >
+                Late
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-4 flex gap-3">
+            <button
+              type="button"
+              (click)="closeModal()"
+              class="flex-1 px-6 py-4 rounded-2xl font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all active:scale-95"
+            >
+              {{ isEditMode ? "Update Record" : "Save Attendance" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Bulk Upload Modal -->
+@if (isBulkModalOpen) {
+  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div
+      class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+      (click)="closeBulkModal()"
+    ></div>
+
+    <div
+      class="relative w-full max-w-lg bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+    >
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-slate-900">
+            Bulk Attendance Import
+          </h3>
+          <button
+            (click)="closeBulkModal()"
+            class="text-slate-400 hover:text-slate-600 p-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div
+            class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 flex gap-3"
+          >
+            <svg
+              class="text-indigo-600 shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <p class="text-sm text-indigo-700 font-medium leading-relaxed">
+              Please upload an Excel or CSV file containing records of student
+              emails and their attendance status.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2"
+              >Upload Attendance File</label
+            >
+            <div class="relative group">
+              <input
+                type="file"
+                (change)="onBulkFileSelected($event)"
+                required
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <div
+                class="border-2 border-dashed border-slate-200 group-hover:border-indigo-400 group-hover:bg-indigo-50/50 rounded-2xl p-8 transition-all text-center"
+              >
+                <div
+                  class="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3 text-indigo-600"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <div class="text-sm font-bold text-slate-900 mb-1">
+                  {{
+                    selectedBulkFile
+                      ? selectedBulkFile.name
+                      : "Click or drag file to upload"
+                  }}
+                </div>
+                <div class="text-xs text-slate-500 font-medium">
+                  Excel, CSV files accepted
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 flex gap-3">
+            <button
+              type="button"
+              (click)="closeBulkModal()"
+              class="flex-1 px-6 py-4 rounded-2xl font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              (click)="onBulkSubmit()"
+              [disabled]="!selectedBulkFile"
+              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+            >
+              Import Records
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

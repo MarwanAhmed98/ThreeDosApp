@@ -33,4 +33,12 @@ export class TeamsService {
   DeleteTeamMember(memberId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/team-members/${memberId}`)
   }
+
+  GetTeamMembers(teamId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/teams/${teamId}/members`)
+  }
+
+  DeleteTeam(teamId: string): Observable<any> {
+    return this.httpClient.delete(`${environments.baseUrl}/teams/${teamId}`)
+  }
 }
