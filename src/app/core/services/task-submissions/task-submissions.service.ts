@@ -13,7 +13,7 @@ export class TaskSubmissionsService {
   GetSubmissionList(pageIndex: number, pageSize: number = 10, taskId: string = ''): Observable<any> {
     let url = `${environments.baseUrl}/task-submissions?pageIndex=${pageIndex}&pageSize=${pageSize}`;
     if (taskId) {
-      url += `&taskId=${taskId}`;
+      url += `&task_id=${taskId}`;
     }
     return this.httpClient.get(url)
   }

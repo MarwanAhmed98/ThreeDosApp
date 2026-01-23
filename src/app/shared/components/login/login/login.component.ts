@@ -30,7 +30,8 @@ export class LoginComponent {
             this.toastrService.success(res.message, 'ThreeDos')
             localStorage.setItem('userToken', res.data.access_token);
             localStorage.setItem('UserName', res.data.user_name);
-            this.router.navigate(['/Admin']);
+            localStorage.setItem('userRole', res.data.role);
+            this.router.navigate([res.data.role === 'Head'||res.data.role === 'Instructor' ||res.data.role === 'VicePresident' ? '/Admin' : '/User']);
           }
           this.isLoading = false;
         },
