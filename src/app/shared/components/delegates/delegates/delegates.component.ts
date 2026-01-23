@@ -23,8 +23,8 @@ export class DelegatesComponent {
 
   navItems = [
     { label: 'Dashboard', route: '/Delegates/DelegateDashboard', iconClass: 'fas fa-th-large' },
-    { label: 'Sessions', route: '/Delegates/Sessions', iconClass: 'fas fa-calendar-alt' },
-    { label: 'Attendance', route: '/Delegates/Attendance', iconClass: 'fas fa-user-check' },
+    { label: 'Sessions', route: '/Delegates/Delegatessession', iconClass: 'fas fa-calendar-alt' },
+    { label: 'Attendance', route: '/Delegates/DelegateAttendance', iconClass: 'fas fa-user-check' },
     { label: 'Tasks', route: '/Delegates/Tasks', iconClass: 'fas fa-tasks' },
     { label: 'Submissions', route: '/Delegates/Submissions', iconClass: 'fas fa-file-upload' },
   ];

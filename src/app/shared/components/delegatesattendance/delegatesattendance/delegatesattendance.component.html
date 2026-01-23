@@ -1,0 +1,131 @@
+<div class="animate-in fade-in duration-500">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">My Attendance</h1>
+                <p class="text-muted mt-1 text-sm md:text-base">Track your participation across all registered councils.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 bg-surface border border-main px-6 py-3 rounded-2xl shadow-sm">
+                <span class="text-sm font-bold text-muted uppercase tracking-wider">Your Attendance:</span>
+                <span class="text-xl font-black text-brand-purple">{{ attendancePercentage() }}%</span>
+            </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+            <div
+                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-brand-purple/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-app rounded-2xl flex items-center justify-center text-brand-purple">
+                        <i class="fas fa-calendar-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-muted uppercase">Total Sessions</p>
+                        <h3 class="text-2xl font-bold text-main">{{ totalSessions() }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-emerald-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500">
+                        <i class="fas fa-check-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-muted uppercase">Attended</p>
+                        <h3 class="text-2xl font-bold text-main">{{ presentCount() }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-rose-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500">
+                        <i class="fas fa-times-circle text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-muted uppercase">Missed</p>
+                        <h3 class="text-2xl font-bold text-main">{{ totalSessions() - presentCount() }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="relative mb-8">
+            <span class="absolute inset-y-0 left-4 flex items-center text-muted">
+                <i class="fas fa-search"></i>
+            </span>
+            <input [(ngModel)]="text" type="text" placeholder="Search sessions by name..."
+                class="w-full pl-12 pr-4 py-4 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted" />
+        </div>
+
+        <!-- Attendance List -->
+        <div class="bg-surface rounded-[2rem] border border-main shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-app border-b border-main">
+                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider">Session
+                                Topic</th>
+                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center">
+                                Date</th>
+                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center">
+                                Status</th>
+                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-right">
+                                Records</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y border-main">
+                        @for (record of attendanceRecords(); track record.id) {
+                        <tr class="hover:bg-brand-purple/5 transition-colors group">
+                            <td class="px-8 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-app border border-main flex items-center justify-center text-brand-purple group-hover:bg-white transition-colors">
+                                        <i class="fas fa-book-reader"></i>
+                                    </div>
+                                    <div class="font-bold text-main text-base">{{ record.session }}</div>
+                                </div>
+                            </td>
+                            <td class="px-8 py-6 text-center">
+                                <div class="text-sm font-medium text-main">{{ record.date | date: "longDate" }}</div>
+                            </td>
+                            <td class="px-8 py-6 text-center">
+                                <span
+                                    [class]="'px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ' + getStatusClass(record.status)">
+                                    {{ record.status }}
+                                </span>
+                            </td>
+                            <td class="px-8 py-6 text-right">
+                                <button class="text-xs font-bold text-brand-purple hover:underline">View
+                                    Details</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer/Pagination -->
+            <div class="px-8 py-5 bg-app/50 border-t border-main flex items-center justify-between">
+                <p class="text-xs font-bold text-muted uppercase tracking-tighter">Your academic participation history
+                </p>
+                <div class="flex items-center gap-2">
+                    <button
+                        class="p-2 w-10 h-10 rounded-xl border border-main bg-surface text-muted hover:text-main transition-all">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </button>
+                    <button
+                        class="p-2 w-10 h-10 rounded-xl border border-brand-purple bg-brand-purple text-white shadow-lg shadow-brand-purple/20 transition-all">1</button>
+                    <button
+                        class="p-2 w-10 h-10 rounded-xl border border-main bg-surface text-muted hover:text-main transition-all">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

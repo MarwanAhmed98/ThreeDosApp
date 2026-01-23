@@ -1,0 +1,119 @@
+<div class="animate-in fade-in duration-500">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">My Sessions</h1>
+            <p class="text-muted mt-1">Browse available sessions, join live workshops, and download study materials.</p>
+        </div>
+
+        <!-- Search & Quick Filters -->
+        <div class="flex flex-col md:flex-row gap-4 mb-8">
+            <div class="relative flex-1">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
+                <input [(ngModel)]="text" type="text" placeholder="Search by topic or council..."
+                    class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none transition-all shadow-sm text-main" />
+            </div>
+            <div class="flex gap-2">
+                <button
+                    class="px-5 py-3.5 bg-surface border border-main rounded-2xl text-main font-bold flex items-center gap-2 hover:bg-brand-purple/5 transition-all">
+                    <i class="fas fa-filter text-brand-purple"></i> All Councils
+                </button>
+            </div>
+        </div>
+
+        <!-- Sessions Table -->
+        <div
+            class="bg-transparent md:bg-surface md:rounded-[32px] md:border md:border-main overflow-hidden md:shadow-sm">
+            <table class="w-full text-left border-collapse block md:table">
+                <thead class="hidden md:table-header-group">
+                    <tr
+                        class="border-b border-main bg-app/50 text-[11px] font-bold text-muted uppercase tracking-widest">
+                        <th class="px-6 py-5">Status</th>
+                        <th class="px-6 py-5">Schedule</th>
+                        <th class="px-6 py-5">Session & Council</th>
+                        <th class="px-6 py-5">Resources</th>
+                        <th class="px-6 py-5 text-right">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
+                    @for (session of sessions(); track session.id) {
+                    <tr
+                        class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-brand-purple/5 transition-all group">
+
+                        <!-- Status Mobile -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Status</span>
+                            <span [class]="getStatusClass(session.status)"
+                                class="px-3 py-1 rounded-full text-[10px] font-bold">
+                                {{ session.status }}
+                            </span>
+                        </td>
+
+                        <!-- Schedule -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Schedule</span>
+                            <div class="text-sm">
+                                <div class="font-bold text-main">{{ session.date | date:'mediumDate' }}</div>
+                                <div class="text-xs text-muted">{{ session.time }}</div>
+                            </div>
+                        </td>
+
+                        <!-- Topic & Council -->
+                        <td
+                            class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                            <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-1">Session</span>
+                            <div>
+                                <div class="font-bold text-brand-purple text-base">{{ session.title }}</div>
+                                <div class="text-xs text-muted flex items-center gap-1.5 mt-1">
+                                    <i class="fas fa-users text-[10px]"></i> {{ session.council }}
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Resources -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Resources</span>
+                            @if (session.material) {
+                            <a [href]="session.material" target="_blank"
+                                class="flex items-center gap-2 text-brand-purple font-bold text-sm hover:underline">
+                                <div class="w-8 h-8 rounded-lg bg-brand-purple/10 flex items-center justify-center">
+                                    <i class="fas fa-file-arrow-down"></i>
+                                </div>
+                                Material
+                            </a>
+                            } @else {
+                            <span class="text-xs text-muted italic">Not available yet</span>
+                            }
+                        </td>
+
+                        <!-- Action -->
+                        <td
+                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 text-right">
+                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Registration</span>
+
+                            @if (session.status === 'COMPLETED') {
+                            <button disabled
+                                class="text-xs font-bold text-muted bg-app px-4 py-2 rounded-xl border border-main">Ended</button>
+                            } @else if (session.isJoined) {
+                            <button
+                                class="text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl flex items-center gap-2 ml-auto">
+                                <i class="fas fa-check-double"></i> Registered
+                            </button>
+                            } @else {
+                            <button (click)="joinSession(session.id)"
+                                class="bg-brand-purple text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-brand-purple/20 hover:scale-105 transition-all active:scale-95">
+                                Join Session
+                            </button>
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
