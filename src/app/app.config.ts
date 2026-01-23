@@ -6,12 +6,18 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error/error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHotToastConfig } from '@ngneat/hot-toast';
 import { headersInterceptor } from './core/interceptors/headers/headers.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { loadingInterceptor } from './core/interceptors/loading/loading.interceptor';
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay())
-    , provideHttpClient(withFetch(), withInterceptors([errorInterceptor , headersInterceptor , loadingInterceptor])), provideToastr(), provideAnimations(), provideHotToastConfig() , importProvidersFrom(NgxSpinnerModule)
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+    provideHttpClient(withFetch(), withInterceptors([errorInterceptor, headersInterceptor, loadingInterceptor])),
+    provideToastr(),
+    provideAnimations(),
+    importProvidersFrom(NgxSpinnerModule)
   ]
 };

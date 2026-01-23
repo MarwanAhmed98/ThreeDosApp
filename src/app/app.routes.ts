@@ -13,16 +13,23 @@ import { DelegatesComponent } from './shared/components/delegates/delegates/dele
 import { DelegatesdashboardComponent } from './shared/components/delegatesdashboard/delegatesdashboard/delegatesdashboard.component';
 import { DelegatessessionComponent } from './shared/components/delegatessession/delegatessession/delegatessession.component';
 import { DelegatesattendanceComponent } from './shared/components/delegatesattendance/delegatesattendance/delegatesattendance.component';
+import { adminGuard } from './core/guards/admin.guard';
+import { delegateGuard } from './core/guards/delegate.guard';
+import { loginGuard } from './core/guards/login.guard';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
     },
     {
-        path: 'Login', component: LoginComponent, title: 'Login'
+        path: 'Login',
+        component: LoginComponent,
+        title: 'Login',
+        canActivate: [loginGuard]
     },
     {
         path: 'Admin',
         component: AdminComponent,
+        canActivate: [adminGuard],
         children: [
             { path: 'Dashboard', component: DashboardComponent, title: 'Dashboard' },
             { path: 'Councils', component: CouncilsComponent, title: 'Councils' },
@@ -39,6 +46,7 @@ export const routes: Routes = [
     {
         path: 'Delegates',
         component: DelegatesComponent,
+        canActivate: [delegateGuard],
         children: [
             { path: 'DelegateDashboard', component: DelegatesdashboardComponent, title: 'Dashboard' },
             { path: 'Tasks', component: TasksmangementComponent, title: 'Task Management' },

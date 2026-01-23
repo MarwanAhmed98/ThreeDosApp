@@ -1,4 +1,5 @@
 @import 'ngx-toastr/toastr';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,10 +29,30 @@ body {
 }
 
 /* Custom classes using variables */
-.bg-app { background-color: var(--bg-color); }
-.bg-surface { background-color: var(--surface-color); }
-.text-main { color: var(--text-primary); }
-.text-muted { color: var(--text-secondary); }
-.border-main { border-color: var(--border-color); }
-.text-accent { color: var(--accent-color); }
-.bg-accent { background-color: var(--accent-color); }
+.bg-app {
+  background-color: var(--bg-color);
+}
+
+.bg-surface {
+  background-color: var(--surface-color);
+}
+
+.text-main {
+  color: var(--text-primary);
+}
+
+.text-muted {
+  color: var(--text-secondary);
+}
+
+.border-main {
+  border-color: var(--border-color);
+}
+
+.text-accent {
+  color: var(--accent-color);
+}
+
+.bg-accent {
+  background-color: var(--accent-color);
+}

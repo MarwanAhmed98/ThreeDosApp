@@ -26,7 +26,6 @@ export class DelegatesComponent {
     { label: 'Sessions', route: '/Delegates/Delegatessession', iconClass: 'fas fa-calendar-alt' },
     { label: 'Attendance', route: '/Delegates/DelegateAttendance', iconClass: 'fas fa-user-check' },
     { label: 'Tasks', route: '/Delegates/Tasks', iconClass: 'fas fa-tasks' },
-    { label: 'Submissions', route: '/Delegates/Submissions', iconClass: 'fas fa-file-upload' },
   ];
 
   ngOnInit(): void {
@@ -64,14 +63,13 @@ export class DelegatesComponent {
   LogoutBtn(): void {
     this.authService.Logout().subscribe({
       next: (res) => {
-        if (res.status === 'success') {
-          this.toastrService.success(res.message, 'ThreeDos');
-          localStorage.removeItem('userToken');
-          localStorage.removeItem('UserName');
-          setTimeout(() => {
-            this.router.navigate(['/Login']);
-          }, 1500);
-        }
+        this.toastrService.success('Logged out successfully', 'ThreeDos');
+        this.router.navigate(['/Login']);
+      },
+      error: (err) => {
+        // Even if API fails, the auth service clears local data
+        this.toastrService.info('Logged out locally', 'ThreeDos');
+        this.router.navigate(['/Login']);
       }
     });
   }

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
-import { ToastrService } from 'ngx-toastr';
 import { filter } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin',
@@ -69,14 +69,13 @@ export class AdminComponent implements OnInit {
   LogoutBtn(): void {
     this.authService.Logout().subscribe({
       next: (res) => {
-        if (res.status === 'success') {
-          this.toastrService.success(res.message, 'ThreeDos');
-          localStorage.removeItem('userToken');
-          localStorage.removeItem('UserName');
-          setTimeout(() => {
-            this.router.navigate(['/Login']);
-          }, 1500);
-        }
+        this.toastrService.success('Logged out successfully');
+        this.router.navigate(['/Login']);
+      },
+      error: (err) => {
+        // Even if API fails, the auth service clears local data
+        this.toastrService.info('Logged out locally');
+        this.router.navigate(['/Login']);
       }
     });
   }

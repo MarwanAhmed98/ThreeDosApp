@@ -1,3 +1,9 @@
+<!-- Conditional rendering based on user role -->
+@if (isDelegate()) {
+<!-- Delegate View: Show delegate-specific task interface -->
+<app-delegate-tasks></app-delegate-tasks>
+} @else {
+<!-- Admin View: Show existing admin task management interface -->
 <div class="animate-in fade-in duration-500">
   <!-- Header Section -->
   <div class="mb-6 md:mb-8">
@@ -10,35 +16,26 @@
   </div>
 
   <!-- Top Action Bar -->
-  <div
-    class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8"
-  >
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
     <!-- Search Bar -->
     <div class="relative flex-1 w-full lg:max-w-2xl">
       <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-muted">
         <i class="fas fa-search"></i>
       </span>
-      <input
-        [(ngModel)]="text"
-        type="text"
-        placeholder="Search for tasks..."
-        class="w-full pl-12 pr-4 py-3 rounded-2xl md:rounded-full border border-main bg-surface shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all text-sm md:text-base text-main placeholder-muted"
-      />
+      <input [(ngModel)]="text" type="text" placeholder="Search for tasks..."
+        class="w-full pl-12 pr-4 py-3 rounded-2xl md:rounded-full border border-main bg-surface shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all text-sm md:text-base text-main placeholder-muted" />
     </div>
 
     <!-- Filters & Add Button -->
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
       <button
-        class="flex items-center justify-between px-6 py-3 bg-surface border border-main rounded-2xl md:rounded-full text-main text-sm font-medium hover:bg-brand-purple/5 transition-colors"
-      >
+        class="flex items-center justify-between px-6 py-3 bg-surface border border-main rounded-2xl md:rounded-full text-main text-sm font-medium hover:bg-brand-purple/5 transition-colors">
         <span>Filter by Status</span>
         <i class="fas fa-chevron-down ml-2 text-muted"></i>
       </button>
 
-      <button
-        (click)="openAddModal()"
-        class="flex items-center justify-center gap-2 px-6 py-3 bg-brand-purple text-white rounded-2xl md:rounded-full hover:bg-opacity-90 transition-all shadow-lg shadow-brand-purple/20 active:scale-95"
-      >
+      <button (click)="openAddModal()"
+        class="flex items-center justify-center gap-2 px-6 py-3 bg-brand-purple text-white rounded-2xl md:rounded-full hover:bg-opacity-90 transition-all shadow-lg shadow-brand-purple/20 active:scale-95">
         <i class="fas fa-plus"></i>
         <span class="font-semibold text-sm md:text-base">Create Task</span>
       </button>
@@ -46,16 +43,12 @@
   </div>
 
   <!-- Data Display Section -->
-  <div
-    class="bg-surface rounded-3xl shadow-sm border border-main overflow-hidden"
-  >
+  <div class="bg-surface rounded-3xl shadow-sm border border-main overflow-hidden">
     <!-- Desktop Table View (Hidden on mobile) -->
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-left border-collapse">
         <thead>
-          <tr
-            class="text-xs font-bold text-muted uppercase tracking-wider border-b border-main bg-app"
-          >
+          <tr class="text-xs font-bold text-muted uppercase tracking-wider border-b border-main bg-app">
             <th class="px-8 py-5">Task Name</th>
             <th class="px-6 py-5">Description</th>
             <th class="px-6 py-5">Council</th>
@@ -66,66 +59,56 @@
         </thead>
         <tbody class="divide-y border-main">
           @for (task of TasksList | searchtasks: text; track task.id) {
-            <tr class="hover:bg-brand-purple/5 transition-colors group">
-              <td class="px-8 py-5">
-                <div class="flex items-center gap-4">
-                  <span class="font-semibold text-main">{{ task.title }}</span>
-                </div>
-              </td>
-              <td class="px-6 py-5">
-                <div class="flex items-center gap-2 text-muted font-medium">
-                  <i class="fas fa-info-circle text-brand-purple/50"></i>
-                  {{ task.description }}
-                </div>
-              </td>
-              <td class="px-6 py-5">
-                <div
-                  class="inline-flex items-center gap-2 px-3 py-1 bg-app rounded-full text-sm font-medium text-main border border-main"
-                >
-                  {{ task.council_name }}
-                </div>
-              </td>
-              <td class="px-6 py-5">
-                <div
-                  class="inline-flex items-center gap-2 px-3 py-1 bg-app rounded-full text-sm font-medium text-main border border-main"
-                >
-                  {{ task.council_session }}
-                </div>
-              </td>
-              <td class="px-6 py-5">
-                <span
-                  [class]="
+          <tr class="hover:bg-brand-purple/5 transition-colors group">
+            <td class="px-8 py-5">
+              <div class="flex items-center gap-4">
+                <span class="font-semibold text-main">{{ task.title }}</span>
+              </div>
+            </td>
+            <td class="px-6 py-5">
+              <div class="flex items-center gap-2 text-muted font-medium">
+                <i class="fas fa-info-circle text-brand-purple/50"></i>
+                {{ task.description }}
+              </div>
+            </td>
+            <td class="px-6 py-5">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-app rounded-full text-sm font-medium text-main border border-main">
+                {{ task.council_name }}
+              </div>
+            </td>
+            <td class="px-6 py-5">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-app rounded-full text-sm font-medium text-main border border-main">
+                {{ task.council_session }}
+              </div>
+            </td>
+            <td class="px-6 py-5">
+              <span [class]="
                     'px-4 py-1 rounded-full text-sm font-bold capitalize ' +
                     getStatusClass(task.status)
-                  "
-                >
-                  {{ task.status }}
-                </span>
-              </td>
-              <td class="px-8 py-5 text-right">
-                <div class="flex justify-end gap-2">
-                  <button
-                    [routerLink]="['/Admin/Submissions', task.id]"
-                    class="text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 p-2 rounded-lg transition-colors"
-                    title="View Submissions"
-                  >
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button
-                    (click)="openEditModal(task)"
-                    class="text-brand-purple hover:bg-brand-purple/10 p-2 rounded-lg transition-colors"
-                  >
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button
-                    (click)="deleteTask(task.id)"
-                    class="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg transition-colors"
-                  >
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+                  ">
+                {{ task.status }}
+              </span>
+            </td>
+            <td class="px-8 py-5 text-right">
+              <div class="flex justify-end gap-2">
+                <button [routerLink]="['/Admin/Submissions', task.id]"
+                  class="text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 p-2 rounded-lg transition-colors"
+                  title="View Submissions">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button (click)="openEditModal(task)"
+                  class="text-brand-purple hover:bg-brand-purple/10 p-2 rounded-lg transition-colors">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button (click)="deleteTask(task.id)"
+                  class="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg transition-colors">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
@@ -134,62 +117,52 @@
     <!-- Mobile Card View (Visible only on small screens) -->
     <div class="md:hidden divide-y border-main">
       @for (task of TasksList | searchtasks: text; track task.id) {
-        <div class="p-5 flex flex-col gap-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div>
-                <h3 class="font-bold text-main">{{ task.title }}</h3>
-                <p class="text-xs text-muted font-semibold tracking-wider">
-                  {{ task.council_name }}
-                </p>
-              </div>
+      <div class="p-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div>
+              <h3 class="font-bold text-main">{{ task.title }}</h3>
+              <p class="text-xs text-muted font-semibold tracking-wider">
+                {{ task.council_name }}
+              </p>
             </div>
-            <button class="text-muted p-1 hover:text-main">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
           </div>
+          <button class="text-muted p-1 hover:text-main">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+        </div>
 
-          <div class="flex items-center justify-between mt-1">
-            <div class="flex items-center gap-2 text-muted text-sm font-medium">
-              <i class="fas fa-info-circle text-brand-purple/50"></i>
-              {{ task.description }}
-            </div>
-            <span
-              [class]="
+        <div class="flex items-center justify-between mt-1">
+          <div class="flex items-center gap-2 text-muted text-sm font-medium">
+            <i class="fas fa-info-circle text-brand-purple/50"></i>
+            {{ task.description }}
+          </div>
+          <span [class]="
                 'px-3 py-1 rounded-full text-xs font-bold capitalize ' +
                 getStatusClass(task.status)
-              "
-            >
-              {{ task.status }}
-            </span>
-          </div>
+              ">
+            {{ task.status }}
+          </span>
         </div>
+      </div>
       }
     </div>
   </div>
 
   <!-- Pagination -->
-  <div
-    class="mt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted px-2"
-  >
+  <div class="mt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted px-2">
     <p class="order-2 md:order-1">
       Showing <span class="font-bold text-main">{{ currentPage }}</span> of
       <span class="font-bold text-main">{{ lastpage }}</span> tasks
     </p>
 
-    <div
-      class="flex items-center gap-2 order-1 md:order-2 w-full md:w-auto justify-center"
-    >
-      <button
-        (click)="changePage(currentPage - 1)"
-        class="flex-1 md:flex-none px-4 py-2 border border-main bg-surface rounded-xl hover:bg-brand-purple/5 transition-all text-main shadow-sm"
-      >
+    <div class="flex items-center gap-2 order-1 md:order-2 w-full md:w-auto justify-center">
+      <button (click)="changePage(currentPage - 1)"
+        class="flex-1 md:flex-none px-4 py-2 border border-main bg-surface rounded-xl hover:bg-brand-purple/5 transition-all text-main shadow-sm">
         Prev
       </button>
-      <button
-        (click)="changePage(currentPage + 1)"
-        class="flex-1 md:flex-none px-4 py-2 border border-main bg-surface rounded-xl hover:bg-brand-purple/5 transition-all font-medium text-main shadow-sm"
-      >
+      <button (click)="changePage(currentPage + 1)"
+        class="flex-1 md:flex-none px-4 py-2 border border-main bg-surface rounded-xl hover:bg-brand-purple/5 transition-all font-medium text-main shadow-sm">
         Next
       </button>
     </div>
@@ -198,146 +171,78 @@
 
 <!-- Modal -->
 @if (isModalOpen) {
-  <div
-    class="fixed inset-0 z-[60] overflow-y-auto"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
-  >
+<div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
+      (click)="closeModal()"></div>
+
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
     <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-        aria-hidden="true"
-        (click)="closeModal()"
-      ></div>
-
-      <span
-        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        aria-hidden="true"
-        >&#8203;</span
-      >
-
-      <div
-        class="inline-block align-bottom bg-surface border border-main rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in"
-      >
-        <form (ngSubmit)="onSubmit()">
-          <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                <h3 class="text-xl font-bold text-main" id="modal-title">
-                  {{ isEditMode ? "Edit Task" : "Create New Task" }}
-                </h3>
-                <div class="mt-4 space-y-4">
-                  <div>
-                    <label
-                      for="title"
-                      class="block text-sm font-semibold text-muted"
-                      >Title</label
-                    >
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      [(ngModel)]="taskData.title"
-                      required
-                      class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main placeholder-muted"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      for="description"
-                      class="block text-sm font-semibold text-muted"
-                      >Description</label
-                    >
-                    <textarea
-                      name="description"
-                      id="description"
-                      [(ngModel)]="taskData.description"
-                      required
-                      class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main placeholder-muted"
-                      rows="3"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <label
-                      for="status"
-                      class="block text-sm font-semibold text-muted"
-                      >Status</label
-                    >
-                    <select
-                      name="status"
-                      id="status"
-                      [(ngModel)]="taskData.status"
-                      required
-                      class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main"
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Completed">Completed</option>
-                    </select>
-                  </div>
-                  <!-- Date Input -->
-                  <div>
-                    <label
-                      for="date"
-                      class="block text-sm font-semibold text-muted"
-                      >Date</label
-                    >
-                    <input
-                      type="date"
-                      name="date"
-                      id="date"
-                      [(ngModel)]="taskData.due_date"
-                      required
-                      class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      for="council_session"
-                      class="block text-sm font-semibold text-muted"
-                      >Session</label
-                    >
-                    <select
-                      name="council_session"
-                      id="council_session"
-                      [(ngModel)]="taskData.council_session_id"
-                      required
-                      class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main"
-                    >
-                      <option value="" disabled>Select Session</option>
-                      @for (session of SessionList; track session.id) {
-                        <option [value]="session.id">
-                          {{ session.title }} ({{ session.council }})
-                        </option>
-                      }
-                    </select>
-                  </div>
+      class="inline-block align-bottom bg-surface border border-main rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in">
+      <form (ngSubmit)="onSubmit()">
+        <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <h3 class="text-xl font-bold text-main" id="modal-title">
+                {{ isEditMode ? "Edit Task" : "Create New Task" }}
+              </h3>
+              <div class="mt-4 space-y-4">
+                <div>
+                  <label for="title" class="block text-sm font-semibold text-muted">Title</label>
+                  <input type="text" name="title" id="title" [(ngModel)]="taskData.title" required
+                    class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main placeholder-muted" />
+                </div>
+                <div>
+                  <label for="description" class="block text-sm font-semibold text-muted">Description</label>
+                  <textarea name="description" id="description" [(ngModel)]="taskData.description" required
+                    class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main placeholder-muted"
+                    rows="3"></textarea>
+                </div>
+                <div>
+                  <label for="status" class="block text-sm font-semibold text-muted">Status</label>
+                  <select name="status" id="status" [(ngModel)]="taskData.status" required
+                    class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+                <!-- Date Input -->
+                <div>
+                  <label for="date" class="block text-sm font-semibold text-muted">Date</label>
+                  <input type="date" name="date" id="date" [(ngModel)]="taskData.due_date" required
+                    class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main" />
+                </div>
+                <div>
+                  <label for="council_session" class="block text-sm font-semibold text-muted">Session</label>
+                  <select name="council_session" id="council_session" [(ngModel)]="taskData.council_session_id" required
+                    class="mt-1 block w-full border border-main rounded-2xl shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple sm:text-sm p-4 bg-app border text-main">
+                    <option value="" disabled>Select Session</option>
+                    @for (session of SessionList; track session.id) {
+                    <option [value]="session.id">
+                      {{ session.title }} ({{ session.council }})
+                    </option>
+                    }
+                  </select>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="bg-app px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main"
-          >
-            <button
-              type="submit"
-              class="w-full inline-flex justify-center rounded-full border border-transparent shadow-lg px-6 py-3 bg-brand-purple text-sm font-bold text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:ml-3 sm:w-auto transition-all"
-            >
-              {{ isEditMode ? "Update" : "Create" }}
-            </button>
-            <button
-              type="button"
-              (click)="closeModal()"
-              class="mt-3 w-full inline-flex justify-center rounded-full border border-main shadow-sm px-6 py-3 bg-surface text-sm font-bold text-main hover:bg-brand-purple/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:mt-0 sm:ml-3 sm:w-auto transition-all"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="bg-app px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main">
+          <button type="submit"
+            class="w-full inline-flex justify-center rounded-full border border-transparent shadow-lg px-6 py-3 bg-brand-purple text-sm font-bold text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:ml-3 sm:w-auto transition-all">
+            {{ isEditMode ? "Update" : "Create" }}
+          </button>
+          <button type="button" (click)="closeModal()"
+            class="mt-3 w-full inline-flex justify-center rounded-full border border-main shadow-sm px-6 py-3 bg-surface text-sm font-bold text-main hover:bg-brand-purple/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:mt-0 sm:ml-3 sm:w-auto transition-all">
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+}
 }

@@ -10,11 +10,17 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./login-navbar.component.scss']
 })
 export class LoginNavbarComponent implements OnInit {
-  isDarkMode: boolean = false;
+  isDarkMode: boolean = true;
 
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
-      this.isDarkMode = localStorage.getItem('theme') === 'dark';
+      const savedTheme = localStorage.getItem('theme');
+      this.isDarkMode = savedTheme === null || savedTheme === 'dark';
+      if (savedTheme === null) {
+        localStorage.setItem('theme', 'dark');
+      }
+      this.applyTheme();
+    } else {
       this.applyTheme();
     }
   }

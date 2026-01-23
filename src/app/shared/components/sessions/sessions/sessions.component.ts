@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
@@ -8,11 +8,11 @@ import { Icouncils } from '../../../interfaces/icouncils';
 import { SearchsessionsPipe } from '../../../pipes/searchsessions/searchsessions.pipe';
 @Component({
   selector: 'app-sessions',
-  imports: [CommonModule, FormsModule , DatePipe , SearchsessionsPipe],
+  imports: [CommonModule, FormsModule, DatePipe, SearchsessionsPipe],
   templateUrl: './sessions.component.html',
   styleUrl: './sessions.component.scss'
 })
-export class SessionsComponent {
+export class SessionsComponent implements AfterViewInit {
   private readonly sessionsService = inject(SessionsService);
   private readonly councilsService = inject(CouncilsService);
   SessionList: ISession[] = [];
@@ -50,7 +50,7 @@ export class SessionsComponent {
   GetSessionsList(): void {
     this.sessionsService.GetSessionlList(this.currentPage).subscribe({
       next: (res) => {
-        console.log(res);
+        console.log(res.data);
         this.SessionList = res.data.data;
         this.perPages = res.data.pagination.per_page;
         this.lastpage = res.data.pagination.last_page;
@@ -116,4 +116,18 @@ export class SessionsComponent {
       });
     }
   }
+
+  ngAfterViewInit(): void {
+    // Initialization logic can be added here if needed
+  }
+
+  sortSessionsByDate(): ISession[] {
+    return this.SessionList.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA; // Sort from newest to oldest
+    });
+  }
+
+
 }

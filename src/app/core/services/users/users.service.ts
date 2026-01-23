@@ -15,7 +15,7 @@ export class UsersService {
   GetUsersByCouncil(): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users?filter=council`)
   }
-  GetUserListByRole(role:string): Observable<any> {
+  GetUserListByRole(role: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users?role=${role}`)
   }
   GetUserById(userId: string): Observable<any> {
@@ -25,7 +25,7 @@ export class UsersService {
     return this.httpClient.post(`${environments.baseUrl}/users`, user)
   }
   UpdateUser(user: any): Observable<any> {
-    return this.httpClient.put(`${environments.baseUrl}/users`, user)
+    return this.httpClient.put(`${environments.baseUrl}/users/${user.id}`, user)
   }
   DeleteUser(userId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/users/${userId}`)

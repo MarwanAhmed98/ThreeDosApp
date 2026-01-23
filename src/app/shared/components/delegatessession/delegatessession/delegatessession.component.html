@@ -10,110 +10,352 @@
         <div class="flex flex-col md:flex-row gap-4 mb-8">
             <div class="relative flex-1">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
-                <input [(ngModel)]="text" type="text" placeholder="Search by topic or council..."
-                    class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none transition-all shadow-sm text-main" />
+                <input [value]="text()" (input)="onSearchChange($event)" type="text"
+                    placeholder="Search by topic or council..."
+                    class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:ring-4 focus:ring-accent/10 focus:border-accent outline-none transition-all shadow-sm text-main" />
             </div>
             <div class="flex gap-2">
                 <button
-                    class="px-5 py-3.5 bg-surface border border-main rounded-2xl text-main font-bold flex items-center gap-2 hover:bg-brand-purple/5 transition-all">
-                    <i class="fas fa-filter text-brand-purple"></i> All Councils
+                    class="px-5 py-3.5 bg-surface border border-main rounded-2xl text-main font-bold flex items-center gap-2 hover:bg-accent/5 transition-all">
+                    <i class="fas fa-filter text-accent"></i> All Councils
                 </button>
             </div>
         </div>
 
+        <!-- Loading State -->
+        @if (loading()) {
+        <div class="flex justify-center items-center py-12">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+        </div>
+        }
+
         <!-- Sessions Table -->
+        @if (!loading()) {
         <div
             class="bg-transparent md:bg-surface md:rounded-[32px] md:border md:border-main overflow-hidden md:shadow-sm">
-            <table class="w-full text-left border-collapse block md:table">
-                <thead class="hidden md:table-header-group">
-                    <tr
-                        class="border-b border-main bg-app/50 text-[11px] font-bold text-muted uppercase tracking-widest">
-                        <th class="px-6 py-5">Status</th>
-                        <th class="px-6 py-5">Schedule</th>
-                        <th class="px-6 py-5">Session & Council</th>
-                        <th class="px-6 py-5">Resources</th>
-                        <th class="px-6 py-5 text-right">Action</th>
-                    </tr>
-                </thead>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse block md:table min-w-full">
+                    <thead class="hidden md:table-header-group">
+                        <tr
+                            class="border-b border-main bg-app/50 text-[11px] font-bold text-muted uppercase tracking-widest">
+                            <th class="px-6 py-5 whitespace-nowrap">Status</th>
+                            <th class="px-6 py-5 whitespace-nowrap">Schedule</th>
+                            <th class="px-6 py-5 whitespace-nowrap">Session & Council</th>
+                            <th class="px-6 py-5 whitespace-nowrap">Resources</th>
+                            <th class="px-6 py-5 text-right whitespace-nowrap min-w-[200px]">Actions</th>
+                        </tr>
+                    </thead>
 
-                <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
-                    @for (session of sessions(); track session.id) {
-                    <tr
-                        class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-brand-purple/5 transition-all group">
+                    <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
+                        @for (session of filteredSessions(); track session.id) {
+                        <tr
+                            class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-accent/5 transition-all group">
 
-                        <!-- Status Mobile -->
-                        <td
-                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Status</span>
-                            <span [class]="getStatusClass(session.status)"
-                                class="px-3 py-1 rounded-full text-[10px] font-bold">
-                                {{ session.status }}
-                            </span>
-                        </td>
+                            <!-- Status Mobile -->
+                            <td
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Status</span>
+                                <span [class]="getStatusClass(session.status)"
+                                    class="px-3 py-1 rounded-full text-[10px] font-bold">
+                                    {{ session.status }}
+                                </span>
+                            </td>
 
-                        <!-- Schedule -->
-                        <td
-                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Schedule</span>
-                            <div class="text-sm">
-                                <div class="font-bold text-main">{{ session.date | date:'mediumDate' }}</div>
-                                <div class="text-xs text-muted">{{ session.time }}</div>
-                            </div>
-                        </td>
-
-                        <!-- Topic & Council -->
-                        <td
-                            class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                            <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-1">Session</span>
-                            <div>
-                                <div class="font-bold text-brand-purple text-base">{{ session.title }}</div>
-                                <div class="text-xs text-muted flex items-center gap-1.5 mt-1">
-                                    <i class="fas fa-users text-[10px]"></i> {{ session.council }}
+                            <!-- Schedule -->
+                            <td
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Schedule</span>
+                                <div class="text-sm">
+                                    <div class="font-bold text-main">{{ formatDate(session.date) }}</div>
+                                    <div class="text-xs text-muted">{{ session.time || 'TBD' }}</div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
 
-                        <!-- Resources -->
-                        <td
-                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Resources</span>
-                            @if (session.material) {
-                            <a [href]="session.material" target="_blank"
-                                class="flex items-center gap-2 text-brand-purple font-bold text-sm hover:underline">
-                                <div class="w-8 h-8 rounded-lg bg-brand-purple/10 flex items-center justify-center">
+                            <!-- Topic & Council -->
+                            <td
+                                class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                                <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-1">Session</span>
+                                <div>
+                                    <div class="font-bold text-accent text-base">{{ session.title }}</div>
+                                    <div class="text-xs text-muted flex items-center gap-1.5 mt-1">
+                                        <i class="fas fa-users text-[10px]"></i> {{ session.council }}
+                                    </div>
+                                    @if (session.description) {
+                                    <div class="text-xs text-muted mt-1 line-clamp-2">{{ session.description }}</div>
+                                    }
+                                </div>
+                            </td>
+
+                            <!-- Resources -->
+                            <td
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
+                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Resources</span>
+                                @if (session.material) {
+                                <a [href]="session.material" target="_blank"
+                                    class="flex items-center gap-2 text-accent font-bold text-sm hover:underline">
+                                    <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+                                        <i class="fas fa-file-arrow-down"></i>
+                                    </div>
+                                    Material
+                                </a>
+                                } @else {
+                                <span class="text-xs text-muted italic">Not available yet</span>
+                                }
+                            </td>
+
+                            <!-- Action -->
+                            <td class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6">
+                                <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-2">Actions</span>
+
+                                <div
+                                    class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 md:justify-end">
+                                    <!-- View Details Button -->
+                                    <button (click)="openSessionDetails(session)"
+                                        class="flex items-center justify-center gap-2 text-xs font-bold text-accent bg-accent/10 px-4 py-2.5 rounded-xl hover:bg-accent/20 transition-all border border-accent/20">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Details</span>
+                                    </button>
+
+                                    <!-- Registration Button -->
+                                    @if (isSessionCompleted(session.status)) {
+                                    <button disabled
+                                        class="flex items-center justify-center gap-2 text-xs font-bold text-muted bg-gray-100 dark:bg-gray-800 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-not-allowed">
+                                        <i class="fas fa-ban"></i>
+                                        <span>Ended</span>
+                                    </button>
+                                    } @else if (session.isJoined) {
+                                    <button disabled
+                                        class="flex items-center justify-center gap-2 text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 px-4 py-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 cursor-not-allowed">
+                                        <i class="fas fa-check-double"></i>
+                                        <span>Registered</span>
+                                    </button>
+                                    } @else {
+                                    <button (click)="joinSession(session.id)" [disabled]="loading()"
+                                        class="flex items-center justify-center gap-2 bg-accent text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-accent/20 hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                                        @if (loading()) {
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        } @else {
+                                        <i class="fas fa-user-plus"></i>
+                                        }
+                                        <span>Join Session</span>
+                                    </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                                        <i class="fas fa-calendar-alt text-2xl text-gray-400"></i>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-main mb-2">No sessions found</h3>
+                                    <p class="text-muted">
+                                        @if (text()) {
+                                        Try adjusting your search terms.
+                                        } @else {
+                                        No sessions are available at the moment.
+                                        }
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1) {
+        <div class="mt-8 flex items-center justify-center gap-2">
+            <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() === 1"
+                class="px-4 py-2 border border-main bg-surface rounded-xl hover:bg-accent/5 transition-all text-main shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <span class="px-4 py-2 text-sm text-muted">
+                Page {{ currentPage() }} of {{ totalPages() }}
+            </span>
+
+            <button (click)="changePage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
+                class="px-4 py-2 border border-main bg-surface rounded-xl hover:bg-accent/5 transition-all text-main shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        }
+        }
+    </div>
+</div>
+
+<!-- Session Details Modal -->
+@if (isDetailsModalOpen()) {
+<div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
+            (click)="closeSessionDetails()"></div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div
+            class="inline-block align-bottom bg-surface border border-main rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full animate-in">
+
+            <!-- Modal Header -->
+            <div class="bg-surface px-6 pt-6 pb-4 border-b border-main">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-main" id="modal-title">
+                            Session Details
+                        </h3>
+                        @if (selectedSession()) {
+                        <p class="text-sm text-muted mt-1">{{ selectedSession()?.title }}</p>
+                        }
+                    </div>
+                    <button type="button" (click)="closeSessionDetails()"
+                        class="text-muted hover:text-main transition-colors p-2 hover:bg-app rounded-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="bg-surface px-6 py-6 max-h-96 overflow-y-auto">
+                @if (loadingDetails()) {
+                <!-- Loading State -->
+                <div class="flex justify-center items-center py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+                </div>
+                } @else if (sessionDetails()) {
+                <!-- Session Details Content -->
+                <div class="space-y-6">
+                    <!-- Basic Information -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-main mb-1">Status</label>
+                            <span [class]="getStatusClass(selectedSession()?.status || '')"
+                                class="inline-block px-3 py-1 rounded-full text-xs font-bold">
+                                {{ selectedSession()?.status }}
+                            </span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-main mb-1">Council</label>
+                            <p class="text-sm text-muted">{{ sessionDetails().council?.name ||
+                                selectedSession()?.council }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-main mb-1">Date & Time</label>
+                            <p class="text-sm text-muted">
+                                {{ formatDate(sessionDetails().date) }}
+                                @if (selectedSession()?.time) {
+                                <span class="ml-2">{{ selectedSession()?.time }}</span>
+                                }
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-main mb-1">Registration Status</label>
+                            @if (selectedSession()?.isJoined) {
+                            <span class="text-emerald-600 text-sm font-semibold">
+                                <i class="fas fa-check-circle mr-1"></i> Registered
+                            </span>
+                            } @else {
+                            <span class="text-orange-600 text-sm font-semibold">
+                                <i class="fas fa-clock mr-1"></i> Not Registered
+                            </span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    @if (sessionDetails().description) {
+                    <div>
+                        <label class="block text-sm font-semibold text-main mb-2">Description</label>
+                        <div class="bg-app rounded-xl p-4 border border-main">
+                            <p class="text-sm text-muted leading-relaxed">{{ sessionDetails().description }}</p>
+                        </div>
+                    </div>
+                    }
+
+                    <!-- Materials -->
+                    @if (sessionDetails().material) {
+                    <div>
+                        <label class="block text-sm font-semibold text-main mb-2">Session Materials</label>
+                        <div class="bg-app rounded-xl p-4 border border-main">
+                            <a [href]="sessionDetails().material" target="_blank"
+                                class="flex items-center gap-3 text-accent hover:text-accent/80 transition-colors">
+                                <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
                                     <i class="fas fa-file-arrow-down"></i>
                                 </div>
-                                Material
+                                <div>
+                                    <p class="font-semibold text-sm">Download Materials</p>
+                                    <p class="text-xs text-muted">Click to access session resources</p>
+                                </div>
+                                <i class="fas fa-external-link-alt ml-auto"></i>
                             </a>
-                            } @else {
-                            <span class="text-xs text-muted italic">Not available yet</span>
-                            }
-                        </td>
-
-                        <!-- Action -->
-                        <td
-                            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 text-right">
-                            <span class="md:hidden text-[10px] font-bold text-muted uppercase">Registration</span>
-
-                            @if (session.status === 'COMPLETED') {
-                            <button disabled
-                                class="text-xs font-bold text-muted bg-app px-4 py-2 rounded-xl border border-main">Ended</button>
-                            } @else if (session.isJoined) {
-                            <button
-                                class="text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl flex items-center gap-2 ml-auto">
-                                <i class="fas fa-check-double"></i> Registered
-                            </button>
-                            } @else {
-                            <button (click)="joinSession(session.id)"
-                                class="bg-brand-purple text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-brand-purple/20 hover:scale-105 transition-all active:scale-95">
-                                Join Session
-                            </button>
-                            }
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
+                    } @else {
+                    <div>
+                        <label class="block text-sm font-semibold text-main mb-2">Session Materials</label>
+                        <div class="bg-app rounded-xl p-4 border border-main">
+                            <p class="text-sm text-muted italic">Materials will be available closer to the session date.
+                            </p>
+                        </div>
+                    </div>
                     }
-                </tbody>
-            </table>
+
+                    <!-- Additional Information -->
+                    @if (sessionDetails().created_at) {
+                    <div class="pt-4 border-t border-main">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-muted">
+                            <div>
+                                <span class="font-semibold">Created:</span>
+                                {{ formatDate(sessionDetails().created_at) }}
+                            </div>
+                            @if (sessionDetails().updated_at) {
+                            <div>
+                                <span class="font-semibold">Last Updated:</span>
+                                {{ formatDate(sessionDetails().updated_at) }}
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <!-- Error State -->
+                <div class="text-center py-8">
+                    <div
+                        class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-2xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-main mb-2">Unable to Load Details</h3>
+                    <p class="text-muted">There was an error loading the session details. Please try again.</p>
+                </div>
+                }
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-app px-6 py-4 border-t border-main flex flex-col sm:flex-row gap-3 sm:justify-between">
+                <button type="button" (click)="closeSessionDetails()"
+                    class="px-6 py-3 border border-main bg-surface text-main rounded-xl hover:bg-accent/5 transition-all font-semibold">
+                    Close
+                </button>
+
+                @if (selectedSession() && !selectedSession()?.isJoined && !isSessionCompleted(selectedSession()?.status
+                || '')) {
+                <button (click)="joinSession(selectedSession()?.id || ''); closeSessionDetails()" [disabled]="loading()"
+                    class="px-6 py-3 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    @if (loading()) {
+                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                    }
+                    <i class="fas fa-user-plus mr-2"></i>
+                    Join Session
+                </button>
+                }
+            </div>
         </div>
     </div>
 </div>
+}

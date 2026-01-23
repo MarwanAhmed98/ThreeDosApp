@@ -11,37 +11,38 @@ export class TeamsService {
   constructor(private httpClient: HttpClient) { }
 
   GetTeamsList(): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/teams`)
+    return this.httpClient.get(`${environments.baseUrl}/teams`);
   }
 
   AddTeam(team: { team_number: string, council_id: string }): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/teams`, team)
+    return this.httpClient.post(`${environments.baseUrl}/teams`, team);
   }
 
   AddTeamMembers(members: any[]): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/team-members`, { members })
+    return this.httpClient.post(`${environments.baseUrl}/team-members`, { members });
   }
 
   AddTeamMember(member: any): Observable<any> {
-    return this.httpClient.post(`${environments.baseUrl}/team-members`, member)
+    return this.httpClient.post(`${environments.baseUrl}/team-members`, member);
   }
+
   GetTeamMember(memberId: string): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/team-members/${memberId}`)
+    return this.httpClient.get(`${environments.baseUrl}/team-members/${memberId}`);
   }
 
   UpdateTeamMember(memberId: string, member: any): Observable<any> {
-    return this.httpClient.put(`${environments.baseUrl}/team-members/${memberId}`, member)
+    return this.httpClient.put(`${environments.baseUrl}/team-members/${memberId}`, member);
   }
 
   DeleteTeamMember(memberId: string): Observable<any> {
-    return this.httpClient.delete(`${environments.baseUrl}/team-members/${memberId}`)
+    return this.httpClient.delete(`${environments.baseUrl}/team-members/${memberId}`);
   }
 
   GetTeamMembers(teamId: string): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/teams/${teamId}`)
+    return this.httpClient.get(`${environments.baseUrl}/teams/${teamId}`);
   }
 
   DeleteTeam(teamId: string): Observable<any> {
-    return this.httpClient.delete(`${environments.baseUrl}/teams/${teamId}`)
+    return this.httpClient.delete(`${environments.baseUrl}/teams/${teamId}`);
   }
 }

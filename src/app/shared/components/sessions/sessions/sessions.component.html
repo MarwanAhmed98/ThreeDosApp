@@ -1,9 +1,7 @@
 <div class="animate-in fade-in duration-500">
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
-    <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8"
-    >
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
       <div>
         <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
           Sessions Management
@@ -12,10 +10,8 @@
           View and manage scheduled council sessions and attendance.
         </p>
       </div>
-      <button
-        (click)="openAddModal()"
-        class="w-full sm:w-auto bg-brand-purple hover:bg-opacity-90 text-white px-5 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-purple/20 active:scale-95"
-      >
+      <button (click)="openAddModal()"
+        class="w-full sm:w-auto bg-brand-purple hover:bg-opacity-90 text-white px-5 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-purple/20 active:scale-95">
         <i class="fas fa-plus"></i>
         Create Session
       </button>
@@ -27,208 +23,144 @@
         <span class="absolute inset-y-0 left-4 flex items-center text-muted">
           <i class="fas fa-search"></i>
         </span>
-        <input
-          [(ngModel)]="text"
-          type="text"
-          placeholder="Search Sessions..."
-          class="w-full pl-12 pr-4 py-3 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted"
-        />
+        <input [(ngModel)]="text" type="text" placeholder="Search Sessions..."
+          class="w-full pl-12 pr-4 py-3 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted" />
       </div>
 
       <div class="flex gap-2">
         <button
-          class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all text-sm font-bold shadow-sm"
-        >
+          class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all text-sm font-bold shadow-sm">
           <i class="fas fa-filter text-muted"></i>
           <span>Filter</span>
         </button>
 
         <button
-          class="p-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all shadow-sm"
-        >
+          class="p-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all shadow-sm">
           <i class="fas fa-calendar-alt text-muted"></i>
         </button>
       </div>
     </div>
 
     <!-- Responsive Table -->
-    <div
-      class="bg-transparent md:bg-surface md:rounded-3xl md:border md:border-main overflow-hidden md:shadow-sm"
-    >
+    <div class="bg-transparent md:bg-surface md:rounded-3xl md:border md:border-main overflow-hidden md:shadow-sm">
       <table class="w-full text-left border-collapse block md:table">
         <!-- Desktop Header (Hidden on Mobile) -->
         <thead class="hidden md:table-header-group">
           <tr class="border-b border-main bg-app">
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
               Date & Time
             </th>
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
               Session Name
             </th>
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
               Council
             </th>
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
               Description
             </th>
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
               Material
             </th>
-            <th
-              class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider text-right"
-            >
+            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider text-right">
               Actions
             </th>
           </tr>
         </thead>
 
         <!-- Content -->
-        <tbody
-          class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main"
-        >
+        <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
           @for (
-            session of SessionList | searchsessions: text;
-            track session.id
+          session of SessionList | searchsessions: text;
+          track session.id
           ) {
-            <tr
-              class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-brand-purple/5 transition-colors group shadow-sm md:shadow-none"
-            >
-              <!-- Date -->
-              <td
-                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider"
-                  >Date</span
-                >
-                <div class="text-sm font-bold text-main">
-                  {{ session.date | date: "mediumDate" }}
-                </div>
-              </td>
+          <tr
+            class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-brand-purple/5 transition-colors group shadow-sm md:shadow-none">
+            <!-- Date -->
+            <td
+              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Date</span>
+              <div class="text-sm font-bold text-main">
+                {{ session.date | date: "mediumDate" }}
+              </div>
+            </td>
 
-              <!-- Name -->
-              <td
-                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider"
-                  >Session</span
-                >
-                <div class="text-sm font-bold text-brand-purple">
-                  {{ session.title }}
-                </div>
-              </td>
+            <!-- Name -->
+            <td
+              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Session</span>
+              <div class="text-sm font-bold text-brand-purple">
+                {{ session.title }}
+              </div>
+            </td>
 
-              <!-- Council -->
-              <td
-                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider"
-                  >Council</span
-                >
-                <div
-                  class="text-sm text-main font-medium bg-app md:bg-transparent px-2 py-1 md:p-0 rounded-lg border border-main md:border-none"
-                >
-                  {{ session.council }}
-                </div>
-              </td>
+            <!-- Council -->
+            <td
+              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Council</span>
+              <div
+                class="text-sm text-main font-medium bg-app md:bg-transparent px-2 py-1 md:p-0 rounded-lg border border-main md:border-none">
+                {{ session.council }}
+              </div>
+            </td>
 
-              <!-- Description -->
-              <td
-                class="flex flex-col md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider mb-1"
-                  >Description</span
-                >
-                <div class="text-sm text-muted leading-relaxed">
-                  {{ session.description }}
-                </div>
-              </td>
+            <!-- Description -->
+            <td class="flex flex-col md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider mb-1">Description</span>
+              <div class="text-sm text-muted leading-relaxed">
+                {{ session.description }}
+              </div>
+            </td>
 
-              <!-- Material -->
-              <td
-                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider"
-                  >Material</span
-                >
-                <div class="text-sm">
-                  <a
-                    [href]="session.material"
-                    target="_blank"
-                    class="text-brand-purple hover:underline font-bold flex items-center gap-1"
-                  >
-                    <i class="fas fa-file-pdf"></i>
-                    Material
-                  </a>
-                </div>
-              </td>
+            <!-- Material -->
+            <td
+              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Material</span>
+              <div class="text-sm">
+                <a [href]="session.material" target="_blank"
+                  class="text-brand-purple hover:underline font-bold flex items-center gap-1">
+                  <i class="fas fa-file-pdf"></i>
+                  Material
+                </a>
+              </div>
+            </td>
 
-              <!-- Actions -->
-              <td
-                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 text-right"
-              >
-                <span
-                  class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider"
-                  >Actions</span
-                >
-                <div class="flex justify-end gap-2">
-                  <button
-                    (click)="openEditModal(session)"
-                    class="p-2 text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all"
-                  >
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button
-                    (click)="deleteSession(session.id)"
-                    class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
-                  >
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+            <!-- Actions -->
+            <td class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 text-right">
+              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Actions</span>
+              <div class="flex justify-end gap-2">
+                <button (click)="openEditModal(session)"
+                  class="p-2 text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button (click)="deleteSession(session.id)"
+                  class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
 
       <!-- Footer / Pagination -->
       <div
-        class="mt-4 md:mt-0 px-6 py-4 bg-app flex flex-col sm:flex-row items-center justify-between gap-4 border border-main md:border-none md:border-t rounded-2xl md:rounded-none shadow-sm md:shadow-none"
-      >
-        <div
-          class="text-sm text-muted text-center sm:text-left order-2 sm:order-1"
-        >
+        class="mt-4 md:mt-0 px-6 py-4 bg-app flex flex-col sm:flex-row items-center justify-between gap-4 border border-main md:border-none md:border-t rounded-2xl md:rounded-none shadow-sm md:shadow-none">
+        <div class="text-sm text-muted text-center sm:text-left order-2 sm:order-1">
           Showing
           <span class="font-bold text-main">{{ currentPage }}</span> of
           <span class="font-bold text-main">{{ lastpage }}</span>
           results
         </div>
         <div class="flex gap-2 w-full sm:w-auto order-1 sm:order-2">
-          <button
-            (click)="changePage(currentPage - 1)"
-            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-muted border border-main rounded-xl bg-surface hover:text-main transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
+          <button (click)="changePage(currentPage - 1)"
+            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-muted border border-main rounded-xl bg-surface hover:text-main transition-all flex items-center justify-center gap-2 shadow-sm">
             <i class="fas fa-chevron-left"></i>
             Prev
           </button>
-          <button
-            (click)="changePage(currentPage + 1)"
-            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-main border border-main rounded-xl bg-surface hover:border-brand-purple transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
+          <button (click)="changePage(currentPage + 1)"
+            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-main border border-main rounded-xl bg-surface hover:border-brand-purple transition-all flex items-center justify-center gap-2 shadow-sm">
             Next
             <i class="fas fa-chevron-right"></i>
           </button>
@@ -240,143 +172,74 @@
 
 <!-- Modal -->
 @if (isModalOpen) {
-  <div
-    class="fixed inset-0 z-[60] overflow-y-auto"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
-  >
+<div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
+      (click)="closeModal()"></div>
+
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
     <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-        aria-hidden="true"
-        (click)="closeModal()"
-      ></div>
-
-      <span
-        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        aria-hidden="true"
-        >&#8203;</span
-      >
-
-      <div
-        class="inline-block align-bottom bg-surface border border-main rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in"
-      >
-        <form (ngSubmit)="onSubmit()">
-          <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                <h3 class="text-xl font-bold text-main" id="modal-title">
-                  {{ isEditMode ? "Edit Session" : "Create New Session" }}
-                </h3>
-                <div class="mt-4 space-y-4">
-                  <div>
-                    <label
-                      for="title"
-                      class="block text-sm font-bold text-muted mb-1"
-                      >Title</label
-                    >
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      [(ngModel)]="sessionData.title"
-                      required
-                      class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
-                      placeholder="e.g. Session 1: Introduction"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      for="date"
-                      class="block text-sm font-bold text-muted mb-1"
-                      >Date</label
-                    >
-                    <input
-                      type="datetime-local"
-                      name="date"
-                      id="date"
-                      [(ngModel)]="sessionData.date"
-                      required
-                      class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      for="council"
-                      class="block text-sm font-bold text-muted mb-1"
-                      >Council</label
-                    >
-                    <select
-                      name="council"
-                      id="council"
-                      [(ngModel)]="sessionData.council_id"
-                      required
-                      class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all"
-                    >
-                      <option value="" disabled>Select Council</option>
-                      @for (council of CouncilList; track council.id) {
-                        <option [value]="council.id">
-                          {{ council.name }}
-                        </option>
-                      }
-                    </select>
-                  </div>
-                  <div>
-                    <label
-                      for="description"
-                      class="block text-sm font-bold text-muted mb-1"
-                      >Description</label
-                    >
-                    <textarea
-                      name="description"
-                      id="description"
-                      [(ngModel)]="sessionData.description"
-                      required
-                      class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted h-32 transition-all"
-                      placeholder="Enter session details..."
-                    ></textarea>
-                  </div>
-                  <div>
-                    <label
-                      for="material"
-                      class="block text-sm font-bold text-muted mb-1"
-                      >Material URL</label
-                    >
-                    <input
-                      type="url"
-                      name="material"
-                      id="material"
-                      [(ngModel)]="sessionData.material"
-                      class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
-                      placeholder="https://example.com/material.pdf"
-                    />
-                  </div>
+      class="inline-block align-bottom bg-surface border border-main rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in">
+      <form (ngSubmit)="onSubmit()">
+        <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <h3 class="text-xl font-bold text-main" id="modal-title">
+                {{ isEditMode ? "Edit Session" : "Create New Session" }}
+              </h3>
+              <div class="mt-4 space-y-4">
+                <div>
+                  <label for="title" class="block text-sm font-bold text-muted mb-1">Title</label>
+                  <input type="text" name="title" id="title" [(ngModel)]="sessionData.title" required
+                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
+                    placeholder="e.g. Session 1: Introduction" />
+                </div>
+                <div>
+                  <label for="date" class="block text-sm font-bold text-muted mb-1">Date</label>
+                  <input type="datetime-local" name="date" id="date" [(ngModel)]="sessionData.date" required
+                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all [color-scheme:dark]" />
+                </div>
+                <div>
+                  <label for="council" class="block text-sm font-bold text-muted mb-1">Council</label>
+                  <select name="council" id="council" [(ngModel)]="sessionData.council_id" required
+                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all">
+                    <option value="" disabled>Select Council</option>
+                    @for (council of CouncilList; track council.id) {
+                    <option [value]="council.id">
+                      {{ council.name }}
+                    </option>
+                    }
+                  </select>
+                </div>
+                <div>
+                  <label for="description" class="block text-sm font-bold text-muted mb-1">Description</label>
+                  <textarea name="description" id="description" [(ngModel)]="sessionData.description" required
+                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted h-32 transition-all"
+                    placeholder="Enter session details..."></textarea>
+                </div>
+                <div>
+                  <label for="material" class="block text-sm font-bold text-muted mb-1">Material URL</label>
+                  <input type="url" name="material" id="material" [(ngModel)]="sessionData.material"
+                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
+                    placeholder="https://threedos.web.app" />
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="bg-app px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main"
-          >
-            <button
-              type="submit"
-              class="w-full inline-flex justify-center rounded-xl bg-brand-purple px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-purple/20 transition-all hover:bg-opacity-90 active:scale-95"
-            >
-              {{ isEditMode ? "Update" : "Create" }}
-            </button>
-            <button
-              type="button"
-              (click)="closeModal()"
-              class="mt-3 w-full inline-flex justify-center rounded-xl border border-main bg-surface px-6 py-2.5 text-sm font-bold text-main hover:bg-brand-purple/5 transition-all w-full sm:mt-0 sm:w-auto"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="bg-app px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main">
+          <button type="submit"
+            class="w-full inline-flex justify-center rounded-xl bg-brand-purple px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-purple/20 transition-all hover:bg-opacity-90 active:scale-95">
+            {{ isEditMode ? "Update" : "Create" }}
+          </button>
+          <button type="button" (click)="closeModal()"
+            class="mt-3 w-full inline-flex justify-center rounded-xl border border-main bg-surface px-6 py-2.5 text-sm font-bold text-main hover:bg-brand-purple/5 transition-all w-full sm:mt-0 sm:w-auto">
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 }

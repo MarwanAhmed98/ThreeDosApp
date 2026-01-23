@@ -4,18 +4,26 @@ import { FormsModule } from '@angular/forms';
 import { Itask, ITaskRequest, ITaskUpdate } from '../../../interfaces/itask';
 import { TasksService } from '../../../../core/services/tasks/tasks.service';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ISession } from '../../../interfaces/isession';
 import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
 import { RouterModule } from '@angular/router';
+import { DelegateTasksComponent } from '../../delegate-tasks/delegate-tasks.component';
+
 @Component({
   selector: 'app-tasksmangement',
-  imports: [CommonModule, FormsModule, SearchtasksPipe, RouterModule],
+  imports: [CommonModule, FormsModule, SearchtasksPipe, RouterModule, DelegateTasksComponent],
   templateUrl: './tasksmangement.component.html',
   styleUrl: './tasksmangement.component.scss'
 })
 export class TasksmangementComponent implements OnInit {
   private readonly tasksService = inject(TasksService);
   private readonly sessionsService = inject(SessionsService);
+  private readonly authService = inject(AuthService);
+
+  // Check if user is delegate
+  isDelegate = computed(() => this.authService.isDelegate());
+
   text: string = "";
   currentPage: number = 1;
   lastpage: number = 1;
@@ -39,9 +47,13 @@ export class TasksmangementComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.GetTasksList();
-    this.GetSessions();
+    // Only load admin functionality if user is not a delegate
+    if (!this.isDelegate()) {
+      this.GetTasksList();
+      this.GetSessions();
+    }
   }
+
   GetSessions(): void {
     // Fetching all sessions for dropdown, might need pagination logic if too many
     this.sessionsService.GetSessionlList(1).subscribe({
@@ -50,6 +62,7 @@ export class TasksmangementComponent implements OnInit {
       }
     });
   }
+
   getStatusClass(status: string) {
     switch (status) {
       case 'In Progress': return 'bg-blue-50 text-blue-600';
@@ -58,6 +71,7 @@ export class TasksmangementComponent implements OnInit {
       default: return 'bg-gray-50';
     }
   }
+
   GetTasksList(): void {
     this.tasksService.GetTaskList(this.currentPage).subscribe({
       next: (res) => {
@@ -68,6 +82,7 @@ export class TasksmangementComponent implements OnInit {
       }
     })
   }
+
   changePage(page: number) {
     if (page >= 1 && page <= this.lastpage) {
       this.currentPage = page;
