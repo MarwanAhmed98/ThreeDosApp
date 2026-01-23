@@ -17,8 +17,8 @@ export class TaskSubmissionsService {
     }
     return this.httpClient.get(url)
   }
-  GetSubmissionByTaskId(taskId: string): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/task-submissions/task/${taskId}`)
+  GetSubmissionByTaskId(taskId: string, pageIndex: number, pageSize: number = 10): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/task-submissions?pageIndex=${pageIndex}&pageSize=${pageSize}&task_id=${taskId}`)
   }
   GetSubmissionById(submissionId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/task-submissions/${submissionId}`)
