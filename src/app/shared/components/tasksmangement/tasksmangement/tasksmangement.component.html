@@ -140,7 +140,7 @@
                   {{ task.council_name }}
                 </div>
               </td>
-                <td class="px-6 py-5">
+              <td class="px-6 py-5">
                 <div
                   class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm font-medium text-gray-700 border border-gray-50"
                 >
@@ -353,7 +353,7 @@
                       rows="3"
                     ></textarea>
                   </div>
-                  <!-- <div>
+                  <div>
                     <label
                       for="status"
                       class="block text-sm font-semibold text-gray-700"
@@ -370,7 +370,23 @@
                       <option value="In Progress">In Progress</option>
                       <option value="Completed">Completed</option>
                     </select>
-                  </div> -->
+                  </div>
+                  <!-- Date Input -->
+                  <div>
+                    <label
+                      for="date"
+                      class="block text-sm font-semibold text-gray-700"
+                      >Date</label
+                    >
+                    <input
+                      type="date"
+                      name="date"
+                      id="date"
+                      [(ngModel)]="taskData.due_date"
+                      required
+                      class="mt-1 block w-full border-gray-200 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4 bg-gray-50 border"
+                    />
+                  </div>
                   <div>
                     <label
                       for="council_session"
@@ -380,7 +396,7 @@
                     <select
                       name="council_session"
                       id="council_session"
-                      [(ngModel)]="taskData.council_session"
+                      [(ngModel)]="taskData.council_session_id"
                       required
                       class="mt-1 block w-full border-gray-200 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4 bg-gray-50 border"
                     >

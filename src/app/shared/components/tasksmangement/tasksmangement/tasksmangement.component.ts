@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Itask } from '../../../interfaces/itask';
+import { Itask, ITaskRequest, ITaskUpdate } from '../../../interfaces/itask';
 import { TasksService } from '../../../../core/services/tasks/tasks.service';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
 import { ISession } from '../../../interfaces/isession';
@@ -33,7 +33,8 @@ export class TasksmangementComponent implements OnInit {
     title: '',
     description: '',
     status: 'Pending',
-    council_session: ''
+    due_date: '',
+    council_session_id: ''
   };
 
   ngOnInit(): void {
@@ -76,18 +77,19 @@ export class TasksmangementComponent implements OnInit {
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedTaskId = null;
-    this.taskData = { title: '', description: '', status: 'Pending', council_session: '' };
+    this.taskData = { title: '', description: '', due_date: '', status: 'Pending', council_session_id: '' };
     this.isModalOpen = true;
   }
 
-  openEditModal(task: Itask): void {
+  openEditModal(task: ITaskUpdate): void {
     this.isEditMode = true;
     this.selectedTaskId = task.id;
     this.taskData = {
       title: task.title,
       description: task.description,
       status: task.status,
-      council_session: task.council_session
+      due_date: task.due_date,
+      council_session_id: task.council_session_id
     };
     this.isModalOpen = true;
   }

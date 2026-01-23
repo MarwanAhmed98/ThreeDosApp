@@ -6,3 +6,16 @@ export interface Icouncils {
   created_at: string
   updated_at: string
 }
+
+export interface IcouncilsRequest {
+  name: string
+  description: string
+  head_id?: string
+}
+
+export interface IcouncilsUpdate {
+  id: string
+  name: string
+  description: string
+  head_id?: string
+}

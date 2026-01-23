@@ -34,7 +34,7 @@ export class SessionsComponent {
     date: '',
     description: '',
     material: '',
-    council: ''
+    council_id: ''
   };
   ngOnInit(): void {
     this.GetSessionsList();
@@ -68,7 +68,7 @@ export class SessionsComponent {
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedSessionId = null;
-    this.sessionData = { title: '', date: '', description: '', material: '', council: '' };
+    this.sessionData = { title: '', date: '', description: '', material: '', council_id: '' };
     this.isModalOpen = true;
   }
 
@@ -80,7 +80,7 @@ export class SessionsComponent {
       date: session.date,
       description: session.description,
       material: session.material,
-      council: session.council
+      council_id: session.council
     };
     this.isModalOpen = true;
   }

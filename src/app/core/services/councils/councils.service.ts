@@ -19,7 +19,7 @@ export class CouncilsService {
     return this.httpClient.post(`${environments.baseUrl}/councils`, council)
   }
   UpdateCouncil(council: any): Observable<any> {
-    return this.httpClient.put(`${environments.baseUrl}/councils`, council)
+    return this.httpClient.put(`${environments.baseUrl}/councils/${council.id}`, council)
   }
   DeleteCouncil(councilId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/councils/${councilId}`)

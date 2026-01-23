@@ -409,13 +409,13 @@
                     <select
                       name="council"
                       id="council"
-                      [(ngModel)]="sessionData.council"
+                      [(ngModel)]="sessionData.council_id"
                       required
                       class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
                     >
                       <option value="" disabled>Select Council</option>
                       @for (council of CouncilList; track council.id) {
-                        <option [value]="council.name">
+                        <option [value]="council.id">
                           {{ council.name }}
                         </option>
                       }
