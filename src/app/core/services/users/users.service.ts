@@ -12,6 +12,9 @@ export class UsersService {
   GetUserList(pageIndex: number): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users?pageIndex=${pageIndex}&pageSize=10`)
   }
+  GetUsersByCouncil(): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/users?filter=council`)
+  }
   GetUserListByRole(role:string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users?role=${role}`)
   }

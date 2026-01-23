@@ -69,7 +69,7 @@ export class TeamsComponent implements OnInit {
   }
 
   GetUsers(): void {
-    this.usersService.GetUserList(1).subscribe({
+    this.usersService.GetUsersByCouncil().subscribe({
       next: (res) => {
         this.UserList = res.data.data;
       }
