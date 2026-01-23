@@ -22,6 +22,9 @@ export class TeamsService {
     return this.httpClient.post(`${environments.baseUrl}/team-members`, { members })
   }
 
+  AddTeamMember(member: any): Observable<any> {
+    return this.httpClient.post(`${environments.baseUrl}/team-members`, member)
+  }
   GetTeamMember(memberId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/team-members/${memberId}`)
   }
@@ -35,7 +38,7 @@ export class TeamsService {
   }
 
   GetTeamMembers(teamId: string): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/teams/${teamId}/members`)
+    return this.httpClient.get(`${environments.baseUrl}/teams/${teamId}`)
   }
 
   DeleteTeam(teamId: string): Observable<any> {

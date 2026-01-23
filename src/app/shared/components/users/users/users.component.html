@@ -1,52 +1,28 @@
-<div class="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+<div class="animate-in fade-in duration-500">
   <!-- Header Section -->
   <div
     class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-6"
   >
     <div>
-      <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
         User Management
       </h1>
-      <p class="text-slate-500 mt-2 text-sm md:text-base">
+      <p class="text-muted mt-2 text-sm md:text-base">
         Manage access, roles, and permissions for your team members.
       </p>
     </div>
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
       <button
-        class="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-semibold hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+        class="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border border-main rounded-xl font-semibold hover:bg-brand-purple/5 text-main transition-all shadow-sm active:scale-95"
       >
-        <svg
-          class="w-4 h-4 text-slate-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-          />
-        </svg>
+        <i class="fas fa-file-import text-muted"></i>
         <span class="text-sm">Bulk Import</span>
       </button>
       <button
         (click)="openAddModal()"
-        class="flex items-center justify-center gap-2 px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 active:scale-95"
+        class="flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-purple text-white rounded-xl font-semibold hover:bg-opacity-90 transition-all shadow-md shadow-brand-purple/20 active:scale-95"
       >
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
+        <i class="fas fa-plus"></i>
         <span class="text-sm">Create User</span>
       </button>
     </div>
@@ -59,135 +35,113 @@
     <!-- Search -->
     <div class="relative flex-1">
       <span
-        class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"
+        class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-muted"
       >
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+        <i class="fas fa-search"></i>
       </span>
       <input
         [(ngModel)]="text"
         type="text"
         placeholder="Search by Name, Email..."
-        class="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm text-sm"
+        class="w-full pl-11 pr-4 py-2.5 bg-surface border border-main rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-sm text-main placeholder-muted"
       />
     </div>
 
     <!-- Filter Selects -->
     <div class="grid grid-cols-2 md:flex md:items-center gap-2 lg:gap-3">
       <select
-        class="bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 shadow-sm cursor-pointer"
+        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm cursor-pointer text-main"
       >
         <option>Role: All</option>
       </select>
       <select
-        class="bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 shadow-sm cursor-pointer"
+        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm cursor-pointer text-main"
       >
         <option>Council: All</option>
       </select>
       <select
-        class="bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 shadow-sm font-medium cursor-pointer"
+        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm font-medium cursor-pointer text-main"
       >
         <option>Status: Active</option>
       </select>
       <button
-        class="p-2.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 shadow-sm transition-colors hidden md:block"
+        class="p-2.5 bg-surface border border-main rounded-xl hover:bg-brand-purple/5 shadow-sm transition-colors hidden md:block text-muted"
       >
-        <svg
-          class="w-5 h-5 text-slate-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-          />
-        </svg>
+        <i class="fas fa-filter"></i>
       </button>
     </div>
   </div>
 
   <!-- Table Content -->
   <div
-    class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm"
+    class="bg-surface border border-main rounded-2xl overflow-hidden shadow-sm"
   >
     <!-- Desktop View: Table -->
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-left border-collapse">
-        <thead class="bg-slate-50/50 border-b border-slate-200">
+        <thead class="bg-app border-b border-main">
           <tr>
             <th class="px-6 py-4 w-10">
               <input
                 type="checkbox"
-                class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                class="rounded border-main bg-app text-brand-purple focus:ring-brand-purple"
               />
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider"
             >
               User
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center"
             >
               Role
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center"
             >
               Council
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center"
             >
               Last Active
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center"
             >
               Status
             </th>
             <th
-              class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center"
+              class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center"
             >
               Actions
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y border-main">
           @for (User of UsersList | searchuser: text; track User.id) {
-            <tr class="hover:bg-slate-50/50 transition-colors">
+            <tr class="hover:bg-brand-purple/5 transition-colors">
               <td class="px-6 py-4">
                 <input
                   type="checkbox"
-                  class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                  class="rounded border-main bg-app text-brand-purple focus:ring-brand-purple"
                 />
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-3">
                   <img
-                    src="/images/User Icon.png"
-                    class="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm shrink-0"
+                    src="https://ui-avatars.com/api/?name={{
+                      User.name
+                    }}&background=7F4797&color=ffffff"
+                    class="w-10 h-10 rounded-full object-cover ring-2 ring-surface shadow-sm shrink-0"
                     alt="avatar"
                   />
                   <div>
-                    <div class="font-semibold text-slate-900 leading-none">
+                    <div class="font-semibold text-main leading-none">
                       {{ User.name }}
                     </div>
-                    <div class="text-xs text-slate-500 mt-1">
+                    <div class="text-xs text-muted mt-1">
                       {{ User.email }}
                     </div>
                   </div>
@@ -197,15 +151,17 @@
                 <span
                   class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider"
                   [ngClass]="{
-                    'bg-purple-100 text-purple-700': User.role === 'Head',
-                    'bg-slate-100 text-slate-700': User.role == 'Instructor',
+                    'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300':
+                      User.role === 'Head',
+                    'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300':
+                      User.role == 'Instructor',
                   }"
                   >{{ User.role }}</span
                 >
               </td>
               <td class="px-6 py-4 text-center">
                 <span
-                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border border-slate-200 bg-white shadow-sm"
+                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border border-main bg-surface shadow-sm text-main"
                 >
                   <span
                     class="w-1.5 h-1.5 rounded-full"
@@ -221,18 +177,19 @@
                   {{ User.council }}
                 </span>
               </td>
-              <td
-                class="px-6 py-4 text-center text-sm text-slate-500 font-medium"
-              >
+              <td class="px-6 py-4 text-center text-sm text-muted font-medium">
                 {{ User.last_active }}
               </td>
               <td class="px-6 py-4 text-center">
                 <span
                   class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider"
                   [ngClass]="{
-                    'bg-emerald-100 text-emerald-700': User.status === 'Active',
-                    'bg-slate-100 text-slate-600': User.status === 'Offline',
-                    'bg-amber-100 text-amber-700': User.status === 'Invited',
+                    'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300':
+                      User.status === 'Active',
+                    'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400':
+                      User.status === 'Offline',
+                    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300':
+                      User.status === 'Invited',
                   }"
                 >
                   {{ User.status }}
@@ -242,40 +199,22 @@
                 <div class="flex justify-center gap-2">
                   <button
                     (click)="openEditModal(User)"
-                    class="p-1.5 text-indigo-600 hover:text-indigo-900 transition-colors"
+                    class="p-1.5 text-brand-purple hover:bg-brand-purple/10 rounded-lg transition-colors"
                   >
-                    <svg
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteUser(User.id)"
-                    class="p-1.5 text-red-600 hover:text-red-900 transition-colors"
-                  >
-                    <svg
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  @if (
+                    User.role !== "VicePresident" &&
+                    User.role !== "Head" &&
+                    User.role !== "Instructor"
+                  ) {
+                    <button
+                      (click)="deleteUser(User.id)"
+                      class="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  }
                 </div>
               </td>
             </tr>
@@ -285,54 +224,61 @@
     </div>
 
     <!-- Mobile View: Card List -->
-    <div class="md:hidden divide-y divide-slate-100">
+    <div class="md:hidden divide-y border-main">
       @for (User of UsersList | searchuser: text; track User.id) {
         <div class="p-4 flex flex-col gap-4">
           <div class="flex items-start justify-between">
             <div class="flex items-center gap-3">
               <img
-                src="/images/User Icon.png"
-                class="w-12 h-12 rounded-full ring-2 ring-slate-100"
+                src="https://ui-avatars.com/api/?name={{
+                  User.name
+                }}&background=7F4797&color=ffffff"
+                class="w-12 h-12 rounded-full ring-2 ring-main"
                 alt="avatar"
               />
               <div>
-                <div class="font-bold text-slate-900">{{ User.name }}</div>
-                <div class="text-xs text-slate-500">{{ User.email }}</div>
+                <div class="font-bold text-main">{{ User.name }}</div>
+                <div class="text-xs text-muted">{{ User.email }}</div>
               </div>
             </div>
-            <button class="text-slate-400 p-1">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                />
-              </svg>
-            </button>
+            @if (
+              User.role !== "VicePresident" &&
+              User.role !== "Head" &&
+              User.role !== "Instructor"
+            ) {
+              <button
+                (click)="deleteUser(User.id)"
+                class="text-red-400 p-1 hover:text-red-600"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            }
           </div>
 
           <div class="grid grid-cols-2 gap-3">
-            <div class="bg-slate-50 p-2 rounded-lg">
+            <div class="bg-app p-2 rounded-lg border border-main">
               <span
-                class="block text-[10px] uppercase font-bold text-slate-400 mb-1"
+                class="block text-[10px] uppercase font-bold text-muted mb-1"
                 >Role</span
               >
-              <span class="text-xs font-semibold text-slate-700">{{
+              <span class="text-xs font-semibold text-main">{{
                 User.role
               }}</span>
             </div>
-            <div class="bg-slate-50 p-2 rounded-lg">
+            <div class="bg-app p-2 rounded-lg border border-main">
               <span
-                class="block text-[10px] uppercase font-bold text-slate-400 mb-1"
+                class="block text-[10px] uppercase font-bold text-muted mb-1"
                 >Status</span
               >
-              <span class="text-xs font-semibold text-emerald-600">{{
+              <span class="text-xs font-semibold text-emerald-500">{{
                 User.status
               }}</span>
             </div>
           </div>
 
-          <div class="flex items-center justify-between text-xs text-slate-500">
+          <div class="flex items-center justify-between text-xs text-muted">
             <span class="flex items-center gap-1">
-              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span class="w-2 h-2 rounded-full bg-brand-purple"></span>
               {{ User.council }}
             </span>
             <span class="italic">Last seen: {{ User.last_active }}</span>
@@ -343,49 +289,25 @@
 
     <!-- Pagination -->
     <div
-      class="px-6 py-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4"
+      class="px-6 py-4 bg-app border-t border-main flex flex-col sm:flex-row items-center justify-between gap-4"
     >
       <button
         (click)="changePage(currentPage - 1)"
-        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-50 shadow-sm transition-all active:bg-slate-100"
+        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-main bg-surface rounded-xl text-sm font-semibold hover:bg-brand-purple/5 text-main shadow-sm transition-all active:bg-brand-purple/10"
       >
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <i class="fas fa-chevron-left"></i>
         Previous
       </button>
-      <div class="text-sm text-slate-600 font-medium order-first sm:order-none">
-        Page <span class="text-slate-900 font-bold">{{ currentPage }}</span> of
+      <div class="text-sm text-muted font-medium order-first sm:order-none">
+        Page <span class="text-main font-bold">{{ currentPage }}</span> of
         {{ totalPages }}
       </div>
       <button
         (click)="changePage(currentPage + 1)"
-        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-50 shadow-sm transition-all active:bg-slate-100"
+        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-main bg-surface rounded-xl text-sm font-semibold hover:bg-brand-purple/5 text-main shadow-sm transition-all active:bg-brand-purple/10"
       >
         Next
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <i class="fas fa-chevron-right"></i>
       </button>
     </div>
   </div>
@@ -394,7 +316,7 @@
 <!-- Modal -->
 @if (isModalOpen) {
   <div
-    class="fixed inset-0 z-50 overflow-y-auto"
+    class="fixed inset-0 z-[60] overflow-y-auto"
     aria-labelledby="modal-title"
     role="dialog"
     aria-modal="true"
@@ -403,7 +325,7 @@
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
       <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         aria-hidden="true"
         (click)="closeModal()"
       ></div>
@@ -415,20 +337,20 @@
       >
 
       <div
-        class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        class="inline-block align-bottom bg-surface border border-main rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in"
       >
         <form (ngSubmit)="onSubmit()">
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                <h3 class="text-xl font-bold text-slate-900" id="modal-title">
+                <h3 class="text-xl font-bold text-main" id="modal-title">
                   {{ isEditMode ? "Edit User" : "Create New User" }}
                 </h3>
                 <div class="mt-4 space-y-4">
                   <div>
                     <label
                       for="name"
-                      class="block text-sm font-semibold text-slate-700"
+                      class="block text-sm font-semibold text-muted"
                       >Name</label
                     >
                     <input
@@ -437,13 +359,13 @@
                       id="name"
                       [(ngModel)]="userData.name"
                       required
-                      class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
+                      class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
                     />
                   </div>
                   <div>
                     <label
                       for="email"
-                      class="block text-sm font-semibold text-slate-700"
+                      class="block text-sm font-semibold text-muted"
                       >Email</label
                     >
                     <input
@@ -452,13 +374,13 @@
                       id="email"
                       [(ngModel)]="userData.email"
                       required
-                      class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
+                      class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
                     />
                   </div>
                   <div>
                     <label
                       for="role"
-                      class="block text-sm font-semibold text-slate-700"
+                      class="block text-sm font-semibold text-muted"
                       >Role</label
                     >
                     <select
@@ -466,7 +388,7 @@
                       id="role"
                       [(ngModel)]="userData.role"
                       required
-                      class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
+                      class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main"
                     >
                       <option value="Admin">Admin</option>
                       <option value="Head">Head</option>
@@ -477,7 +399,7 @@
                   <div>
                     <label
                       for="council"
-                      class="block text-sm font-semibold text-slate-700"
+                      class="block text-sm font-semibold text-muted"
                       >Council</label
                     >
                     <select
@@ -485,7 +407,7 @@
                       id="council"
                       [(ngModel)]="userData.council"
                       required
-                      class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
+                      class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main"
                     >
                       <option value="" disabled>Select Council</option>
                       @for (council of CouncilList; track council.id) {
@@ -498,7 +420,7 @@
                   <div>
                     <label
                       for="status"
-                      class="block text-sm font-semibold text-slate-700"
+                      class="block text-sm font-semibold text-muted"
                       >Status</label
                     >
                     <select
@@ -506,7 +428,7 @@
                       id="status"
                       [(ngModel)]="userData.status"
                       required
-                      class="mt-1 block w-full border-slate-200 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 bg-slate-50 border"
+                      class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main"
                     >
                       <option value="Active">Active</option>
                       <option value="Offline">Offline</option>
@@ -517,18 +439,18 @@
             </div>
           </div>
           <div
-            class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2"
+            class="bg-app px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main"
           >
             <button
               type="submit"
-              class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-md px-6 py-2.5 bg-indigo-600 text-sm font-bold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto"
+              class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-md px-6 py-2.5 bg-brand-purple text-sm font-bold text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:ml-3 sm:w-auto transition-all"
             >
               {{ isEditMode ? "Update" : "Create" }}
             </button>
             <button
               type="button"
               (click)="closeModal()"
-              class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-200 shadow-sm px-6 py-2.5 bg-white text-sm font-bold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto"
+              class="mt-3 w-full inline-flex justify-center rounded-xl border border-main shadow-sm px-6 py-2.5 bg-surface text-sm font-bold text-main hover:bg-brand-purple/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:mt-0 sm:ml-3 sm:w-auto transition-all"
             >
               Cancel
             </button>

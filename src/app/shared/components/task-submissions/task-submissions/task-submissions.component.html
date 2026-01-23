@@ -1,38 +1,22 @@
-<div class="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+<div class="animate-in fade-in duration-500">
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div
       class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
     >
       <div>
-        <h1
-          class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900"
-        >
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
           Task Submissions
         </h1>
-        <p class="text-slate-500 mt-1 text-sm md:text-base">
+        <p class="text-muted mt-1 text-sm md:text-base">
           Monitor and manage student task submissions and approvals.
         </p>
       </div>
       <button
         (click)="openAddModal()"
-        class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-100 active:scale-95"
+        class="w-full sm:w-auto bg-brand-purple text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-purple/20 active:scale-95"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="17 8 12 3 7 8" />
-          <line x1="12" y1="3" x2="12" y2="15" />
-        </svg>
+        <i class="fas fa-upload"></i>
         New Submission
       </button>
     </div>
@@ -40,35 +24,20 @@
     <!-- Search & Filters -->
     <div class="flex flex-col lg:flex-row gap-4 mb-8">
       <div class="relative flex-1">
-        <span
-          class="absolute inset-y-0 left-4 flex items-center text-slate-400"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
+        <span class="absolute inset-y-0 left-4 flex items-center text-muted">
+          <i class="fas fa-search"></i>
         </span>
         <input
           [(ngModel)]="text"
           type="text"
           placeholder="Search by Task or Student Name..."
-          class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm"
+          class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted"
         />
       </div>
 
       <div class="flex gap-2">
         <select
-          class="px-4 py-3.5 bg-white border border-slate-200 rounded-2xl text-slate-600 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-sm font-medium"
+          class="px-4 py-3.5 bg-surface border border-main rounded-2xl text-main focus:outline-none focus:ring-4 focus:ring-brand-purple/10 transition-all shadow-sm font-medium"
         >
           <option value="">All Statuses</option>
           <option value="pending">Pending</option>
@@ -80,80 +49,79 @@
 
     <!-- Submissions Table -->
     <div
-      class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden"
+      class="bg-surface rounded-3xl border border-main shadow-sm overflow-hidden"
     >
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-slate-50/50 border-b border-slate-100">
+            <tr class="bg-app border-b border-main">
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
               >
                 Student
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
               >
                 Task Title
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
               >
                 Submitted At
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
               >
                 Grade
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
               >
                 Status
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
               >
                 File
               </th>
               <th
-                class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-wider text-right"
+                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-right"
               >
                 Actions
               </th>
-
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-50">
+          <tbody class="divide-y border-main">
             @for (
               submission of SubmissionList | searchsubmissions: text;
               track submission.id
             ) {
-              <tr class="hover:bg-slate-50/50 transition-colors group">
+              <tr class="hover:bg-brand-purple/5 transition-colors group">
                 <td class="px-6 py-5">
                   <div class="flex items-center gap-3">
                     <div
-                      class="w-9 h-9 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-sm"
+                      class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple font-bold text-sm"
                     >
                       {{ submission.user?.charAt(0) || "U" }}
                     </div>
-                    <div class="font-bold text-slate-900">
+                    <div class="font-bold text-main">
                       {{ submission.user || "Anonymous" }}
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-5">
-                  <div class="text-sm font-bold text-slate-700">
+                  <div class="text-sm font-bold text-main">
                     {{ submission.task || "Untitled" }}
                   </div>
                 </td>
                 <td class="px-6 py-5 text-center">
-                  <div class="text-sm text-slate-500">
+                  <div class="text-sm text-muted">
                     {{ submission.created_at | date: "mediumDate" }}
                   </div>
                 </td>
                 <td class="px-6 py-5 text-center">
-                  <div class="text-sm text-slate-500">
+                  <div class="text-sm text-muted font-bold">
                     {{ submission.grade }}
                   </div>
                 </td>
@@ -171,24 +139,9 @@
                   <a
                     [href]="submission.file_path"
                     target="_blank"
-                    class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-bold text-sm"
+                    class="inline-flex items-center gap-2 text-brand-purple hover:underline font-bold text-sm"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
-                      />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
+                    <i class="fas fa-file-download"></i>
                     Link
                   </a>
                 </td>
@@ -196,48 +149,15 @@
                   <div class="flex justify-end gap-1">
                     <button
                       (click)="openEditModal(submission)"
-                      class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                      class="p-2 text-muted hover:text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                        />
-                        <path
-                          d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                        />
-                      </svg>
+                      <i class="fas fa-edit"></i>
                     </button>
                     <button
                       (click)="deleteSubmission(submission.id)"
-                      class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                      class="p-2 text-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                        <line x1="10" y1="11" x2="10" y2="17" />
-                        <line x1="14" y1="11" x2="14" y2="17" />
-                      </svg>
+                      <i class="fas fa-trash"></i>
                     </button>
                   </div>
                 </td>
@@ -249,25 +169,25 @@
 
       <!-- Pagination -->
       <div
-        class="px-6 py-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4"
+        class="px-6 py-5 bg-app border-t border-main flex flex-col sm:flex-row items-center justify-between gap-4"
       >
-        <div class="text-sm text-slate-500 font-medium">
+        <div class="text-sm text-muted font-medium">
           Showing
-          <span class="text-slate-900 font-bold">{{ currentPage }}</span> of
-          <span class="text-slate-900 font-bold">{{ lastPage }}</span> pages
+          <span class="text-main font-bold">{{ currentPage }}</span> of
+          <span class="text-main font-bold">{{ lastPage }}</span> pages
         </div>
         <div class="flex items-center gap-2">
           <button
             (click)="changePage(currentPage - 1)"
             [disabled]="currentPage === 1"
-            class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
+            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
           >
             Previous
           </button>
           <button
             (click)="changePage(currentPage + 1)"
             [disabled]="currentPage === lastPage"
-            class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
+            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
           >
             Next
           </button>
@@ -281,50 +201,34 @@
 @if (isModalOpen) {
   <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
     <div
-      class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+      class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm"
       (click)="closeModal()"
     ></div>
 
     <div
-      class="relative w-full max-w-lg bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+      class="relative w-full max-w-lg bg-surface border border-main rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
     >
       <div class="p-8">
         <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-slate-900">
+          <h3 class="text-xl font-bold text-main">
             {{ isEditMode ? "Update Submission" : "Submit Task File" }}
           </h3>
-          <button
-            (click)="closeModal()"
-            class="text-slate-400 hover:text-slate-600 p-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+          <button (click)="closeModal()" class="text-muted hover:text-main p-2">
+            <i class="fas fa-times"></i>
           </button>
         </div>
 
         <form (ngSubmit)="onSubmit()" class="space-y-5">
           @if (!isEditMode) {
             <div>
-              <label class="block text-sm font-bold text-slate-700 mb-2"
+              <label class="block text-sm font-bold text-muted mb-2"
                 >Select Task</label
               >
               <select
                 [(ngModel)]="submissionData.task_id"
                 name="task_id"
                 required
-                class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-medium"
+                class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main"
               >
                 <option value="" disabled>Choose a task...</option>
                 @for (task of TasksList; track task.id) {
@@ -334,7 +238,7 @@
             </div>
 
             <div>
-              <label class="block text-sm font-bold text-slate-700 mb-2"
+              <label class="block text-sm font-bold text-muted mb-2"
                 >Upload File</label
               >
               <div class="relative group">
@@ -345,35 +249,21 @@
                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                 />
                 <div
-                  class="border-2 border-dashed border-slate-200 group-hover:border-indigo-400 group-hover:bg-indigo-50/50 rounded-2xl p-8 transition-all text-center"
+                  class="border-2 border-dashed border-main group-hover:border-brand-purple group-hover:bg-brand-purple/5 rounded-2xl p-8 transition-all text-center"
                 >
                   <div
-                    class="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3 text-indigo-600"
+                    class="w-12 h-12 bg-brand-purple/10 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-purple"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
-                    </svg>
+                    <i class="fas fa-cloud-upload-alt text-xl"></i>
                   </div>
-                  <div class="text-sm font-bold text-slate-900 mb-1">
+                  <div class="text-sm font-bold text-main mb-1">
                     {{
                       selectedFile
                         ? selectedFile.name
                         : "Click or drag file to upload"
                     }}
                   </div>
-                  <div class="text-xs text-slate-500 font-medium">
+                  <div class="text-xs text-muted font-medium">
                     Maximum size: 10MB
                   </div>
                 </div>
@@ -381,43 +271,30 @@
             </div>
           } @else {
             <div>
-                <!-- Rating To 19 -->
-                 <div class="mb-4">
-                    <label class="block text-sm font-bold text-slate-700 mb-2"
-                      >Grade</label
-                    >
-                    <select
-                      [(ngModel)]="submissionData.grade"
-                      name="grade"
-                      required
-                      class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-medium"
-                    >
-                      <option value="">Select Grade</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
-                  </div>
-              <!-- <label class="block text-sm font-bold text-slate-700 mb-2"
-                >Update Status</label
-              >
-              <select
-                [(ngModel)]="submissionData.status"
-                name="status"
-                required
-                class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-medium"
-              >
-                <option value="pending">Pending</option>
-                <option value="approved">Approved</option>
-                <option value="rejected">Rejected</option>
-              </select> -->
+              <!-- Rating To 19 -->
+              <div class="mb-4">
+                <label class="block text-sm font-bold text-muted mb-2"
+                  >Grade</label
+                >
+                <select
+                  [(ngModel)]="submissionData.grade"
+                  name="grade"
+                  required
+                  class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main"
+                >
+                  <option value="">Select Grade</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
             </div>
           }
 
@@ -425,13 +302,13 @@
             <button
               type="button"
               (click)="closeModal()"
-              class="flex-1 px-6 py-4 rounded-2xl font-bold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-all"
+              class="flex-1 px-6 py-4 rounded-2xl font-bold text-muted bg-app border border-main hover:bg-brand-purple/5 transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all active:scale-95"
+              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-brand-purple hover:opacity-90 shadow-lg shadow-brand-purple/20 transition-all active:scale-95"
             >
               {{ isEditMode ? "Apply Changes" : "Confirm Submission" }}
             </button>

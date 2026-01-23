@@ -110,7 +110,7 @@ export class TeamsComponent implements OnInit {
   GetTeamMembers(teamId: string): void {
     this.teamsService.GetTeamMembers(teamId).subscribe({
       next: (res) => {
-        this.SelectedTeamMembers = res.data;
+        this.SelectedTeamMembers = res.data.team_members;
       }
     });
   }
@@ -132,7 +132,7 @@ export class TeamsComponent implements OnInit {
 
   onAddMember(): void {
     // API expects an array of members
-    this.teamsService.AddTeamMembers([this.memberData]).subscribe({
+    this.teamsService.AddTeamMember(this.memberData).subscribe({
       next: () => {
         if (this.selectedTeamId) {
           this.GetTeamMembers(this.selectedTeamId);

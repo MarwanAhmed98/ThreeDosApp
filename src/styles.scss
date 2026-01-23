@@ -1,5 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-color: #F9FAFB;
+  --surface-color: #FFFFFF;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border-color: #F1F5F9;
+  --accent-color: #7C69EF;
+}
+
+.dark {
+  --bg-color: #19191C;
+  --surface-color: #252429;
+  --text-primary: #F4F4F4;
+  --text-secondary: #9F9F9F;
+  --border-color: #565657;
+  --accent-color: #7F4797;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom classes using variables */
+.bg-app { background-color: var(--bg-color); }
+.bg-surface { background-color: var(--surface-color); }
+.text-main { color: var(--text-primary); }
+.text-muted { color: var(--text-secondary); }
+.border-main { border-color: var(--border-color); }
+.text-accent { color: var(--accent-color); }
+.bg-accent { background-color: var(--accent-color); }
