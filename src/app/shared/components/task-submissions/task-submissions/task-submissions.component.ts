@@ -55,7 +55,7 @@ export class TaskSubmissionsComponent implements OnInit {
   }
 
   GetSubmissions(): void {
-    this.submissionsService.GetSubmissionList(this.currentPage, 10, this.taskId).subscribe({
+    this.submissionsService.GetSubmissionByTaskId(this.taskId, this.currentPage, 10).subscribe({
       next: (res) => {
         this.SubmissionList = res.data.data;
         this.lastPage = res.data.pagination.last_page;
