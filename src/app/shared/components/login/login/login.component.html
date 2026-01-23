@@ -1,131 +1,200 @@
-<div class="min-h-screen bg-[#F3F4F6] flex items-center justify-center p-6 font-sans">
-    <div class="w-full max-w-[480px] bg-white rounded-[40px] shadow-2xl p-10 md:p-14">
-
-        <!-- Header/Logo -->
-        <div class="flex flex-col items-center mb-8">
-            <div class="flex items-center gap-2 mb-6">
-                <div class="w-8 h-8 bg-[#7C69EF] rounded-sm flex items-center justify-center transform -rotate-12">
-                    <div class="w-4 h-4 bg-white/30 rounded-full"></div>
-                </div>
-                <h1 class="text-2xl font-bold text-[#111827] tracking-tight">ThreeDOS</h1>
-            </div>
-            <h2 class="text-2xl font-bold text-[#111827] mb-2">Log in to your account</h2>
-            <p class="text-[#6B7280] text-sm">Welcome back! Please enter your details.</p>
-        </div>
-
-        <form [formGroup]="LoginForm" class="space-y-5" (ngSubmit)="LoginFormSubmit()">
-            <!-- Email Field -->
-            <div>
-                <label class="block text-sm font-medium text-[#111827] mb-1.5">Email</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <input formControlName="email" type="email" placeholder="Enter your email"
-                        class="block w-full pl-11 pr-4 py-3 bg-white border border-[#E5E7EB] rounded-2xl text-sm focus:ring-2 focus:ring-[#7C69EF] focus:border-transparent outline-none transition-all placeholder:text-[#9CA3AF]">
-                </div>
-            </div>
-            @if (LoginForm.get('email')?.errors && (LoginForm.get('email')?.touched || LoginForm.get('email')?.dirty))
-            {
-            <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    @if (LoginForm.get('email')?.getError('email')) {
-                    <span class="font-medium">Danger alert!</span> Please enter a valid email address.
-                    }
-                    @else if (LoginForm.get('email')?.getError('required')) {
-                    <span class="font-medium">Danger alert!</span> Email is required.
-                    }
-
-                </div>
-            </div>
-            }
-            <!-- Password Field -->
-            <div>
-                <label class="block text-sm font-medium text-[#111827] mb-1.5">Password</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <input formControlName="password" type="password" placeholder="Enter your password"
-                        class="block w-full pl-11 pr-11 py-3 bg-white border border-[#E5E7EB] rounded-2xl text-sm focus:ring-2 focus:ring-[#7C69EF] focus:border-transparent outline-none transition-all">
-                </div>
-            </div>
-            @if (LoginForm.get('password')?.errors && (LoginForm.get('password')?.touched ||
-            LoginForm.get('password')?.dirty))
-            {
-            <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    @if (LoginForm.get('password')?.getError('pattern')) {
-                    <span class="font-medium">Danger alert!</span> Input must be between 3 and 6 characters and can
-                    contain letters and numbers only.
-                    }
-                    @else if (LoginForm.get('password')?.getError('required')) {
-                    <span class="font-medium">Danger alert!</span> Password is required.
-                    }
-
-                </div>
-            </div>
-            }
-            <!-- Options -->
-            <div class="flex items-center justify-between text-sm">
-                <label class="flex items-center cursor-pointer">
-                    <input type="checkbox"
-                        class="w-4 h-4 text-[#7C69EF] border-[#E5E7EB] rounded-full focus:ring-[#7C69EF]">
-                    <span class="ml-2 text-[#4B5563]">Remember me</span>
-                </label>
-                <a href="#" class="text-[#7C69EF] font-semibold hover:underline">Forgot password?</a>
-            </div>
-
-            <!-- Sign In Button -->
-            <button [disabled]="LoginForm.invalid" type="submit"
-                class="w-full bg-[#7C69EF] text-white py-3.5 rounded-2xl font-semibold shadow-lg shadow-[#7C69EF]/30 hover:bg-[#6b58dc] transform transition-all active:scale-[0.98]">
-                Sign in
-                @if (isLoading) {
-                <span><i class="fas fa-spin fa-spinner"></i></span>
-                }
-            </button>
-
-            <!-- Divider -->
-            <div class="relative flex items-center py-4">
-                <div class="flex-grow border-t border-[#E5E7EB]"></div>
-                <span class="flex-shrink mx-4 text-[10px] font-bold text-[#9CA3AF] tracking-widest uppercase">Or sign in
-                    with</span>
-                <div class="flex-grow border-t border-[#E5E7EB]"></div>
-            </div>
-
-            <!-- Social Logins -->
-            <div class="grid grid-cols-2 gap-4">
-                <button type="button"
-                    class="flex items-center justify-center gap-2 py-3 px-4 border border-[#E5E7EB] rounded-2xl hover:bg-gray-50 transition-colors">
-                    <img src="/images/Google Icon.jfif" class="w-5 h-5" alt="Google">
-                    <span class="text-sm font-medium text-[#111827]">Google</span>
-                </button>
-                <button type="button"
-                    class="flex items-center justify-center gap-2 py-3 px-4 border border-[#E5E7EB] rounded-2xl hover:bg-gray-50 transition-colors">
-                    <img src="/images/Microsoft icon.png" class="w-5 h-5" alt="Microsoft">
-                    <span class="text-sm font-medium text-[#111827]">Microsoft</span>
-                </button>
-            </div>
-        </form>
+<div
+  class="min-h-screen bg-app flex items-center justify-center p-6 font-sans transition-colors duration-300"
+>
+  <app-login-navbar></app-login-navbar>
+  <div
+    class="w-full max-w-[480px] bg-surface rounded-[40px] shadow-2xl p-10 md:p-14 transition-colors duration-300"
+  >
+    <!-- Header -->
+    <div class="flex flex-col items-center mb-8">
+      <h2 class="text-2xl font-bold text-main mb-2">Log in to your account</h2>
+      <p class="text-muted text-sm">Welcome back! Please enter your details.</p>
     </div>
+
+    <form
+      [formGroup]="LoginForm"
+      class="space-y-5"
+      (ngSubmit)="LoginFormSubmit()"
+    >
+      <!-- Email Field -->
+      <div>
+        <label class="block text-sm font-medium text-main mb-1.5">Email</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-muted"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+          </div>
+          <input
+            formControlName="email"
+            type="email"
+            placeholder="Enter your email"
+            class="block w-full pl-11 pr-4 py-3 bg-app border border-main rounded-2xl text-sm text-main focus:ring-2 focus:ring-[#7C69EF] focus:border-transparent outline-none transition-all placeholder:text-muted"
+          />
+        </div>
+      </div>
+      @if (
+        LoginForm.get("email")?.errors &&
+        (LoginForm.get("email")?.touched || LoginForm.get("email")?.dirty)
+      ) {
+        <div
+          class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          <svg
+            class="shrink-0 inline w-4 h-4 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+            />
+          </svg>
+          <span class="sr-only">Info</span>
+          <div>
+            @if (LoginForm.get("email")?.getError("email")) {
+              <span class="font-medium">Danger alert!</span> Please enter a
+              valid email address.
+            } @else if (LoginForm.get("email")?.getError("required")) {
+              <span class="font-medium">Danger alert!</span> Email is required.
+            }
+          </div>
+        </div>
+      }
+      <!-- Password Field -->
+      <div>
+        <label class="block text-sm font-medium text-main mb-1.5"
+          >Password</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-muted"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Enter your password"
+            class="block w-full pl-11 pr-11 py-3 bg-app border border-main rounded-2xl text-sm text-main focus:ring-2 focus:ring-[#7C69EF] focus:border-transparent outline-none transition-all placeholder:text-muted"
+          />
+        </div>
+      </div>
+      @if (
+        LoginForm.get("password")?.errors &&
+        (LoginForm.get("password")?.touched || LoginForm.get("password")?.dirty)
+      ) {
+        <div
+          class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          <svg
+            class="shrink-0 inline w-4 h-4 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+            />
+          </svg>
+          <span class="sr-only">Info</span>
+          <div>
+            @if (LoginForm.get("password")?.getError("pattern")) {
+              <span class="font-medium">Danger alert!</span> Input must be
+              between 3 and 6 characters and can contain letters and numbers
+              only.
+            } @else if (LoginForm.get("password")?.getError("required")) {
+              <span class="font-medium">Danger alert!</span> Password is
+              required.
+            }
+          </div>
+        </div>
+      }
+      <!-- Options -->
+      <div class="flex items-center justify-between text-sm">
+        <label class="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            class="w-4 h-4 text-[#7C69EF] border-main rounded-full focus:ring-[#7C69EF]"
+          />
+          <span class="ml-2 text-muted">Remember me</span>
+        </label>
+        <a href="#" class="text-accent font-semibold hover:underline"
+          >Forgot password?</a
+        >
+      </div>
+
+      <!-- Sign In Button -->
+      <button
+        [disabled]="LoginForm.invalid"
+        type="submit"
+        class="w-full bg-[#7C69EF] text-white py-3.5 rounded-2xl font-semibold shadow-lg shadow-[#7C69EF]/30 hover:bg-[#6b58dc] transform transition-all active:scale-[0.98]"
+      >
+        Sign in
+        @if (isLoading) {
+          <span><i class="fas fa-spin fa-spinner"></i></span>
+        }
+      </button>
+
+      <!-- Divider -->
+      <div class="relative flex items-center py-4">
+        <div class="flex-grow border-t border-main"></div>
+        <span
+          class="flex-shrink mx-4 text-[10px] font-bold text-muted tracking-widest uppercase"
+          >Or sign in with</span
+        >
+        <div class="flex-grow border-t border-main"></div>
+      </div>
+
+      <!-- Social Logins -->
+      <div class="grid grid-cols-2 gap-4">
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 py-3 px-4 border border-main rounded-2xl hover:bg-gray-50 dark:hover:bg-opacity-10 transition-colors"
+        >
+          <img src="/images/Google Icon.jfif" class="w-5 h-5" alt="Google" />
+          <span class="text-sm font-medium text-main">Google</span>
+        </button>
+        <button
+          type="button"
+          class="flex items-center justify-center gap-2 py-3 px-4 border border-main rounded-2xl hover:bg-gray-50 dark:hover:bg-opacity-10 transition-colors"
+        >
+          <img
+            src="/images/Microsoft icon.png"
+            class="w-5 h-5"
+            alt="Microsoft"
+          />
+          <span class="text-sm font-medium text-main">Microsoft</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

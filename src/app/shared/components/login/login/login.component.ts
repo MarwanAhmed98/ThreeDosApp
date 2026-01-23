@@ -3,9 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { LoginNavbarComponent } from '../../login-navbar/login-navbar.component';
+
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, LoginNavbarComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
