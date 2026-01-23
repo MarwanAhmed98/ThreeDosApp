@@ -6,9 +6,10 @@ import { TasksService } from '../../../../core/services/tasks/tasks.service';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
 import { ISession } from '../../../interfaces/isession';
 import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-tasksmangement',
-  imports: [CommonModule, FormsModule, SearchtasksPipe],
+  imports: [CommonModule, FormsModule, SearchtasksPipe, RouterModule],
   templateUrl: './tasksmangement.component.html',
   styleUrl: './tasksmangement.component.scss'
 })

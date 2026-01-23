@@ -24,6 +24,7 @@ export class AdminComponent {
     { label: 'Dashboard', route: '/Admin/Dashboard', iconClass: 'fas fa-th-large' },
     { label: 'User Management', route: '/Admin/Users', iconClass: 'fas fa-users' },
     { label: 'Tasks', route: '/Admin/Tasks', iconClass: 'fas fa-tasks' },
+    { label: 'Submissions', route: '/Admin/Submissions', iconClass: 'fas fa-file-upload' },
     { label: 'Sessions', route: '/Admin/Sessions', iconClass: 'fas fa-calendar-alt' },
     { label: 'Councils', route: '/Admin/Councils', iconClass: 'fas fa-building' }
   ];

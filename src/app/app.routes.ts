@@ -6,6 +6,7 @@ import { UsersComponent } from './shared/components/users/users/users.component'
 import { TasksmangementComponent } from './shared/components/tasksmangement/tasksmangement/tasksmangement.component';
 import { SessionsComponent } from './shared/components/sessions/sessions/sessions.component';
 import { CouncilsComponent } from './shared/components/councils/councils/councils.component';
+import { TaskSubmissionsComponent } from './shared/components/task-submissions/task-submissions/task-submissions.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -22,6 +23,8 @@ export const routes: Routes = [
             { path: 'Users', component: UsersComponent , title: 'User Management'},
             { path: 'Tasks', component: TasksmangementComponent , title: 'Task Management'},
             { path: 'Sessions', component: SessionsComponent , title: 'Sessions Management'},
+            { path: 'Submissions', component: TaskSubmissionsComponent , title: 'Task Submissions'},
+            { path: 'Submissions/:taskId', component: TaskSubmissionsComponent , title: 'Task Submissions'},
             { path: '', redirectTo: 'Dashboard', pathMatch: 'full' }
         ]
     }

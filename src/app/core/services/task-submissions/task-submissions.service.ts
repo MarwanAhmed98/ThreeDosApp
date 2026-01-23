@@ -10,10 +10,16 @@ export class TaskSubmissionsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  GetSubmissionList(pageIndex: number, pageSize: number = 10): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/task-submissions?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+  GetSubmissionList(pageIndex: number, pageSize: number = 10, taskId: string = ''): Observable<any> {
+    let url = `${environments.baseUrl}/task-submissions?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+    if (taskId) {
+      url += `&taskId=${taskId}`;
+    }
+    return this.httpClient.get(url)
   }
-
+  GetSubmissionByTaskId(taskId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/task-submissions/task/${taskId}`)
+  }
   GetSubmissionById(submissionId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/task-submissions/${submissionId}`)
   }
