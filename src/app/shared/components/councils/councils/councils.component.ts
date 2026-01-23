@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CouncilsService } from '../../../../core/services/councils/councils.service';
 import { Icouncils } from '../../../interfaces/icouncils';
 import { SearchcouncilsPipe } from '../../../pipes/searchcouncils/searchcouncils.pipe';
+import { Iusers } from '../../../interfaces/iusers';
+import { UsersService } from '../../../../core/services/users/users.service';
 @Component({
   selector: 'app-councils',
   imports: [CommonModule, FormsModule, DatePipe , SearchcouncilsPipe],
@@ -12,9 +14,10 @@ import { SearchcouncilsPipe } from '../../../pipes/searchcouncils/searchcouncils
 })
 export class CouncilsComponent {
   private readonly councilsService = inject(CouncilsService);
+  private readonly usersService = inject(UsersService);
   CouncilList: Icouncils[] = [];
   text: string = "";
-
+  headList: Iusers[] = [];
   // Modal State
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
@@ -29,6 +32,13 @@ export class CouncilsComponent {
   ngOnInit(): void {
     this.GetCouncils();
   }
+  // GetHeads(): void {
+  //   this.usersService.GetUserListByRole("Head").subscribe({
+  //     next: (res) => {
+  //       this.headList = res.data;
+  //     }
+  //   });
+  // }
   GetCouncils(): void {
     this.councilsService.GetCouncilList().subscribe({
       next: (res) => {
@@ -38,6 +48,7 @@ export class CouncilsComponent {
   }
 
   openAddModal(): void {
+    // this.GetHeads();
     this.isEditMode = false;
     this.selectedCouncilId = null;
     this.councilData = { name: '', description: '', head_id: '' };
@@ -45,6 +56,7 @@ export class CouncilsComponent {
   }
 
   openEditModal(council: Icouncils): void {
+    // this.GetHeads();
     this.isEditMode = true;
     this.selectedCouncilId = council.id;
     this.councilData = {
