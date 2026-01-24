@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { filter } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-delegates',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule , RouterLink],
   templateUrl: './delegates.component.html',
   styleUrl: './delegates.component.scss'
 })

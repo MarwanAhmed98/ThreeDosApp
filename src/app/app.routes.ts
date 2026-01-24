@@ -17,6 +17,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { delegateGuard } from './core/guards/delegate.guard';
 import { loginGuard } from './core/guards/login.guard';
 import { DelegateTasksComponent } from './shared/components/delegate-tasks/delegate-tasks.component';
+import { StudentsprofileComponent } from './shared/components/studentsprofile/studentsprofile/studentsprofile.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -55,6 +56,7 @@ export const routes: Routes = [
             { path: 'Submissions', component: TaskSubmissionsComponent, title: 'Task Submissions' },
             { path: 'Submissions/:taskId', component: TaskSubmissionsComponent, title: 'Task Submissions' },
             { path: 'DelegateAttendance', component: DelegatesattendanceComponent, title: 'Attendance' },
+            { path: 'StudentsProfile', component: StudentsprofileComponent, title: 'Students Profile' },
             { path: '', redirectTo: 'DelegateDashboard', pathMatch: 'full' }
         ]
     }

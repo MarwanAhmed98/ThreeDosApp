@@ -7,8 +7,7 @@
         class="w-72 bg-surface border-r border-main flex flex-col fixed h-full z-50 transition-all duration-300 lg:translate-x-0">
         <div class="p-8 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-10 h-10  rounded-xl flex items-center justify-center  shadow-brand-purple/20">
+                <div class="w-10 h-10  rounded-xl flex items-center justify-center  shadow-brand-purple/20">
                     <img class="rounded-full" src="/images/ThreeDos Logo.jpeg" alt="">
                 </div>
                 <span class="text-xl font-bold text-main tracking-tight">ThreeDOS</span>
@@ -75,11 +74,14 @@
                         class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 border-2 border-surface rounded-full"></span>
                 </div>
 
-                <img [src]="
-            'https://ui-avatars.com/api/?name=' +
-            UserName +
-            '&background=7F4797&color=ffffff'
-          " class="w-10 h-10 rounded-full border border-main shadow-sm" alt="Avatar" />
+                <a routerLink="/Delegates/StudentsProfile">
+                    <img [src]="
+      'https://ui-avatars.com/api/?name=' +
+      UserName +
+      '&background=7F4797&color=ffffff'
+    " class="w-10 h-10 rounded-full border border-main shadow-sm cursor-pointer" alt="Avatar" />
+                </a>
+
             </div>
         </header>
 
