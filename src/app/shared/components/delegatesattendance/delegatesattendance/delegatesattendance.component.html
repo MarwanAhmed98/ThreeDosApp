@@ -1,106 +1,138 @@
-<div class="animate-in fade-in duration-500">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+    <div class="animate-in fade-in duration-500">
+
+        <!-- Header Section -->
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">My Attendance</h1>
-                <p class="text-muted mt-1 text-sm md:text-base">Track your participation across all registered councils.
+                <h1
+                    class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
+                    My Attendance
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+                    Track your participation across all registered councils.
                 </p>
             </div>
-            <div class="flex items-center gap-3 bg-surface border border-main px-6 py-3 rounded-2xl shadow-sm">
-                <span class="text-sm font-bold text-muted uppercase tracking-wider">Your Attendance:</span>
-                <span class="text-xl font-black text-brand-purple">{{ attendancePercentage() }}%</span>
+
+            <div
+                class="w-full lg:w-auto flex items-center gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 py-3 rounded-2xl shadow-sm">
+                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Overall
+                    Rate:</span>
+                <span class="text-xl font-black text-purple-600 dark:text-purple-400">{{ attendancePercentage()
+                    }}%</span>
             </div>
         </div>
 
         <!-- Summary Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
             <div
-                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-brand-purple/30 transition-all">
+                class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all duration-300 group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-app rounded-2xl flex items-center justify-center text-brand-purple">
+                    <div
+                        class="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-xl flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-inner">
                         <i class="fas fa-calendar-alt text-xl"></i>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-muted uppercase">Total Sessions</p>
-                        <h3 class="text-2xl font-bold text-main">{{ totalSessions() }}</h3>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Total
+                            Sessions</p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ totalSessions() }}</h3>
                     </div>
                 </div>
             </div>
+
             <div
-                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-emerald-500/30 transition-all">
+                class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-emerald-200/50 dark:hover:shadow-black/20 hover:border-emerald-200 dark:hover:border-emerald-900/50 hover:-translate-y-1 transition-all duration-300 group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500">
+                    <div
+                        class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner">
                         <i class="fas fa-check-circle text-xl"></i>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-muted uppercase">Attended</p>
-                        <h3 class="text-2xl font-bold text-main">{{ presentCount() }}</h3>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Attended
+                        </p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ presentCount() }}</h3>
                     </div>
                 </div>
             </div>
+
             <div
-                class="bg-surface p-6 rounded-[2rem] border border-main shadow-sm group hover:border-rose-500/30 transition-all">
+                class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-red-200/50 dark:hover:shadow-black/20 hover:border-red-200 dark:hover:border-red-900/50 hover:-translate-y-1 transition-all duration-300 group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500">
+                    <div
+                        class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-xl flex items-center justify-center text-red-600 dark:text-red-400 shadow-inner">
                         <i class="fas fa-times-circle text-xl"></i>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-muted uppercase">Missed</p>
-                        <h3 class="text-2xl font-bold text-main">{{ totalSessions() - presentCount() }}</h3>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Missed
+                        </p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ totalSessions() -
+                            presentCount() }}</h3>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Search -->
-        <div class="relative mb-8">
-            <span class="absolute inset-y-0 left-4 flex items-center text-muted">
-                <i class="fas fa-search"></i>
+        <div class="relative mb-6 group">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i
+                    class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
             </span>
             <input [(ngModel)]="text" type="text" placeholder="Search sessions by name..."
-                class="w-full pl-12 pr-4 py-4 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted" />
+                class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm font-medium text-sm" />
         </div>
 
         <!-- Attendance List -->
-        <div class="bg-surface rounded-[2rem] border border-main shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
+        <div
+            class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden transition-colors">
+
+            <!-- Desktop View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-app border-b border-main">
-                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider">Session
-                                Topic</th>
-                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center">
+                        <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                Session Topic</th>
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
                                 Date</th>
-                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center">
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
                                 Status</th>
-                            <th class="px-8 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-right">
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
                                 Records</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y border-main">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                         @for (record of attendanceRecords(); track record.id) {
-                        <tr class="hover:bg-brand-purple/5 transition-colors group">
-                            <td class="px-8 py-6">
+                        <tr
+                            class="group hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors duration-200">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
                                     <div
-                                        class="w-10 h-10 rounded-xl bg-app border border-main flex items-center justify-center text-brand-purple group-hover:bg-white transition-colors">
+                                        class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-white dark:group-hover:bg-slate-700 transition-colors shadow-sm">
                                         <i class="fas fa-book-reader"></i>
                                     </div>
-                                    <div class="font-bold text-main text-base">{{ record.session }}</div>
+                                    <div
+                                        class="font-bold text-slate-800 dark:text-slate-200 text-sm group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                        {{ record.session }}
+                                    </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6 text-center">
-                                <div class="text-sm font-medium text-main">{{ record.date | date: "longDate" }}</div>
+                            <td class="px-6 py-4 text-center">
+                                <div class="text-sm font-medium text-slate-600 dark:text-slate-300">{{ record.date |
+                                    date: "longDate" }}</div>
                             </td>
-                            <td class="px-8 py-6 text-center">
+                            <td class="px-6 py-4 text-center">
                                 <span
-                                    [class]="'px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ' + getStatusClass(record.status)">
+                                    [class]="'inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ' + getStatusClass(record.status)">
                                     {{ record.status }}
                                 </span>
                             </td>
-                            <td class="px-8 py-6 text-right">
-                                <button class="text-xs font-bold text-brand-purple hover:underline">View
+                            <td class="px-6 py-4 text-right">
+                                <button
+                                    class="text-xs font-bold text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:underline">View
                                     Details</button>
                             </td>
                         </tr>
@@ -109,19 +141,47 @@
                 </table>
             </div>
 
+            <!-- Mobile Card View -->
+            <div class="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+                @for (record of attendanceRecords(); track record.id) {
+                <div class="p-4 flex flex-col gap-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-sm flex-shrink-0">
+                                <i class="fas fa-book-reader"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm">{{ record.session }}
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ record.date | date:
+                                    "longDate" }}</p>
+                            </div>
+                        </div>
+                        <span
+                            [class]="'flex-shrink-0 inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ' + getStatusClass(record.status)">
+                            {{ record.status }}
+                        </span>
+                    </div>
+                </div>
+                }
+            </div>
+
             <!-- Footer/Pagination -->
-            <div class="px-8 py-5 bg-app/50 border-t border-main flex items-center justify-between">
-                <p class="text-xs font-bold text-muted uppercase tracking-tighter">Your academic participation history
-                </p>
+            <div
+                class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p
+                    class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide text-center sm:text-left">
+                    Your academic participation history</p>
                 <div class="flex items-center gap-2">
                     <button
-                        class="p-2 w-10 h-10 rounded-xl border border-main bg-surface text-muted hover:text-main transition-all">
+                        class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all disabled:opacity-50">
                         <i class="fas fa-chevron-left text-xs"></i>
                     </button>
                     <button
-                        class="p-2 w-10 h-10 rounded-xl border border-brand-purple bg-brand-purple text-white shadow-lg shadow-brand-purple/20 transition-all">1</button>
+                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-md shadow-purple-500/20">1</button>
                     <button
-                        class="p-2 w-10 h-10 rounded-xl border border-main bg-surface text-muted hover:text-main transition-all">
+                        class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all disabled:opacity-50">
                         <i class="fas fa-chevron-right text-xs"></i>
                     </button>
                 </div>

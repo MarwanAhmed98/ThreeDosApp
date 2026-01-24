@@ -1,23 +1,32 @@
-<div class="animate-in fade-in duration-500">
-    <div class="max-w-7xl mx-auto">
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+    <div class="animate-in fade-in duration-500">
+
         <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">My Sessions</h1>
-            <p class="text-muted mt-1">Browse available sessions, join live workshops, and download study materials.</p>
+        <div class="mb-6 md:mb-8">
+            <h1
+                class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
+                My Sessions
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+                Browse available sessions, join live workshops, and download study materials.
+            </p>
         </div>
 
         <!-- Search & Quick Filters -->
-        <div class="flex flex-col md:flex-row gap-4 mb-8">
-            <div class="relative flex-1">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="relative flex-1 group">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i
+                        class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
+                </span>
                 <input [value]="text()" (input)="onSearchChange($event)" type="text"
                     placeholder="Search by topic or council..."
-                    class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:ring-4 focus:ring-accent/10 focus:border-accent outline-none transition-all shadow-sm text-main" />
+                    class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm font-medium text-sm" />
             </div>
             <div class="flex gap-2">
                 <button
-                    class="px-5 py-3.5 bg-surface border border-main rounded-2xl text-main font-bold flex items-center gap-2 hover:bg-accent/5 transition-all">
-                    <i class="fas fa-filter text-accent"></i> All Councils
+                    class="px-5 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 font-bold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-purple-600 dark:hover:text-purple-400 transition-all shadow-sm active:scale-95 text-sm">
+                    <i class="fas fa-filter text-slate-400 dark:text-slate-500"></i> All Councils
                 </button>
             </div>
         </div>
@@ -25,93 +34,115 @@
         <!-- Loading State -->
         @if (loading()) {
         <div class="flex justify-center items-center py-12">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 dark:border-purple-400"></div>
         </div>
         }
 
         <!-- Sessions Table -->
         @if (!loading()) {
         <div
-            class="bg-transparent md:bg-surface md:rounded-[32px] md:border md:border-main overflow-hidden md:shadow-sm">
+            class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden transition-colors bg-transparent md:bg-white md:dark:bg-slate-900">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse block md:table min-w-full">
                     <thead class="hidden md:table-header-group">
-                        <tr
-                            class="border-b border-main bg-app/50 text-[11px] font-bold text-muted uppercase tracking-widest">
-                            <th class="px-6 py-5 whitespace-nowrap">Status</th>
-                            <th class="px-6 py-5 whitespace-nowrap">Schedule</th>
-                            <th class="px-6 py-5 whitespace-nowrap">Session & Council</th>
-                            <th class="px-6 py-5 whitespace-nowrap">Resources</th>
-                            <th class="px-6 py-5 text-right whitespace-nowrap min-w-[200px]">Actions</th>
+                        <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">
+                                Status</th>
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">
+                                Schedule</th>
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">
+                                Session & Council</th>
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">
+                                Resources</th>
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right whitespace-nowrap min-w-[200px]">
+                                Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
+                    <tbody
+                        class="block md:table-row-group space-y-4 md:space-y-0 divide-y divide-slate-100 dark:divide-slate-800">
                         @for (session of filteredSessions(); track session.id) {
                         <tr
-                            class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-accent/5 transition-all group">
+                            class="block md:table-row bg-white dark:bg-slate-900 md:bg-transparent rounded-2xl border border-slate-200 dark:border-slate-800 md:border-none hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-all group shadow-sm md:shadow-none">
 
                             <!-- Status Mobile -->
                             <td
-                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Status</span>
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+                                <span
+                                    class="md:hidden text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">Status</span>
                                 <span [class]="getStatusClass(session.status)"
-                                    class="px-3 py-1 rounded-full text-[10px] font-bold">
+                                    class="px-2.5 py-1 rounded-full text-[10px] font-bold border shadow-sm uppercase tracking-wide">
                                     {{ session.status }}
                                 </span>
                             </td>
 
                             <!-- Schedule -->
                             <td
-                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Schedule</span>
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+                                <span
+                                    class="md:hidden text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">Schedule</span>
                                 <div class="text-sm">
-                                    <div class="font-bold text-main">{{ formatDate(session.date) }}</div>
-                                    <div class="text-xs text-muted">{{ session.time || 'TBD' }}</div>
+                                    <div class="font-bold text-slate-800 dark:text-slate-200">{{
+                                        formatDate(session.date) }}</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ session.time
+                                        || 'TBD' }}</div>
                                 </div>
                             </td>
 
                             <!-- Topic & Council -->
                             <td
-                                class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                                <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-1">Session</span>
+                                class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+                                <span
+                                    class="md:hidden text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mb-1">Session</span>
                                 <div>
-                                    <div class="font-bold text-accent text-base">{{ session.title }}</div>
-                                    <div class="text-xs text-muted flex items-center gap-1.5 mt-1">
-                                        <i class="fas fa-users text-[10px]"></i> {{ session.council }}
+                                    <div
+                                        class="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                        {{ session.title }}</div>
+                                    <div
+                                        class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mt-1 font-medium">
+                                        <i class="fas fa-users text-[10px] text-purple-400"></i> {{ session.council }}
                                     </div>
                                     @if (session.description) {
-                                    <div class="text-xs text-muted mt-1 line-clamp-2">{{ session.description }}</div>
+                                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1 line-clamp-2">{{
+                                        session.description }}</div>
                                     }
                                 </div>
                             </td>
 
                             <!-- Resources -->
                             <td
-                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-6 border-b border-main md:border-none">
-                                <span class="md:hidden text-[10px] font-bold text-muted uppercase">Resources</span>
+                                class="flex justify-between items-center md:table-cell px-4 md:px-6 py-4 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+                                <span
+                                    class="md:hidden text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">Resources</span>
                                 @if (session.material) {
                                 <a [href]="session.material" target="_blank"
-                                    class="flex items-center gap-2 text-accent font-bold text-sm hover:underline">
-                                    <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+                                    class="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-sm hover:underline decoration-purple-300 underline-offset-2 transition-all">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
                                         <i class="fas fa-file-arrow-down"></i>
                                     </div>
                                     Material
                                 </a>
                                 } @else {
-                                <span class="text-xs text-muted italic">Not available yet</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500 italic">Not available yet</span>
                                 }
                             </td>
 
                             <!-- Action -->
-                            <td class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-6">
-                                <span class="md:hidden text-[10px] font-bold text-muted uppercase mb-2">Actions</span>
+                            <td class="flex flex-col md:table-cell px-4 md:px-6 py-4 md:py-4">
+                                <span
+                                    class="md:hidden text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mb-2">Actions</span>
 
                                 <div
                                     class="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 md:justify-end">
                                     <!-- View Details Button -->
                                     <button (click)="openSessionDetails(session)"
-                                        class="flex items-center justify-center gap-2 text-xs font-bold text-accent bg-accent/10 px-4 py-2.5 rounded-xl hover:bg-accent/20 transition-all border border-accent/20">
+                                        class="flex items-center justify-center gap-2 text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-4 py-2.5 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all border border-purple-200 dark:border-purple-800/50">
                                         <i class="fas fa-eye"></i>
                                         <span>Details</span>
                                     </button>
@@ -119,7 +150,7 @@
                                     <!-- Registration Button -->
                                     @if (isSessionCompleted(session.status)) {
                                     <button disabled
-                                        class="flex items-center justify-center gap-2 text-xs font-bold text-muted bg-gray-100 dark:bg-gray-800 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-not-allowed">
+                                        class="flex items-center justify-center gap-2 text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 cursor-not-allowed">
                                         <i class="fas fa-ban"></i>
                                         <span>Ended</span>
                                     </button>
@@ -131,7 +162,7 @@
                                     </button>
                                     } @else {
                                     <button (click)="joinSession(session.id)" [disabled]="loading()"
-                                        class="flex items-center justify-center gap-2 bg-accent text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-accent/20 hover:scale-105 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                                        class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-500/20 hover:scale-105 hover:from-purple-700 hover:to-indigo-700 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                         @if (loading()) {
                                         <i class="fas fa-spinner fa-spin"></i>
                                         } @else {
@@ -145,14 +176,15 @@
                         </tr>
                         } @empty {
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center">
+                            <td colspan="5" class="px-6 py-12 text-center bg-white dark:bg-slate-900">
                                 <div class="flex flex-col items-center">
                                     <div
-                                        class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                                        <i class="fas fa-calendar-alt text-2xl text-gray-400"></i>
+                                        class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4 ring-1 ring-slate-100 dark:ring-slate-700">
+                                        <i class="fas fa-calendar-alt text-2xl text-slate-300 dark:text-slate-500"></i>
                                     </div>
-                                    <h3 class="text-lg font-semibold text-main mb-2">No sessions found</h3>
-                                    <p class="text-muted">
+                                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">No sessions
+                                        found</h3>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm">
                                         @if (text()) {
                                         Try adjusting your search terms.
                                         } @else {
@@ -170,18 +202,20 @@
 
         <!-- Pagination -->
         @if (totalPages() > 1) {
-        <div class="mt-8 flex items-center justify-center gap-2">
+        <div class="mt-8 flex items-center justify-center gap-3">
             <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() === 1"
-                class="px-4 py-2 border border-main bg-surface rounded-xl hover:bg-accent/5 transition-all text-main shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                class="w-10 h-10 flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-slate-600 dark:text-slate-300 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                 <i class="fas fa-chevron-left"></i>
             </button>
 
-            <span class="px-4 py-2 text-sm text-muted">
-                Page {{ currentPage() }} of {{ totalPages() }}
+            <span
+                class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                Page <span class="font-bold text-slate-900 dark:text-white">{{ currentPage() }}</span> of {{
+                totalPages() }}
             </span>
 
             <button (click)="changePage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
-                class="px-4 py-2 border border-main bg-surface rounded-xl hover:bg-accent/5 transition-all text-main shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                class="w-10 h-10 flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-slate-600 dark:text-slate-300 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -193,39 +227,39 @@
 <!-- Session Details Modal -->
 @if (isDetailsModalOpen()) {
 <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
             (click)="closeSessionDetails()"></div>
 
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div
-            class="inline-block align-bottom bg-surface border border-main rounded-3xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full animate-in">
+            class="inline-block align-bottom bg-white dark:bg-slate-900 border border-white/50 dark:border-slate-700 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full animate-in zoom-in-95 duration-200">
 
             <!-- Modal Header -->
-            <div class="bg-surface px-6 pt-6 pb-4 border-b border-main">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <h3 class="text-xl font-bold text-main" id="modal-title">
-                            Session Details
-                        </h3>
-                        @if (selectedSession()) {
-                        <p class="text-sm text-muted mt-1">{{ selectedSession()?.title }}</p>
-                        }
-                    </div>
-                    <button type="button" (click)="closeSessionDetails()"
-                        class="text-muted hover:text-main transition-colors p-2 hover:bg-app rounded-lg">
-                        <i class="fas fa-times"></i>
-                    </button>
+            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 flex justify-between items-start">
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2" id="modal-title">
+                        <i class="fas fa-info-circle"></i>
+                        Session Details
+                    </h3>
+                    @if (selectedSession()) {
+                    <p class="text-purple-100 text-sm mt-1 truncate max-w-[300px]">{{ selectedSession()?.title }}</p>
+                    }
                 </div>
+                <button type="button" (click)="closeSessionDetails()"
+                    class="text-white/70 hover:text-white transition-colors p-1">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
             </div>
 
             <!-- Modal Content -->
-            <div class="bg-surface px-6 py-6 max-h-96 overflow-y-auto">
+            <div class="bg-white dark:bg-slate-900 px-6 py-6 max-h-96 overflow-y-auto">
                 @if (loadingDetails()) {
                 <!-- Loading State -->
                 <div class="flex justify-center items-center py-8">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 dark:border-purple-400">
+                    </div>
                 </div>
                 } @else if (sessionDetails()) {
                 <!-- Session Details Content -->
@@ -233,35 +267,45 @@
                     <!-- Basic Information -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-main mb-1">Status</label>
+                            <label
+                                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Status</label>
                             <span [class]="getStatusClass(selectedSession()?.status || '')"
-                                class="inline-block px-3 py-1 rounded-full text-xs font-bold">
+                                class="inline-block px-2.5 py-1 rounded-full text-xs font-bold border shadow-sm">
                                 {{ selectedSession()?.status }}
                             </span>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-main mb-1">Council</label>
-                            <p class="text-sm text-muted">{{ sessionDetails().council?.name ||
+                            <label
+                                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Council</label>
+                            <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{{
+                                sessionDetails().council?.name ||
                                 selectedSession()?.council }}</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-main mb-1">Date & Time</label>
-                            <p class="text-sm text-muted">
+                            <label
+                                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Date
+                                & Time</label>
+                            <p class="text-sm font-medium text-slate-700 dark:text-slate-200">
                                 {{ formatDate(sessionDetails().date) }}
                                 @if (selectedSession()?.time) {
-                                <span class="ml-2">{{ selectedSession()?.time }}</span>
+                                <span class="ml-2 text-slate-500 dark:text-slate-400">{{ selectedSession()?.time
+                                    }}</span>
                                 }
                             </p>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-main mb-1">Registration Status</label>
+                            <label
+                                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Registration
+                                Status</label>
                             @if (selectedSession()?.isJoined) {
-                            <span class="text-emerald-600 text-sm font-semibold">
-                                <i class="fas fa-check-circle mr-1"></i> Registered
+                            <span
+                                class="text-emerald-600 dark:text-emerald-400 text-sm font-bold flex items-center gap-1.5">
+                                <i class="fas fa-check-circle"></i> Registered
                             </span>
                             } @else {
-                            <span class="text-orange-600 text-sm font-semibold">
-                                <i class="fas fa-clock mr-1"></i> Not Registered
+                            <span
+                                class="text-amber-600 dark:text-amber-400 text-sm font-bold flex items-center gap-1.5">
+                                <i class="fas fa-clock"></i> Not Registered
                             </span>
                             }
                         </div>
@@ -270,9 +314,12 @@
                     <!-- Description -->
                     @if (sessionDetails().description) {
                     <div>
-                        <label class="block text-sm font-semibold text-main mb-2">Description</label>
-                        <div class="bg-app rounded-xl p-4 border border-main">
-                            <p class="text-sm text-muted leading-relaxed">{{ sessionDetails().description }}</p>
+                        <label
+                            class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Description</label>
+                        <div
+                            class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700">
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{
+                                sessionDetails().description }}</p>
                         </div>
                     </div>
                     }
@@ -280,26 +327,37 @@
                     <!-- Materials -->
                     @if (sessionDetails().material) {
                     <div>
-                        <label class="block text-sm font-semibold text-main mb-2">Session Materials</label>
-                        <div class="bg-app rounded-xl p-4 border border-main">
+                        <label
+                            class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Session
+                            Materials</label>
+                        <div
+                            class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700">
                             <a [href]="sessionDetails().material" target="_blank"
-                                class="flex items-center gap-3 text-accent hover:text-accent/80 transition-colors">
-                                <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                                class="flex items-center gap-3 text-slate-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-file-arrow-down"></i>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-sm">Download Materials</p>
-                                    <p class="text-xs text-muted">Click to access session resources</p>
+                                    <p class="font-bold text-sm">Download Materials</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Click to access
+                                        session resources</p>
                                 </div>
-                                <i class="fas fa-external-link-alt ml-auto"></i>
+                                <i
+                                    class="fas fa-external-link-alt ml-auto text-slate-400 group-hover:text-purple-500"></i>
                             </a>
                         </div>
                     </div>
                     } @else {
                     <div>
-                        <label class="block text-sm font-semibold text-main mb-2">Session Materials</label>
-                        <div class="bg-app rounded-xl p-4 border border-main">
-                            <p class="text-sm text-muted italic">Materials will be available closer to the session date.
+                        <label
+                            class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Session
+                            Materials</label>
+                        <div
+                            class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700">
+                            <p class="text-sm text-slate-500 dark:text-slate-400 italic flex items-center gap-2">
+                                <i class="fas fa-info-circle"></i>
+                                Materials will be available closer to the session date.
                             </p>
                         </div>
                     </div>
@@ -307,15 +365,16 @@
 
                     <!-- Additional Information -->
                     @if (sessionDetails().created_at) {
-                    <div class="pt-4 border-t border-main">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-muted">
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-400 dark:text-slate-500 font-medium">
                             <div>
-                                <span class="font-semibold">Created:</span>
+                                <span class="font-bold">Created:</span>
                                 {{ formatDate(sessionDetails().created_at) }}
                             </div>
                             @if (sessionDetails().updated_at) {
                             <div>
-                                <span class="font-semibold">Last Updated:</span>
+                                <span class="font-bold">Last Updated:</span>
                                 {{ formatDate(sessionDetails().updated_at) }}
                             </div>
                             }
@@ -327,30 +386,32 @@
                 <!-- Error State -->
                 <div class="text-center py-8">
                     <div
-                        class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-exclamation-triangle text-2xl text-red-500"></i>
+                        class="w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4 ring-1 ring-red-100 dark:ring-red-900/30">
+                        <i class="fas fa-exclamation-triangle text-2xl text-red-500 dark:text-red-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-main mb-2">Unable to Load Details</h3>
-                    <p class="text-muted">There was an error loading the session details. Please try again.</p>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">Unable to Load Details</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">There was an error loading the session
+                        details. Please try again.</p>
                 </div>
                 }
             </div>
 
             <!-- Modal Footer -->
-            <div class="bg-app px-6 py-4 border-t border-main flex flex-col sm:flex-row gap-3 sm:justify-between">
+            <div
+                class="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-3 sm:justify-between">
                 <button type="button" (click)="closeSessionDetails()"
-                    class="px-6 py-3 border border-main bg-surface text-main rounded-xl hover:bg-accent/5 transition-all font-semibold">
+                    class="w-full sm:w-auto px-6 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all font-bold text-sm">
                     Close
                 </button>
 
                 @if (selectedSession() && !selectedSession()?.isJoined && !isSessionCompleted(selectedSession()?.status
                 || '')) {
                 <button (click)="joinSession(selectedSession()?.id || ''); closeSessionDetails()" [disabled]="loading()"
-                    class="px-6 py-3 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all font-bold text-sm shadow-md shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                     @if (loading()) {
-                    <i class="fas fa-spinner fa-spin mr-2"></i>
+                    <i class="fas fa-spinner fa-spin"></i>
                     }
-                    <i class="fas fa-user-plus mr-2"></i>
+                    <i class="fas fa-user-plus"></i>
                     Join Session
                 </button>
                 }
