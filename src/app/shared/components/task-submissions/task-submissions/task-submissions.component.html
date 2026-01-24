@@ -1,197 +1,230 @@
-<div class="animate-in fade-in duration-500">
-  <div class="max-w-7xl mx-auto">
-    <!-- Header -->
-    <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
-    >
-      <div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
-          Task Submissions
-        </h1>
-        <p class="text-muted mt-1 text-sm md:text-base">
-          Monitor and manage student task submissions and approvals.
-        </p>
-      </div>
-      <button
-        (click)="openAddModal()"
-        class="w-full sm:w-auto bg-brand-purple text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-purple/20 active:scale-95"
-      >
-        <i class="fas fa-upload"></i>
-        New Submission
-      </button>
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+
+  <!-- Header Section -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-6">
+    <div>
+      <h1
+        class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
+        Task Submissions
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+        Monitor and manage student task submissions and approvals.
+      </p>
     </div>
 
-    <!-- Search & Filters -->
-    <div class="flex flex-col lg:flex-row gap-4 mb-8">
-      <div class="relative flex-1">
-        <span class="absolute inset-y-0 left-4 flex items-center text-muted">
-          <i class="fas fa-search"></i>
-        </span>
-        <input
-          [(ngModel)]="text"
-          type="text"
-          placeholder="Search by Task or Student Name..."
-          class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted"
-        />
-      </div>
+    <button (click)="openAddModal()"
+      class="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all active:scale-95 w-full sm:w-auto">
+      <i class="fas fa-upload"></i>
+      <span>New Submission</span>
+    </button>
+  </div>
 
-      <div class="flex gap-2">
+  <!-- Search & Filters -->
+  <div class="flex flex-col lg:flex-row gap-4 mb-6">
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i
+          class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
+      </div>
+      <input [(ngModel)]="text" type="text" placeholder="Search by Task or Student Name..."
+        class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm" />
+    </div>
+
+    <div class="flex gap-2">
+      <div class="relative w-full sm:w-auto">
         <select
-          class="px-4 py-3.5 bg-surface border border-main rounded-2xl text-main focus:outline-none focus:ring-4 focus:ring-brand-purple/10 transition-all shadow-sm font-medium"
-        >
+          class="w-full sm:w-auto pl-3 pr-8 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm appearance-none cursor-pointer">
           <option value="">All Statuses</option>
           <option value="pending">Pending</option>
           <option value="approved">Approved</option>
           <option value="rejected">Rejected</option>
         </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Submissions Table -->
-    <div
-      class="bg-surface rounded-3xl border border-main shadow-sm overflow-hidden"
-    >
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-app border-b border-main">
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
-              >
-                Student
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
-              >
-                Task Title
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
-              >
-                Submitted At
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
-              >
-                Grade
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
-              >
-                Status
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
-              >
-                File
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-right"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y border-main">
-            @for (
-              submission of SubmissionList | searchsubmissions: text;
-              track submission.id
-            ) {
-              <tr class="hover:bg-brand-purple/5 transition-colors group">
-                <td class="px-6 py-5">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple font-bold text-sm"
-                    >
-                      {{ submission.user?.charAt(0) || "U" }}
-                    </div>
-                    <div class="font-bold text-main">
-                      {{ submission.user || "Anonymous" }}
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-5">
-                  <div class="text-sm font-bold text-main">
-                    {{ submission.task || "Untitled" }}
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <div class="text-sm text-muted">
-                    {{ submission.created_at | date: "mediumDate" }}
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <div class="text-sm text-muted font-bold">
-                    {{ submission.grade }}
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <span
-                    [class]="
-                      'px-3.5 py-1.5 rounded-full text-xs font-bold capitalize transition-all ' +
-                      getStatusClass(submission.status)
-                    "
-                  >
-                    {{ submission.status }}
-                  </span>
-                </td>
-                <td class="px-6 py-5">
-                  <a
-                    [href]="submission.file_path"
-                    target="_blank"
-                    class="inline-flex items-center gap-2 text-brand-purple hover:underline font-bold text-sm"
-                  >
-                    <i class="fas fa-file-download"></i>
-                    Link
-                  </a>
-                </td>
-                <td class="px-6 py-5 text-right">
-                  <div class="flex justify-end gap-1">
-                    <button
-                      (click)="openEditModal(submission)"
-                      class="p-2 text-muted hover:text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button
-                      (click)="deleteSubmission(submission.id)"
-                      class="p-2 text-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
+  <!-- Submissions Container -->
+  <div
+    class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden transition-colors">
+
+    <!-- Desktop Table View -->
+    <div class="hidden md:block overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Student
+            </th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Task
+              Title</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Submitted At</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Grade</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Status</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">File
+            </th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
+              Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          @for (submission of SubmissionList | searchsubmissions: text; track submission.id) {
+          <tr class="group hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors duration-200">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-9 h-9 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-700 dark:text-purple-300 font-bold text-sm ring-2 ring-white dark:ring-slate-800 shadow-sm">
+                  {{ submission.user?.charAt(0) || "U" }}
+                </div>
+                <div class="font-bold text-slate-800 dark:text-slate-200 text-sm">
+                  {{ submission.user || "Anonymous" }}
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="text-sm font-bold text-slate-700 dark:text-slate-200">
+                {{ submission.task || "Untitled" }}
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <div class="text-sm text-slate-500 dark:text-slate-400">
+                {{ submission.created_at | date: "mediumDate" }}
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <div class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                {{ submission.grade || '-' }}
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold capitalize tracking-wide border shadow-sm"
+                [ngClass]="{
+                    'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800': submission.status === 'approved',
+                    'bg-red-50 text-red-700 border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800': submission.status === 'rejected',
+                    'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800': submission.status === 'pending'
+                  }">
+                {{ submission.status }}
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <a [href]="submission.file_path" target="_blank"
+                class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-bold text-sm transition-colors group-hover:underline decoration-purple-300 underline-offset-2">
+                <i class="fas fa-file-download"></i>
+                Link
+              </a>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-1">
+                <button (click)="openEditModal(submission)"
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all">
+                  <i class="fas fa-edit text-xs"></i>
+                </button>
+                <button (click)="deleteSubmission(submission.id)"
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">
+                  <i class="fas fa-trash text-xs"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+      @for (submission of SubmissionList | searchsubmissions: text; track submission.id) {
+      <div class="p-4 flex flex-col gap-4">
+        <!-- Top: User info & Status -->
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 to-indigo-50 dark:from-purple-900/50 dark:to-indigo-900/30 flex items-center justify-center text-purple-700 dark:text-purple-300 font-bold text-sm ring-1 ring-black/5 dark:ring-white/10">
+              {{ submission.user?.charAt(0) || "U" }}
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-100 text-base">{{ submission.user || "Anonymous" }}
+              </div>
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ submission.created_at | date:
+                "mediumDate" }}</div>
+            </div>
+          </div>
+
+          <span
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm"
+            [ngClass]="{
+                      'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800': submission.status === 'approved',
+                      'bg-red-50 text-red-700 border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800': submission.status === 'rejected',
+                      'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800': submission.status === 'pending'
+                    }">
+            {{ submission.status }}
+          </span>
+        </div>
+
+        <!-- Middle: Task Details -->
+        <div
+          class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700 space-y-2">
+          <div>
+            <span class="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-0.5">Task
+              Title</span>
+            <span class="font-semibold text-slate-700 dark:text-slate-200 text-sm line-clamp-1">{{ submission.task ||
+              "Untitled" }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-0.5">Grade</span>
+              <span class="font-bold text-slate-800 dark:text-slate-100 text-sm">{{ submission.grade || '-' }}</span>
+            </div>
+            <a [href]="submission.file_path" target="_blank"
+              class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-bold text-purple-600 dark:text-purple-300 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
+              <i class="fas fa-file-download"></i> View File
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom: Actions -->
+        <div class="flex justify-end gap-2 pt-1 border-t border-slate-50 dark:border-slate-800 mt-1">
+          <button (click)="openEditModal(submission)"
+            class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-sm font-semibold active:scale-95 transition-all">
+            <i class="fas fa-edit"></i> Edit/Grade
+          </button>
+          <button (click)="deleteSubmission(submission.id)"
+            class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-900/30 text-sm font-semibold active:scale-95 transition-all">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
       </div>
+      }
+    </div>
 
-      <!-- Pagination -->
+    <!-- Pagination -->
+    <div
+      class="px-6 py-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div
-        class="px-6 py-5 bg-app border-t border-main flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <div class="text-sm text-muted font-medium">
-          Showing
-          <span class="text-main font-bold">{{ currentPage }}</span> of
-          <span class="text-main font-bold">{{ lastPage }}</span> pages
-        </div>
-        <div class="flex items-center gap-2">
-          <button
-            (click)="changePage(currentPage - 1)"
-            [disabled]="currentPage === 1"
-            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
-          >
-            Previous
-          </button>
-          <button
-            (click)="changePage(currentPage + 1)"
-            [disabled]="currentPage === lastPage"
-            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
-          >
-            Next
-          </button>
-        </div>
+        class="text-sm text-slate-500 dark:text-slate-400 font-medium order-2 sm:order-1 text-center sm:text-left w-full sm:w-auto">
+        Showing
+        <span class="text-slate-800 dark:text-slate-200 font-bold">{{ currentPage }}</span> of
+        <span class="text-slate-800 dark:text-slate-200 font-bold">{{ lastPage }}</span> pages
+      </div>
+      <div class="flex w-full sm:w-auto gap-2 order-1 sm:order-2">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+          class="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+          Previous
+        </button>
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === lastPage"
+          class="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+          Next
+        </button>
       </div>
     </div>
   </div>
@@ -199,122 +232,115 @@
 
 <!-- Modal -->
 @if (isModalOpen) {
-  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    <div
-      class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm"
-      (click)="closeModal()"
-    ></div>
+<div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
+
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
     <div
-      class="relative w-full max-w-lg bg-surface border border-main rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
-    >
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-main">
+      class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in zoom-in-95 duration-200 border border-white/50 dark:border-slate-700">
+
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 flex justify-between items-center">
+        <div>
+          <h3 class="text-xl font-bold text-white flex items-center gap-2" id="modal-title">
+            <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-upload'"></i>
             {{ isEditMode ? "Update Submission" : "Submit Task File" }}
           </h3>
-          <button (click)="closeModal()" class="text-muted hover:text-main p-2">
-            <i class="fas fa-times"></i>
-          </button>
+          <p class="text-purple-100 text-sm mt-1">
+            {{ isEditMode ? "Review and grade student work." : "Upload your work for evaluation." }}
+          </p>
+        </div>
+        <button (click)="closeModal()" class="text-white/70 hover:text-white transition-colors">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="px-6 py-6 space-y-5">
+        @if (!isEditMode) {
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Select
+            Task</label>
+          <div class="relative">
+            <select [(ngModel)]="submissionData.task_id" name="task_id" required
+              class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+              <option value="" disabled>Choose a task...</option>
+              @for (task of TasksList; track task.id) {
+              <option [value]="task.id">{{ task.title }}</option>
+              }
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+              <i class="fas fa-chevron-down text-xs"></i>
+            </div>
+          </div>
         </div>
 
-        <form (ngSubmit)="onSubmit()" class="space-y-5">
-          @if (!isEditMode) {
-            <div>
-              <label class="block text-sm font-bold text-muted mb-2"
-                >Select Task</label
-              >
-              <select
-                [(ngModel)]="submissionData.task_id"
-                name="task_id"
-                required
-                class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main"
-              >
-                <option value="" disabled>Choose a task...</option>
-                @for (task of TasksList; track task.id) {
-                  <option [value]="task.id">{{ task.title }}</option>
-                }
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-bold text-muted mb-2"
-                >Upload File</label
-              >
-              <div class="relative group">
-                <input
-                  type="file"
-                  (change)="onFileSelected($event)"
-                  required
-                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                <div
-                  class="border-2 border-dashed border-main group-hover:border-brand-purple group-hover:bg-brand-purple/5 rounded-2xl p-8 transition-all text-center"
-                >
-                  <div
-                    class="w-12 h-12 bg-brand-purple/10 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-purple"
-                  >
-                    <i class="fas fa-cloud-upload-alt text-xl"></i>
-                  </div>
-                  <div class="text-sm font-bold text-main mb-1">
-                    {{
-                      selectedFile
-                        ? selectedFile.name
-                        : "Click or drag file to upload"
-                    }}
-                  </div>
-                  <div class="text-xs text-muted font-medium">
-                    Maximum size: 10MB
-                  </div>
-                </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">Upload
+            File</label>
+          <div class="relative group">
+            <input type="file" (change)="onFileSelected($event)" required
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+            <div
+              class="border-2 border-dashed border-slate-300 dark:border-slate-600 group-hover:border-purple-500 dark:group-hover:border-purple-400 group-hover:bg-purple-50 dark:group-hover:bg-purple-900/10 rounded-xl p-8 transition-all text-center">
+              <div
+                class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3 text-purple-600 dark:text-purple-400">
+                <i class="fas fa-cloud-upload-alt text-xl"></i>
+              </div>
+              <div class="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">
+                {{ selectedFile ? selectedFile.name : "Click or drag file to upload" }}
+              </div>
+              <div class="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                Maximum size: 10MB
               </div>
             </div>
-          } @else {
-            <div>
-              <!-- Rating To 19 -->
-              <div class="mb-4">
-                <label class="block text-sm font-bold text-muted mb-2"
-                  >Grade</label
-                >
-                <select
-                  [(ngModel)]="submissionData.grade"
-                  name="grade"
-                  required
-                  class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main"
-                >
-                  <option value="">Select Grade</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
-            </div>
-          }
-
-          <div class="pt-4 flex gap-3">
-            <button
-              type="button"
-              (click)="closeModal()"
-              class="flex-1 px-6 py-4 rounded-2xl font-bold text-muted bg-app border border-main hover:bg-brand-purple/5 transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-brand-purple hover:opacity-90 shadow-lg shadow-brand-purple/20 transition-all active:scale-95"
-            >
-              {{ isEditMode ? "Apply Changes" : "Confirm Submission" }}
-            </button>
           </div>
-        </form>
-      </div>
+        </div>
+        } @else {
+        <div>
+          <!-- Rating 1 To 10 -->
+          <div class="mb-4">
+            <label
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Grade
+              (1-10)</label>
+            <div class="relative">
+              <select [(ngModel)]="submissionData.grade" name="grade" required
+                class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+                <option value="">Select Grade</option>
+                <option value="1">1 - Poor</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 - Average</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 - Excellent</option>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+                <i class="fas fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
+        <div class="pt-4 flex flex-col-reverse sm:flex-row gap-3">
+          <button type="button" (click)="closeModal()"
+            class="w-full sm:w-auto flex-1 px-6 py-3 sm:py-2.5 rounded-xl font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all">
+            Cancel
+          </button>
+          <button type="submit"
+            class="w-full sm:w-auto flex-[2] px-6 py-3 sm:py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg shadow-purple-500/20 active:scale-95">
+            {{ isEditMode ? "Apply Changes" : "Confirm Submission" }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 }

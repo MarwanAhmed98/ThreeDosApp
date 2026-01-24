@@ -9,6 +9,7 @@ import { SearchteamsPipe } from '../../../pipes/searchteams/searchteams.pipe';
 import { ITeam, ITeamMember } from '../../../interfaces/iteams';
 import { Icouncils } from '../../../interfaces/icouncils';
 import { Iusers } from '../../../interfaces/iusers';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-teams',
@@ -202,17 +203,26 @@ export class TeamsComponent implements OnInit {
   }
 
   deleteTeam(id: string): void {
-    if (confirm('Are you sure you want to delete this team? This will also remove all team members.')) {
-      this.teamsService.DeleteTeam(id).subscribe({
-        next: () => {
-          this.toastr.success('Team deleted successfully', 'Success');
-          this.GetTeams();
-        },
-        error: () => {
-          this.toastr.error('Failed to delete team', 'Error');
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will also remove all team members.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete team!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.teamsService.DeleteTeam(id).subscribe({
+          next: () => {
+            this.toastr.success('Team deleted successfully', 'Success');
+            this.GetTeams();
+          },
+          error: () => {
+            this.toastr.error('Failed to delete team', 'Error');
+          }
+        });
+      }
+    });
   }
 
   deleteMember(memberId: string): void {
@@ -221,18 +231,30 @@ export class TeamsComponent implements OnInit {
       return;
     }
 
-    if (this.selectedTeamId && confirm('Remove this member from team?')) {
-      this.teamsService.DeleteTeamMember(memberId).subscribe({
-        next: () => {
-          this.toastr.success('Member removed successfully', 'Success');
-          this.GetTeamMembers(this.selectedTeamId!);
-        },
-        error: () => {
-          this.toastr.error('Failed to remove member', 'Error');
+    if (this.selectedTeamId) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Remove this member from team?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, remove',
+        cancelButtonText: 'Cancel'
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.teamsService.DeleteTeamMember(memberId).subscribe({
+            next: () => {
+              this.toastr.success('Member removed successfully', 'Success');
+              this.GetTeamMembers(this.selectedTeamId!);
+            },
+            error: () => {
+              this.toastr.error('Failed to remove member', 'Error');
+            }
+          });
         }
       });
     }
   }
+
 
   getRoleClass(role: string) {
     switch (role?.toLowerCase()) {

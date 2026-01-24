@@ -1,170 +1,177 @@
-<div class="animate-in fade-in duration-500">
-  <div class="max-w-7xl mx-auto">
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
-      <div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
-          Sessions Management
-        </h1>
-        <p class="text-muted mt-1 text-sm md:text-base">
-          View and manage scheduled council sessions and attendance.
-        </p>
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+
+  <!-- Header Section -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-6">
+    <div>
+      <h1
+        class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
+        Sessions Management
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+        View and manage scheduled council sessions and attendance.
+      </p>
+    </div>
+
+    <button (click)="openAddModal()"
+      class="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all active:scale-95 w-full sm:w-auto">
+      <i class="fas fa-plus"></i>
+      <span>Create Session</span>
+    </button>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="flex flex-col lg:flex-row gap-3 mb-6">
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i
+          class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
       </div>
-      <button (click)="openAddModal()"
-        class="w-full sm:w-auto bg-brand-purple hover:bg-opacity-90 text-white px-5 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-purple/20 active:scale-95">
-        <i class="fas fa-plus"></i>
-        Create Session
+      <input [(ngModel)]="text" type="text" placeholder="Search Sessions..."
+        class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm" />
+    </div>
+
+    <div class="flex gap-2">
+      <button
+        class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all shadow-sm active:scale-95">
+        <i class="fas fa-filter text-slate-400 dark:text-slate-500"></i>
+        <span>Filter</span>
+      </button>
+
+      <button
+        class="p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all shadow-sm w-12 flex justify-center items-center">
+        <i class="fas fa-calendar-alt"></i>
       </button>
     </div>
+  </div>
 
-    <!-- Search & Filters -->
-    <div class="flex flex-col lg:flex-row gap-3 mb-6">
-      <div class="relative flex-1">
-        <span class="absolute inset-y-0 left-4 flex items-center text-muted">
-          <i class="fas fa-search"></i>
-        </span>
-        <input [(ngModel)]="text" type="text" placeholder="Search Sessions..."
-          class="w-full pl-12 pr-4 py-3 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted" />
-      </div>
+  <!-- Main Content Card -->
+  <div
+    class="bg-white dark:bg-slate-900 md:border md:border-slate-200/60 dark:md:border-slate-800 md:rounded-2xl md:shadow-xl md:shadow-slate-200/50 dark:md:shadow-black/20 overflow-hidden transition-colors bg-transparent">
 
-      <div class="flex gap-2">
-        <button
-          class="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all text-sm font-bold shadow-sm">
-          <i class="fas fa-filter text-muted"></i>
-          <span>Filter</span>
-        </button>
+    <table class="w-full text-left border-collapse block md:table">
+      <!-- Desktop Header -->
+      <thead class="hidden md:table-header-group">
+        <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+          <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date &
+            Time</th>
+          <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Session
+            Name</th>
+          <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Council
+          </th>
+          <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            Description</th>
+          <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Material
+          </th>
+          <th
+            class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
+            Actions</th>
+        </tr>
+      </thead>
 
-        <button
-          class="p-3 bg-surface border border-main rounded-2xl text-main hover:bg-brand-purple/5 transition-all shadow-sm">
-          <i class="fas fa-calendar-alt text-muted"></i>
-        </button>
-      </div>
-    </div>
+      <!-- Content -->
+      <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y divide-slate-100 dark:divide-slate-800">
+        @for (session of SessionList | searchsessions: text; track session.id) {
+        <tr
+          class="block md:table-row bg-white dark:bg-slate-900 md:bg-transparent rounded-2xl border border-slate-200 dark:border-slate-700 md:border-none hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors group shadow-sm md:shadow-none">
 
-    <!-- Responsive Table -->
-    <div class="bg-transparent md:bg-surface md:rounded-3xl md:border md:border-main overflow-hidden md:shadow-sm">
-      <table class="w-full text-left border-collapse block md:table">
-        <!-- Desktop Header (Hidden on Mobile) -->
-        <thead class="hidden md:table-header-group">
-          <tr class="border-b border-main bg-app">
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
-              Date & Time
-            </th>
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
-              Session Name
-            </th>
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
-              Council
-            </th>
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
-              Description
-            </th>
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider">
-              Material
-            </th>
-            <th class="px-6 py-4 text-[11px] font-bold text-muted uppercase tracking-wider text-right">
-              Actions
-            </th>
-          </tr>
-        </thead>
-
-        <!-- Content -->
-        <tbody class="block md:table-row-group space-y-4 md:space-y-0 divide-y border-main">
-          @for (
-          session of SessionList | searchsessions: text;
-          track session.id
-          ) {
-          <tr
-            class="block md:table-row bg-surface md:bg-transparent rounded-2xl border border-main md:border-none hover:bg-brand-purple/5 transition-colors group shadow-sm md:shadow-none">
-            <!-- Date -->
-            <td
-              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Date</span>
-              <div class="text-sm font-bold text-main">
-                {{ session.date | date: "mediumDate" }}
-              </div>
-            </td>
-
-            <!-- Name -->
-            <td
-              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Session</span>
-              <div class="text-sm font-bold text-brand-purple">
-                {{ session.title }}
-              </div>
-            </td>
-
-            <!-- Council -->
-            <td
-              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Council</span>
+          <!-- Date -->
+          <td
+            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+            <span class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider">Date</span>
+            <div class="flex items-center gap-2">
               <div
-                class="text-sm text-main font-medium bg-app md:bg-transparent px-2 py-1 md:p-0 rounded-lg border border-main md:border-none">
+                class="hidden md:flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold">
+                <span>{{ session.date | date: 'MMM' }}</span>
+                <span>{{ session.date | date: 'dd' }}</span>
+              </div>
+              <div class="text-sm font-bold text-slate-800 dark:text-slate-200">
+                {{ session.date | date: "mediumDate" }}
+                <div class="text-xs font-normal text-slate-500 md:hidden">{{ session.date | date: "shortTime" }}</div>
+              </div>
+            </div>
+          </td>
+
+          <!-- Name -->
+          <td
+            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+            <span class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider">Session</span>
+            <div class="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+              {{ session.title }}
+            </div>
+          </td>
+
+          <!-- Council -->
+          <td
+            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+            <span class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider">Council</span>
+            <div>
+              <span
+                class=" text-center inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
                 {{ session.council }}
-              </div>
-            </td>
+              </span>
+            </div>
+          </td>
 
-            <!-- Description -->
-            <td class="flex flex-col md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider mb-1">Description</span>
-              <div class="text-sm text-muted leading-relaxed">
-                {{ session.description }}
-              </div>
-            </td>
+          <!-- Description -->
+          <td
+            class="flex flex-col md:table-cell px-4 md:px-6 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+            <span
+              class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Description</span>
+            <div class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
+              {{ session.description }}
+            </div>
+          </td>
 
-            <!-- Material -->
-            <td
-              class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 border-b border-main md:border-none">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Material</span>
-              <div class="text-sm">
-                <a [href]="session.material" target="_blank"
-                  class="text-brand-purple hover:underline font-bold flex items-center gap-1">
-                  <i class="fas fa-file-pdf"></i>
-                  Material
-                </a>
-              </div>
-            </td>
+          <!-- Material -->
+          <td
+            class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 md:border-none">
+            <span class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider">Material</span>
+            <div class="text-sm">
+              <a [href]="session.material" target="_blank"
+                class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-semibold flex items-center gap-1.5 transition-colors">
+                <i class="fas fa-file-pdf"></i>
+                <span class="underline decoration-purple-300/50 underline-offset-2">View Material</span>
+              </a>
+            </div>
+          </td>
 
-            <!-- Actions -->
-            <td class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-6 text-right">
-              <span class="md:hidden text-[11px] font-bold text-muted uppercase tracking-wider">Actions</span>
-              <div class="flex justify-end gap-2">
-                <button (click)="openEditModal(session)"
-                  class="p-2 text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button (click)="deleteSession(session.id)"
-                  class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+          <!-- Actions -->
+          <td class="flex justify-between items-center md:table-cell px-4 md:px-6 py-3 md:py-4 text-right">
+            <span class="md:hidden text-[10px] font-bold text-slate-400 uppercase tracking-wider">Actions</span>
+            <div class="flex justify-end gap-1">
+              <button (click)="openEditModal(session)"
+                class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all">
+                <i class="fas fa-pen text-xs"></i>
+              </button>
+              <button (click)="deleteSession(session.id)"
+                class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">
+                <i class="fas fa-trash text-xs"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
 
-      <!-- Footer / Pagination -->
-      <div
-        class="mt-4 md:mt-0 px-6 py-4 bg-app flex flex-col sm:flex-row items-center justify-between gap-4 border border-main md:border-none md:border-t rounded-2xl md:rounded-none shadow-sm md:shadow-none">
-        <div class="text-sm text-muted text-center sm:text-left order-2 sm:order-1">
-          Showing
-          <span class="font-bold text-main">{{ currentPage }}</span> of
-          <span class="font-bold text-main">{{ lastpage }}</span>
-          results
-        </div>
-        <div class="flex gap-2 w-full sm:w-auto order-1 sm:order-2">
-          <button (click)="changePage(currentPage - 1)"
-            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-muted border border-main rounded-xl bg-surface hover:text-main transition-all flex items-center justify-center gap-2 shadow-sm">
-            <i class="fas fa-chevron-left"></i>
-            Prev
-          </button>
-          <button (click)="changePage(currentPage + 1)"
-            class="flex-1 sm:flex-none px-4 py-2.5 text-sm font-bold text-main border border-main rounded-xl bg-surface hover:border-brand-purple transition-all flex items-center justify-center gap-2 shadow-sm">
-            Next
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
+    <!-- Pagination -->
+    <div
+      class="px-6 py-4 bg-white dark:bg-slate-900 md:border-t md:border-slate-100 dark:md:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 md:mt-0 rounded-2xl md:rounded-none border border-slate-200 dark:border-slate-700 md:border-x-0 md:border-b-0 shadow-sm md:shadow-none">
+      <div class="text-sm text-slate-500 dark:text-slate-400 font-medium order-2 sm:order-1">
+        Showing
+        <span class="font-bold text-slate-800 dark:text-slate-200">{{ currentPage }}</span> of
+        <span class="font-bold text-slate-800 dark:text-slate-200">{{ lastpage }}</span>
+        results
+      </div>
+      <div class="flex w-full sm:w-auto gap-2 order-1 sm:order-2">
+        <button (click)="changePage(currentPage - 1)"
+          class="flex-1 sm:flex-none justify-center px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          Previous
+        </button>
+        <button (click)="changePage(currentPage + 1)"
+          class="flex-1 sm:flex-none justify-center px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          Next
+        </button>
       </div>
     </div>
   </div>
@@ -173,68 +180,87 @@
 <!-- Modal -->
 @if (isModalOpen) {
 <div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
-      (click)="closeModal()"></div>
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
 
     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
     <div
-      class="inline-block align-bottom bg-surface border border-main rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in">
-      <form (ngSubmit)="onSubmit()">
-        <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-              <h3 class="text-xl font-bold text-main" id="modal-title">
-                {{ isEditMode ? "Edit Session" : "Create New Session" }}
-              </h3>
-              <div class="mt-4 space-y-4">
-                <div>
-                  <label for="title" class="block text-sm font-bold text-muted mb-1">Title</label>
-                  <input type="text" name="title" id="title" [(ngModel)]="sessionData.title" required
-                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
-                    placeholder="e.g. Session 1: Introduction" />
-                </div>
-                <div>
-                  <label for="date" class="block text-sm font-bold text-muted mb-1">Date</label>
-                  <input type="datetime-local" name="date" id="date" [(ngModel)]="sessionData.date" required
-                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all [color-scheme:dark]" />
-                </div>
-                <div>
-                  <label for="council" class="block text-sm font-bold text-muted mb-1">Council</label>
-                  <select name="council" id="council" [(ngModel)]="sessionData.council_id" required
-                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main transition-all">
-                    <option value="" disabled>Select Council</option>
-                    @for (council of CouncilList; track council.id) {
-                    <option [value]="council.id">
-                      {{ council.name }}
-                    </option>
-                    }
-                  </select>
-                </div>
-                <div>
-                  <label for="description" class="block text-sm font-bold text-muted mb-1">Description</label>
-                  <textarea name="description" id="description" [(ngModel)]="sessionData.description" required
-                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted h-32 transition-all"
-                    placeholder="Enter session details..."></textarea>
-                </div>
-                <div>
-                  <label for="material" class="block text-sm font-bold text-muted mb-1">Material URL</label>
-                  <input type="url" name="material" id="material" [(ngModel)]="sessionData.material"
-                    class="w-full rounded-xl border border-main shadow-sm focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none sm:text-sm p-3 bg-app text-main placeholder-muted transition-all"
-                    placeholder="https://threedos.web.app" />
-                </div>
+      class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in zoom-in-95 duration-200 border border-white/50 dark:border-slate-700">
+
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4">
+        <h3 class="text-xl font-bold text-white flex items-center gap-2" id="modal-title">
+          <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-calendar-plus'"></i>
+          {{ isEditMode ? "Edit Session" : "Create New Session" }}
+        </h3>
+        <p class="text-purple-100 text-sm mt-1">Fill in the details below to {{ isEditMode ? "update" : "schedule" }} a
+          session.</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="px-6 py-6 space-y-4">
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Title</label>
+          <input type="text" name="title" [(ngModel)]="sessionData.title" required
+            class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium"
+            placeholder="e.g. Session 1: Introduction" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Date &
+              Time</label>
+            <input type="datetime-local" name="date" [(ngModel)]="sessionData.date" required
+              class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium [color-scheme:light] dark:[color-scheme:dark]" />
+          </div>
+          <div>
+            <label
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Council</label>
+            <div class="relative">
+              <select name="council" [(ngModel)]="sessionData.council_id" required
+                class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+                <option value="" disabled>Select Council</option>
+                @for (council of CouncilList; track council.id) {
+                <option [value]="council.id">{{ council.name }}</option>
+                }
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+                <i class="fas fa-chevron-down text-xs"></i>
               </div>
             </div>
           </div>
         </div>
-        <div class="bg-app px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main">
+
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Description</label>
+          <textarea name="description" [(ngModel)]="sessionData.description" required
+            class="block w-full p-3 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium h-24 resize-none"
+            placeholder="Enter session agenda or details..."></textarea>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Material
+            URL</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 dark:text-slate-500"><i
+                class="fas fa-link"></i></span>
+            <input type="url" name="material" [(ngModel)]="sessionData.material"
+              class="block w-full pl-10 pr-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium"
+              placeholder="https://example.com/slides.pdf" />
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col-reverse sm:flex-row-reverse gap-3">
           <button type="submit"
-            class="w-full inline-flex justify-center rounded-xl bg-brand-purple px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-purple/20 transition-all hover:bg-opacity-90 active:scale-95">
+            class="w-full sm:w-auto inline-flex justify-center rounded-xl px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-sm font-bold text-white hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg shadow-purple-500/20">
             {{ isEditMode ? "Update" : "Create" }}
           </button>
           <button type="button" (click)="closeModal()"
-            class="mt-3 w-full inline-flex justify-center rounded-xl border border-main bg-surface px-6 py-2.5 text-sm font-bold text-main hover:bg-brand-purple/5 transition-all w-full sm:mt-0 sm:w-auto">
+            class="w-full sm:w-auto inline-flex justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all">
             Cancel
           </button>
         </div>

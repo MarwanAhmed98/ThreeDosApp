@@ -6,6 +6,7 @@ import { CouncilsService } from '../../../../core/services/councils/councils.ser
 import { ISession } from '../../../interfaces/isession';
 import { Icouncils } from '../../../interfaces/icouncils';
 import { SearchsessionsPipe } from '../../../pipes/searchsessions/searchsessions.pipe';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sessions',
   imports: [CommonModule, FormsModule, DatePipe, SearchsessionsPipe],
@@ -108,13 +109,23 @@ export class SessionsComponent implements AfterViewInit {
   }
 
   deleteSession(id: string): void {
-    if (confirm('Are you sure you want to delete this session?')) {
-      this.sessionsService.DeleteSession(id).subscribe({
-        next: () => {
-          this.GetSessionsList();
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this session!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.sessionsService.DeleteSession(id).subscribe({
+          next: () => {
+            this.GetSessionsList();
+            Swal.fire('Deleted!', 'The session has been deleted.', 'success');
+          }
+        });
+      }
+    });
   }
 
   ngAfterViewInit(): void {

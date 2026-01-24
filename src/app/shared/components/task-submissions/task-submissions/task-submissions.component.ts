@@ -9,6 +9,7 @@ import { ITaskSubmission } from '../../../interfaces/itask-submission';
 import { Itask } from '../../../interfaces/itask';
 import { Iusers } from '../../../interfaces/iusers';
 import { SearchsubmissionsPipe } from '../../../pipes/searchsubmissions/searchsubmissions.pipe';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-task-submissions',
@@ -41,7 +42,7 @@ export class TaskSubmissionsComponent implements OnInit {
   submissionData = {
     task_id: '',
     user_id: '',
-   status: '',
+    status: '',
     grade: ''
   };
 
@@ -135,13 +136,27 @@ export class TaskSubmissionsComponent implements OnInit {
   }
 
   deleteSubmission(id: string): void {
-    if (confirm('Are you sure you want to delete this submission?')) {
-      this.submissionsService.DeleteSubmission(id).subscribe({
-        next: () => {
-          this.GetSubmissions();
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this submission!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.submissionsService.DeleteSubmission(id).subscribe({
+          next: () => {
+            this.GetSubmissions();
+            Swal.fire(
+              'Deleted!',
+              'The submission has been deleted successfully.',
+              'success'
+            );
+          }
+        });
+      }
+    });
   }
 
   getStatusClass(status: string) {

@@ -1,165 +1,173 @@
-<div class="animate-in fade-in duration-500">
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+
   <!-- Header Section -->
-  <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-6">
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-6">
     <div>
-      <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
+      <h1
+        class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
         User Management
       </h1>
-      <p class="text-muted mt-2 text-sm md:text-base">
-        Manage access, roles, and permissions for your team members.
+      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+        Manage access, roles, and permissions for your team members effectively.
       </p>
     </div>
+
+    <!-- Action Buttons -->
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
       <button
-        class="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border border-main rounded-xl font-semibold hover:bg-brand-purple/5 text-main transition-all shadow-sm active:scale-95">
-        <i class="fas fa-file-import text-muted"></i>
-        <span class="text-sm">Bulk Import</span>
+        class="group flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all shadow-sm active:scale-95">
+        <i
+          class="fas fa-file-import text-slate-400 dark:text-slate-500 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors"></i>
+        <span>Bulk Import</span>
       </button>
       <button (click)="openAddModal()"
-        class="flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-purple text-white rounded-xl font-semibold hover:bg-opacity-90 transition-all shadow-md shadow-brand-purple/20 active:scale-95">
+        class="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all active:scale-95">
         <i class="fas fa-plus"></i>
-        <span class="text-sm">Create User</span>
+        <span>Create User</span>
       </button>
     </div>
   </div>
 
-  <!-- Filters & Search -->
+  <!-- Filters & Search Toolbar -->
   <div class="flex flex-col xl:flex-row items-stretch xl:items-center gap-4 mb-6">
-    <!-- Search -->
-    <div class="relative flex-1">
-      <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-muted">
-        <i class="fas fa-search"></i>
-      </span>
+    <!-- Search Input -->
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i
+          class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
+      </div>
       <input [(ngModel)]="text" type="text" placeholder="Search by Name, Email..."
-        class="w-full pl-11 pr-4 py-2.5 bg-surface border border-main rounded-xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-sm text-main placeholder-muted" />
+        class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm" />
     </div>
 
     <!-- Filter Selects -->
-    <div class="grid grid-cols-2 md:flex md:items-center gap-2 lg:gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:flex md:items-center gap-3">
       <select
-        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm cursor-pointer text-main">
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm appearance-none w-full md:min-w-[140px]">
         <option>Role: All</option>
       </select>
       <select
-        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm cursor-pointer text-main">
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm appearance-none w-full md:min-w-[140px]">
         <option>Council: All</option>
       </select>
       <select
-        class="bg-surface border border-main rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple/20 shadow-sm font-medium cursor-pointer text-main">
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm appearance-none w-full md:min-w-[140px]">
         <option>Status: Active</option>
       </select>
+
       <button
-        class="p-2.5 bg-surface border border-main rounded-xl hover:bg-brand-purple/5 shadow-sm transition-colors hidden md:block text-muted">
+        class="hidden md:flex items-center justify-center w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors shadow-sm">
         <i class="fas fa-filter"></i>
       </button>
     </div>
   </div>
 
-  <!-- Table Content -->
-  <div class="bg-surface border border-main rounded-2xl overflow-hidden shadow-sm">
+  <!-- Main Content Card -->
+  <div
+    class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden transition-colors">
+
     <!-- Desktop View: Table -->
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-left border-collapse">
-        <thead class="bg-app border-b border-main">
-          <tr>
+        <thead>
+          <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
             <th class="px-6 py-4 w-10">
-              <input type="checkbox" class="rounded border-main bg-app text-brand-purple focus:ring-brand-purple" />
+              <input type="checkbox"
+                class="rounded-[4px] border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-purple-600 focus:ring-purple-500/40 w-4 h-4 cursor-pointer" />
             </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider">
-              User
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">User
             </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center">
-              Role
-            </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center">
-              Council
-            </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center">
-              Last Active
-            </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center">
-              Status
-            </th>
-            <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-wider text-center">
-              Actions
-            </th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Role</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Council</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Last Active</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Status</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
+              Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y border-main">
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           @for (User of UsersList | searchuser: text; track User.id) {
-          <tr class="hover:bg-brand-purple/5 transition-colors">
+          <tr class="group hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors duration-200">
             <td class="px-6 py-4">
-              <input type="checkbox" class="rounded border-main bg-app text-brand-purple focus:ring-brand-purple" />
+              <input type="checkbox"
+                class="rounded-[4px] border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-purple-600 focus:ring-purple-500/40 w-4 h-4 cursor-pointer" />
             </td>
             <td class="px-6 py-4">
               <div class="flex items-center gap-3">
-                <img src="https://ui-avatars.com/api/?name={{
-                      User.name
-                    }}&background=7F4797&color=ffffff"
-                  class="w-10 h-10 rounded-full object-cover ring-2 ring-surface shadow-sm shrink-0" alt="avatar" />
+                <div class="relative flex-shrink-0">
+                  <img src="https://ui-avatars.com/api/?name={{User.name}}&background=7F4797&color=ffffff"
+                    class="w-10 h-10 rounded-full object-cover ring-2 ring-white dark:ring-slate-800 shadow-sm"
+                    alt="avatar" />
+                  @if(User.status === 'Active') {
+                  <span
+                    class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
+                  }
+                </div>
                 <div>
-                  <div class="font-semibold text-main leading-none">
+                  <div class="font-bold text-slate-800 dark:text-slate-200 text-sm">
                     {{ User.name }}
                   </div>
-                  <div class="text-xs text-muted mt-1">
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     {{ User.email }}
                   </div>
                 </div>
               </div>
             </td>
             <td class="px-6 py-4 text-center">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider" [ngClass]="{
-                    'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300':
-                      User.role === 'Head',
-                    'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300':
-                      User.role == 'Instructor',
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide border shadow-sm"
+                [ngClass]="{
+                    'bg-purple-50 text-purple-700 border-purple-100 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700': User.role === 'Head',
+                    'bg-indigo-50 text-indigo-700 border-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700': User.role === 'VicePresident',
+                    'bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600': User.role === 'Instructor'
                   }">{{ User.role }}</span>
             </td>
             <td class="px-6 py-4 text-center">
               <span
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border border-main bg-surface shadow-sm text-main">
-                <span class="w-1.5 h-1.5 rounded-full" [ngClass]="{
-                      'bg-blue-500':
-                        User.council === 'Backend Development Council',
-                      'bg-orange-500':
-                        User.council === 'Frontend Development Council',
-                      'bg-pink-500': User.council === 'Marketing',
-                      'bg-indigo-500': User.council === 'Engineering',
-                    }"></span>
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-sm">
+                <span class="relative flex h-2 w-2">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-purple-400"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-600 dark:bg-purple-500"></span>
+                </span>
                 {{ User.council }}
               </span>
             </td>
-            <td class="px-6 py-4 text-center text-sm text-muted font-medium">
+            <td class="px-6 py-4 text-center text-sm text-slate-500 dark:text-slate-400 font-medium">
               {{ User.last_active }}
             </td>
             <td class="px-6 py-4 text-center">
               <span
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider"
+                class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide"
                 [ngClass]="{
-                    'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300':
-                      User.status === 'Active',
-                    'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400':
-                      User.status === 'Offline',
-                    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300':
-                      User.status === 'Invited',
+                    'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-900/30 dark:text-emerald-400 dark:ring-emerald-500/30': User.status === 'Active',
+                    'bg-slate-50 text-slate-600 ring-1 ring-inset ring-slate-500/20 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-600/40': User.status === 'Offline',
+                    'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30': User.status === 'Invited'
                   }">
                 {{ User.status }}
               </span>
             </td>
-            <td class="px-6 py-4">
-              <div class="flex justify-center gap-2">
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-1">
                 <button (click)="openEditModal(User)"
-                  class="p-1.5 text-brand-purple hover:bg-brand-purple/10 rounded-lg transition-colors">
-                  <i class="fas fa-edit"></i>
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all"
+                  title="Edit">
+                  <i class="fas fa-pen text-xs"></i>
                 </button>
-                @if (
-                User.role !== "VicePresident" &&
-                User.role !== "Head" &&
-                User.role !== "Instructor"
-                ) {
+                @if (User.role !== "VicePresident" && User.role !== "Head" && User.role !== "Instructor") {
                 <button (click)="deleteUser(User.id)"
-                  class="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                  <i class="fas fa-trash"></i>
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                  title="Delete">
+                  <i class="fas fa-trash text-xs"></i>
                 </button>
                 }
               </div>
@@ -170,73 +178,92 @@
       </table>
     </div>
 
-    <!-- Mobile View: Card List -->
-    <div class="md:hidden divide-y border-main">
+    <!-- Mobile View: Fully Responsive Cards -->
+    <div class="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
       @for (User of UsersList | searchuser: text; track User.id) {
       <div class="p-4 flex flex-col gap-4">
+
+        <!-- Mobile Header -->
         <div class="flex items-start justify-between">
           <div class="flex items-center gap-3">
-            <img src="https://ui-avatars.com/api/?name={{
-                  User.name
-                }}&background=7F4797&color=ffffff" class="w-12 h-12 rounded-full ring-2 ring-main" alt="avatar" />
+            <img src="https://ui-avatars.com/api/?name={{User.name}}&background=7F4797&color=ffffff"
+              class="w-12 h-12 rounded-full ring-2 ring-purple-100 dark:ring-purple-900/40" alt="avatar" />
             <div>
-              <div class="font-bold text-main">{{ User.name }}</div>
-              <div class="text-xs text-muted">{{ User.email }}</div>
+              <div class="font-bold text-slate-800 dark:text-slate-100 text-lg leading-tight">{{ User.name }}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium break-all">{{ User.email }}</div>
             </div>
           </div>
-          @if (
-          User.role !== "VicePresident" &&
-          User.role !== "Head" &&
-          User.role !== "Instructor"
-          ) {
-          <button (click)="deleteUser(User.id)" class="text-red-400 p-1 hover:text-red-600">
-            <i class="fas fa-trash"></i>
-          </button>
-          }
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-app p-2 rounded-lg border border-main">
-            <span class="block text-[10px] uppercase font-bold text-muted mb-1">Role</span>
-            <span class="text-xs font-semibold text-main">{{
-              User.role
-              }}</span>
-          </div>
-          <div class="bg-app p-2 rounded-lg border border-main">
-            <span class="block text-[10px] uppercase font-bold text-muted mb-1">Status</span>
-            <span class="text-xs font-semibold text-emerald-500">{{
-              User.status
-              }}</span>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between text-xs text-muted">
-          <span class="flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-brand-purple"></span>
-            {{ User.council }}
+          <span
+            class="flex-shrink-0 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border"
+            [ngClass]="{
+                'bg-emerald-50 border-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400': User.status === 'Active',
+                'bg-slate-50 border-slate-200 text-slate-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400': User.status === 'Offline',
+                'bg-amber-50 border-amber-100 text-amber-700 dark:bg-amber-900/30 dark:border-amber-800 dark:text-amber-400': User.status === 'Invited'
+              }">
+            {{ User.status }}
           </span>
-          <span class="italic">Last seen: {{ User.last_active }}</span>
+        </div>
+
+        <!-- Mobile Data Grid -->
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+            <span class="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-1">Role</span>
+            <span class="font-bold text-slate-700 dark:text-slate-200">{{ User.role }}</span>
+          </div>
+          <div
+            class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+            <span class="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-1">Council</span>
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2 w-2 flex-shrink-0">
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-purple-400"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-600 dark:bg-purple-500"></span>
+              </span>
+              <span class="font-bold text-slate-700 dark:text-slate-200 truncate text-sm">{{ User.council }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Footer -->
+        <div class="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-800 mt-1">
+          <div class="text-xs font-medium text-slate-400 dark:text-slate-500 italic">
+            <i class="far fa-clock mr-1"></i> {{ User.last_active }}
+          </div>
+
+          <div class="flex gap-3">
+            <button (click)="openEditModal(User)"
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 active:scale-95 transition-transform">
+              <i class="fas fa-pen text-xs"></i>
+            </button>
+
+            @if (User.role !== "VicePresident" && User.role !== "Head" && User.role !== "Instructor") {
+            <button (click)="deleteUser(User.id)"
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 active:scale-95 transition-transform">
+              <i class="fas fa-trash text-xs"></i>
+            </button>
+            }
+          </div>
         </div>
       </div>
       }
     </div>
 
     <!-- Pagination -->
-    <div class="px-6 py-4 bg-app border-t border-main flex flex-col sm:flex-row items-center justify-between gap-4">
-      <button (click)="changePage(currentPage - 1)"
-        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-main bg-surface rounded-xl text-sm font-semibold hover:bg-brand-purple/5 text-main shadow-sm transition-all active:bg-brand-purple/10">
-        <i class="fas fa-chevron-left"></i>
-        Previous
-      </button>
-      <div class="text-sm text-muted font-medium order-first sm:order-none">
-        Page <span class="text-main font-bold">{{ currentPage }}</span> of
-        {{ totalPages }}
+    <div
+      class="px-6 py-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-slate-500 dark:text-slate-400 font-medium order-2 sm:order-1">
+        Page <span class="font-bold text-slate-800 dark:text-slate-200">{{ currentPage }}</span> of {{ totalPages }}
       </div>
-      <button (click)="changePage(currentPage + 1)"
-        class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-main bg-surface rounded-xl text-sm font-semibold hover:bg-brand-purple/5 text-main shadow-sm transition-all active:bg-brand-purple/10">
-        Next
-        <i class="fas fa-chevron-right"></i>
-      </button>
+      <div class="flex w-full sm:w-auto gap-2 order-1 sm:order-2">
+        <button (click)="changePage(currentPage - 1)"
+          class="flex-1 sm:flex-none justify-center px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          Previous
+        </button>
+        <button (click)="changePage(currentPage + 1)"
+          class="flex-1 sm:flex-none justify-center px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -244,94 +271,123 @@
 <!-- Modal -->
 @if (isModalOpen) {
 <div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" aria-hidden="true"
-      (click)="closeModal()"></div>
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
 
     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
     <div
-      class="inline-block align-bottom bg-surface border border-main rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in">
-      <form (ngSubmit)="onSubmit()">
-        <div class="bg-surface px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-              <h3 class="text-xl font-bold text-main" id="modal-title">
-                {{ isEditMode ? "Edit User" : "Create New User" }}
-              </h3>
-              <div class="mt-4 space-y-4">
-                <div>
-                  <label for="name" class="block text-sm font-semibold text-muted">Name *</label>
-                  <input type="text" name="name" id="name" [(ngModel)]="userData.name" required
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
-                    placeholder="Enter full name" />
-                </div>
-                <div>
-                  <label for="email" class="block text-sm font-semibold text-muted">Email *</label>
-                  <input type="email" name="email" id="email" [(ngModel)]="userData.email" required
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
-                    placeholder="Enter email address" />
-                </div>
-                @if (!isEditMode) {
-                <div>
-                  <label for="password" class="block text-sm font-semibold text-muted">Password *</label>
-                  <input type="password" name="password" id="password" [(ngModel)]="userData.password" required
-                    minlength="8"
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
-                    placeholder="Enter password (min 8 characters)" />
-                </div>
-                } @else {
-                <div>
-                  <label for="password" class="block text-sm font-semibold text-muted">Password (leave blank to keep
-                    current)</label>
-                  <input type="password" name="password" id="password" [(ngModel)]="userData.password" minlength="8"
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main placeholder-muted"
-                    placeholder="Enter new password (optional)" />
-                </div>
+      class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in zoom-in-95 duration-200 border border-white/50 dark:border-slate-700">
+
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4">
+        <h3 class="text-xl font-bold text-white flex items-center gap-2" id="modal-title">
+          <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-user-plus'"></i>
+          {{ isEditMode ? "Edit User" : "Create New User" }}
+        </h3>
+        <p class="text-purple-100 text-sm mt-1">Fill in the details below to {{ isEditMode ? "update" : "add" }} a user.
+        </p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="px-6 py-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Full
+            Name</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 dark:text-slate-500"><i
+                class="fas fa-user"></i></span>
+            <input type="text" name="name" [(ngModel)]="userData.name" required
+              class="block w-full pl-10 pr-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium"
+              placeholder="John Doe" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Email
+            Address</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 dark:text-slate-500"><i
+                class="fas fa-envelope"></i></span>
+            <input type="email" name="email" [(ngModel)]="userData.email" required
+              class="block w-full pl-10 pr-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium"
+              placeholder="john@example.com" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">
+            Password {{ isEditMode ? '(Optional)' : '*' }}
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 dark:text-slate-500"><i
+                class="fas fa-lock"></i></span>
+            <input type="password" name="password" [(ngModel)]="userData.password" [required]="!isEditMode"
+              minlength="8"
+              class="block w-full pl-10 pr-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium"
+              placeholder="••••••••" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Role</label>
+            <div class="relative">
+              <select name="role_id" [(ngModel)]="userData.role_id" required
+                class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+                <option value="" disabled>Select</option>
+                @for (role of RolesList; track role.id) {
+                <option [value]="role.id">{{ role.name }}</option>
                 }
-                <div>
-                  <label for="role_id" class="block text-sm font-semibold text-muted">Role *</label>
-                  <select name="role_id" id="role_id" [(ngModel)]="userData.role_id" required
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main">
-                    <option value="" disabled>Select Role</option>
-                    @for (role of RolesList; track role.id) {
-                    <option [value]="role.id">
-                      {{ role.name }}
-                    </option>
-                    }
-                  </select>
-                </div>
-                <div>
-                  <label for="council_id" class="block text-sm font-semibold text-muted">Council *</label>
-                  <select name="council_id" id="council_id" [(ngModel)]="userData.council_id" required
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main">
-                    <option value="" disabled>Select Council</option>
-                    @for (council of CouncilList; track council.id) {
-                    <option [value]="council.id">
-                      {{ council.name }}
-                    </option>
-                    }
-                  </select>
-                </div>
-                <div>
-                  <label for="status" class="block text-sm font-semibold text-muted">Status</label>
-                  <select name="status" id="status" [(ngModel)]="userData.status" required
-                    class="mt-1 block w-full border-main rounded-xl shadow-sm focus:ring-brand-purple focus:border-brand-purple sm:text-sm p-3 bg-app text-main">
-                    <option value="Active">Active</option>
-                    <option value="Offline">Offline</option>
-                  </select>
-                </div>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+                <i class="fas fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label
+              class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Council</label>
+            <div class="relative">
+              <select name="council_id" [(ngModel)]="userData.council_id" required
+                class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+                <option value="" disabled>Select</option>
+                @for (council of CouncilList; track council.id) {
+                <option [value]="council.id">{{ council.name }}</option>
+                }
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+                <i class="fas fa-chevron-down text-xs"></i>
               </div>
             </div>
           </div>
         </div>
-        <div class="bg-app px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2 border-t border-main">
+
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Status</label>
+          <div class="relative">
+            <select name="status" [(ngModel)]="userData.status" required
+              class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
+              <option value="Active">Active</option>
+              <option value="Offline">Offline</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+              <i class="fas fa-chevron-down text-xs"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col-reverse sm:flex-row-reverse gap-3">
           <button type="submit"
-            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-md px-6 py-2.5 bg-brand-purple text-sm font-bold text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:ml-3 sm:w-auto transition-all">
-            {{ isEditMode ? "Update" : "Create" }}
+            class="w-full sm:w-auto inline-flex justify-center rounded-xl px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-sm font-bold text-white hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg shadow-purple-500/20">
+            {{ isEditMode ? "Save Changes" : "Create User" }}
           </button>
           <button type="button" (click)="closeModal()"
-            class="mt-3 w-full inline-flex justify-center rounded-xl border border-main shadow-sm px-6 py-2.5 bg-surface text-sm font-bold text-main hover:bg-brand-purple/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-purple sm:mt-0 sm:ml-3 sm:w-auto transition-all">
+            class="w-full sm:w-auto inline-flex justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all">
             Cancel
           </button>
         </div>

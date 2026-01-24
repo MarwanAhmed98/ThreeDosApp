@@ -9,6 +9,7 @@ import { ISession } from '../../../interfaces/isession';
 import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
 import { RouterModule } from '@angular/router';
 import { DelegateTasksComponent } from '../../delegate-tasks/delegate-tasks.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tasksmangement',
@@ -133,12 +134,26 @@ export class TasksmangementComponent implements OnInit {
   }
 
   deleteTask(id: string): void {
-    if (confirm('Are you sure you want to delete this task?')) {
-      this.tasksService.DeleteTask(id).subscribe({
-        next: () => {
-          this.GetTasksList();
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this task!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.tasksService.DeleteTask(id).subscribe({
+          next: () => {
+            this.GetTasksList();
+            Swal.fire(
+              'Deleted!',
+              'The task has been deleted successfully.',
+              'success'
+            );
+          }
+        });
+      }
+    });
   }
 }

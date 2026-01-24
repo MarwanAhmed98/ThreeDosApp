@@ -5,6 +5,7 @@ import { AttendancesService } from '../../../../core/services/attendances/attend
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
 import { UsersService } from '../../../../core/services/users/users.service';
 import { SearchattendancePipe } from '../../../pipes/searchattendance/searchattendance.pipe';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-attendance',
@@ -118,7 +119,7 @@ export class AttendanceComponent implements OnInit {
     this.attendanceData = {
       user_id: attendance.student_id || '',
       council_session_id: attendance.session_id || '',
-   
+
       status: attendance.status
     };
     this.isModalOpen = true;
@@ -147,13 +148,27 @@ export class AttendanceComponent implements OnInit {
   }
 
   deleteAttendance(id: string): void {
-    if (confirm('Are you sure you want to delete this attendance record?')) {
-      this.attendanceService.DeleteAttendance(id).subscribe({
-        next: () => {
-          this.GetAttendances();
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this attendance record!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.attendanceService.DeleteAttendance(id).subscribe({
+          next: () => {
+            this.GetAttendances();
+            Swal.fire(
+              'Deleted!',
+              'The attendance record has been deleted successfully.',
+              'success'
+            );
+          }
+        });
+      }
+    });
   }
 
   getStatusClass(status: string) {

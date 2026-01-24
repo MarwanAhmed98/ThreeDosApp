@@ -9,6 +9,7 @@ import { Iusers } from '../../../interfaces/iusers';
 import { Icouncils } from '../../../interfaces/icouncils';
 import { IRole } from '../../../interfaces/iroles';
 import { SearchuserPipe } from '../../../pipes/searchuser/searchuser.pipe';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -188,17 +189,26 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: string): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.usersService.DeleteUser(id).subscribe({
-        next: () => {
-          this.toastr.success('User deleted successfully', 'Success');
-          this.GetUsers();
-        },
-        error: () => {
-          this.toastr.error('Failed to delete user', 'Error');
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this user!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete user!',
+      cancelButtonText: 'Cancel'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.usersService.DeleteUser(id).subscribe({
+          next: () => {
+            this.toastr.success('User deleted successfully', 'Success');
+            this.GetUsers();
+          },
+          error: () => {
+            this.toastr.error('Failed to delete user', 'Error');
+          }
+        });
+      }
+    });
   }
 
   // Helper methods to get display names

@@ -1,170 +1,193 @@
-<div class="animate-in fade-in duration-500">
-  <div class="max-w-7xl mx-auto">
-    <!-- Header -->
-    <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
-    >
-      <div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-main">
-          Attendance Management
-        </h1>
-        <p class="text-muted mt-1 text-sm md:text-base">
-          Track and manage student attendance for council sessions.
-        </p>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-        <button
-          (click)="openBulkModal()"
-          class="flex items-center justify-center gap-2 px-6 py-3 bg-surface border border-main rounded-2xl font-bold text-main hover:bg-brand-purple/5 transition-all shadow-sm active:scale-95"
-        >
-          <i class="fas fa-file-import"></i>
-          Bulk Import
-        </button>
-        <button
-          (click)="openAddModal()"
-          class="flex items-center justify-center gap-2 px-6 py-3 bg-brand-purple text-white rounded-2xl font-bold transition-all shadow-lg shadow-brand-purple/20 active:scale-95 hover:bg-opacity-90"
-        >
-          <i class="fas fa-user-check"></i>
-          Mark Attendance
-        </button>
-      </div>
+<div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
+
+  <!-- Header Section -->
+  <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-6">
+    <div>
+      <h1
+        class="text-2xl sm:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
+        Attendance Management
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
+        Track and manage student attendance for council sessions.
+      </p>
     </div>
 
-    <!-- Search & Filters -->
-    <div class="flex flex-col lg:flex-row gap-4 mb-8">
-      <div class="relative flex-1">
-        <span class="absolute inset-y-0 left-4 flex items-center text-muted">
-          <i class="fas fa-search"></i>
-        </span>
-        <input
-          [(ngModel)]="text"
-          type="text"
-          placeholder="Search by Student or Session..."
-          class="w-full pl-12 pr-4 py-3.5 bg-surface border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted"
-        />
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+      <button (click)="openBulkModal()"
+        class="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-semibold text-slate-700 dark:text-slate-200 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all shadow-sm active:scale-95 w-full sm:w-auto">
+        <i class="fas fa-file-import text-slate-400 dark:text-slate-500"></i>
+        <span>Bulk Import</span>
+      </button>
+      <button (click)="openAddModal()"
+        class="flex items-center justify-center gap-2 px-6 py-3 sm:py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all active:scale-95 w-full sm:w-auto">
+        <i class="fas fa-user-check"></i>
+        <span>Mark Attendance</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="flex flex-col lg:flex-row gap-4 mb-6">
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i
+          class="fas fa-search text-slate-400 dark:text-slate-500 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors"></i>
       </div>
+      <input [(ngModel)]="text" type="text" placeholder="Search by Student or Session..."
+        class="w-full pl-10 pr-4 py-3 sm:py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm" />
+    </div>
+  </div>
+
+  <!-- Attendance Container -->
+  <div
+    class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-black/20 overflow-hidden transition-colors">
+
+    <!-- Desktop View: Table -->
+    <div class="hidden md:block overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Student
+            </th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Session
+            </th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Date</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
+              Status</th>
+            <th
+              class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
+              Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          @for (record of AttendanceList | searchattendance: text; track record.id) {
+          <tr class="group hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors duration-200">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-9 h-9 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-700 dark:text-purple-300 font-bold text-sm ring-2 ring-white dark:ring-slate-800 shadow-sm">
+                  {{ record.student?.charAt(0) || "U" }}
+                </div>
+                <div class="font-bold text-slate-800 dark:text-slate-200 text-sm">
+                  {{ record.student || "Unknown Student" }}
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                {{ record.session || "Unknown Session" }}
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <div class="text-sm text-slate-500 dark:text-slate-400">
+                {{ record.created_at | date: "mediumDate" }}
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold capitalize tracking-wide border shadow-sm"
+                [ngClass]="{
+                    'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800': record.status === 'present',
+                    'bg-red-50 text-red-700 border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800': record.status === 'absent',
+                    'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800': record.status === 'late'
+                  }">
+                {{ record.status }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-1">
+                <button (click)="openEditModal(record)"
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all">
+                  <i class="fas fa-edit text-xs"></i>
+                </button>
+                <button (click)="deleteAttendance(record.id)"
+                  class="w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">
+                  <i class="fas fa-trash text-xs"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
     </div>
 
-    <!-- Attendance Table -->
-    <div
-      class="bg-surface rounded-3xl border border-main shadow-sm overflow-hidden"
-    >
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-app border-b border-main">
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
-              >
-                Student
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider"
-              >
-                Session
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
-              >
-                Date
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-center"
-              >
-                Status
-              </th>
-              <th
-                class="px-6 py-5 text-[11px] font-bold text-muted uppercase tracking-wider text-right"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y border-main">
-            @for (
-              record of AttendanceList | searchattendance: text;
-              track record.id
-            ) {
-              <tr class="hover:bg-brand-purple/5 transition-colors group">
-                <td class="px-6 py-5">
-                  <div class="flex items-center gap-3">
-                    <div
-                      class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple font-bold text-sm"
-                    >
-                      {{ record.student?.charAt(0) || "U" }}
-                    </div>
-                    <div class="font-bold text-main">
-                      {{ record.student || "Unknown Student" }}
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-5">
-                  <div class="text-sm font-bold text-main">
-                    {{ record.session || "Unknown Session" }}
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <div class="text-sm text-muted">
-                    {{ record.created_at | date: "mediumDate" }}
-                  </div>
-                </td>
-                <td class="px-6 py-5 text-center">
-                  <span
-                    [class]="
-                      'px-3.5 py-1.5 rounded-full text-xs font-bold capitalize transition-all ' +
-                      getStatusClass(record.status)
-                    "
-                  >
-                    {{ record.status }}
-                  </span>
-                </td>
-                <td class="px-6 py-5 text-right">
-                  <div class="flex justify-end gap-1">
-                    <button
-                      (click)="openEditModal(record)"
-                      class="p-2 text-muted hover:text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                    <button
-                      (click)="deleteAttendance(record.id)"
-                      class="p-2 text-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+    <!-- Mobile View: Modern Cards -->
+    <div class="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+      @for (record of AttendanceList | searchattendance: text; track record.id) {
+      <div class="p-4 flex flex-col gap-4">
 
-      <!-- Pagination -->
+        <!-- Top Row: Student info & Status -->
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-100 to-indigo-50 dark:from-purple-900/50 dark:to-indigo-900/30 flex items-center justify-center text-purple-700 dark:text-purple-300 font-bold text-sm ring-1 ring-black/5 dark:ring-white/10">
+              {{ record.student?.charAt(0) || "U" }}
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 dark:text-slate-100 text-base">{{ record.student || "Unknown" }}
+              </div>
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ record.created_at | date:
+                "mediumDate" }}</div>
+            </div>
+          </div>
+
+          <span
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm"
+            [ngClass]="{
+                    'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800': record.status === 'present',
+                    'bg-red-50 text-red-700 border-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800': record.status === 'absent',
+                    'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800': record.status === 'late'
+                  }">
+            {{ record.status }}
+          </span>
+        </div>
+
+        <!-- Middle: Session info card -->
+        <div class="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700">
+          <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1">Session
+          </div>
+          <div class="text-sm font-semibold text-slate-700 dark:text-slate-200 line-clamp-1">
+            {{ record.session || "Unknown Session" }}
+          </div>
+        </div>
+
+        <!-- Bottom: Actions -->
+        <div class="flex justify-end gap-2 pt-1">
+          <button (click)="openEditModal(record)"
+            class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-sm font-semibold active:scale-95 transition-all">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button (click)="deleteAttendance(record.id)"
+            class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-900/30 text-sm font-semibold active:scale-95 transition-all">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Pagination -->
+    <div
+      class="px-6 py-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div
-        class="px-6 py-5 bg-app border-t border-main flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <div class="text-sm text-muted font-medium">
-          Showing
-          <span class="text-main font-bold">{{ currentPage }}</span> of
-          <span class="text-main font-bold">{{ lastPage }}</span> pages
-        </div>
-        <div class="flex items-center gap-2">
-          <button
-            (click)="changePage(currentPage - 1)"
-            [disabled]="currentPage === 1"
-            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
-          >
-            Previous
-          </button>
-          <button
-            (click)="changePage(currentPage + 1)"
-            [disabled]="currentPage === lastPage"
-            class="px-4 py-2 bg-surface border border-main rounded-xl text-sm font-bold text-main hover:bg-brand-purple/5 disabled:opacity-50 disabled:pointer-events-none transition-all shadow-sm"
-          >
-            Next
-          </button>
-        </div>
+        class="text-sm text-slate-500 dark:text-slate-400 font-medium order-2 sm:order-1 text-center sm:text-left w-full sm:w-auto">
+        Showing
+        <span class="text-slate-800 dark:text-slate-200 font-bold">{{ currentPage }}</span> of
+        <span class="text-slate-800 dark:text-slate-200 font-bold">{{ lastPage }}</span> pages
+      </div>
+      <div class="flex w-full sm:w-auto gap-2 order-1 sm:order-2">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+          class="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+          Previous
+        </button>
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === lastPage"
+          class="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+          Next
+        </button>
       </div>
     </div>
   </div>
@@ -172,211 +195,186 @@
 
 <!-- Modal -->
 @if (isModalOpen) {
-  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    <div
-      class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm"
-      (click)="closeModal()"
-    ></div>
+<div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
+
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
     <div
-      class="relative w-full max-w-lg bg-surface border border-main rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
-    >
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-main">
-            {{ isEditMode ? "Update Record" : "Mark New Attendance" }}
+      class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in zoom-in-95 duration-200 border border-white/50 dark:border-slate-700">
+
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 flex justify-between items-center">
+        <div>
+          <h3 class="text-xl font-bold text-white flex items-center gap-2" id="modal-title">
+            <i class="fas" [ngClass]="isEditMode ? 'fa-edit' : 'fa-user-check'"></i>
+            {{ isEditMode ? "Update Record" : "Mark Attendance" }}
           </h3>
-          <button (click)="closeModal()" class="text-muted hover:text-main p-2">
-            <i class="fas fa-times"></i>
-          </button>
+          <p class="text-purple-100 text-sm mt-1">Select student and update their status.</p>
         </div>
+        <button (click)="closeModal()" class="text-white/70 hover:text-white transition-colors">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
 
-        <form (ngSubmit)="onSubmit()" class="space-y-5">
-          <div>
-            <label class="block text-sm font-bold text-muted mb-2"
-              >Student</label
-            >
-            <select
-              [(ngModel)]="attendanceData.user_id"
-              name="user_id"
-              required
-              [disabled]="isEditMode"
-              class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main disabled:opacity-50"
-            >
+      <form (ngSubmit)="onSubmit()" class="px-6 py-6 space-y-5">
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Student</label>
+          <div class="relative">
+            <select [(ngModel)]="attendanceData.user_id" name="user_id" required [disabled]="isEditMode"
+              class="block w-full px-3 py-3 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none disabled:opacity-60">
               <option value="" disabled>Select Student</option>
               @for (user of UserList; track user.id) {
-                <option [value]="user.id">{{ user.name }}</option>
+              <option [value]="user.id">{{ user.name }}</option>
               }
             </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-bold text-muted mb-2"
-              >Session</label
-            >
-            <select
-              [(ngModel)]="attendanceData.council_session_id"
-              name="council_session_id"
-              required
-              [disabled]="isEditMode"
-              class="w-full px-4 py-3.5 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main disabled:opacity-50"
-            >
-              <option value="" disabled>Select Session</option>
-              @for (session of SessionList; track session.id) {
-                <option [value]="session.id">{{ session.title }}</option>
-              }
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-bold text-muted mb-2"
-              >Status</label
-            >
-            <div class="grid grid-cols-3 gap-3">
-              <button
-                type="button"
-                (click)="attendanceData.status = 'present'"
-                [class]="
-                  attendanceData.status === 'present'
-                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
-                    : 'bg-app text-muted hover:bg-brand-purple/5 border border-main'
-                "
-                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
-              >
-                Present
-              </button>
-              <button
-                type="button"
-                (click)="attendanceData.status = 'absent'"
-                [class]="
-                  attendanceData.status === 'absent'
-                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
-                    : 'bg-app text-muted hover:bg-brand-purple/5 border border-main'
-                "
-                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
-              >
-                Absent
-              </button>
-              <button
-                type="button"
-                (click)="attendanceData.status = 'late'"
-                [class]="
-                  attendanceData.status === 'late'
-                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
-                    : 'bg-app text-muted hover:bg-brand-purple/5 border border-main'
-                "
-                class="px-4 py-3 rounded-2xl font-bold transition-all text-sm"
-              >
-                Late
-              </button>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+              <i class="fas fa-chevron-down text-xs"></i>
             </div>
           </div>
+        </div>
 
-          <div class="pt-4 flex gap-3">
-            <button
-              type="button"
-              (click)="closeModal()"
-              class="flex-1 px-6 py-4 rounded-2xl font-bold text-muted bg-app border border-main hover:bg-brand-purple/5 transition-all"
-            >
-              Cancel
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Session</label>
+          <div class="relative">
+            <select [(ngModel)]="attendanceData.council_session_id" name="council_session_id" required
+              [disabled]="isEditMode"
+              class="block w-full px-3 py-3 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none disabled:opacity-60">
+              <option value="" disabled>Select Session</option>
+              @for (session of SessionList; track session.id) {
+              <option [value]="session.id">{{ session.title }}</option>
+              }
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
+              <i class="fas fa-chevron-down text-xs"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">Status</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button type="button" (click)="attendanceData.status = 'present'" [class]="
+                  attendanceData.status === 'present'
+                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 ring-2 ring-emerald-500 ring-offset-2 dark:ring-offset-slate-900'
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                "
+              class="px-4 py-3 rounded-xl font-bold transition-all text-sm flex sm:flex-col items-center justify-center gap-2 active:scale-95">
+              <i class="fas fa-check-circle"
+                [ngClass]="{'text-white': attendanceData.status === 'present', 'text-emerald-500': attendanceData.status !== 'present'}"></i>
+              Present
             </button>
-            <button
-              type="submit"
-              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-brand-purple hover:opacity-90 shadow-lg shadow-brand-purple/20 transition-all active:scale-95"
-            >
-              {{ isEditMode ? "Update Record" : "Save Attendance" }}
+            <button type="button" (click)="attendanceData.status = 'absent'" [class]="
+                  attendanceData.status === 'absent'
+                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 ring-2 ring-red-500 ring-offset-2 dark:ring-offset-slate-900'
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                "
+              class="px-4 py-3 rounded-xl font-bold transition-all text-sm flex sm:flex-col items-center justify-center gap-2 active:scale-95">
+              <i class="fas fa-times-circle"
+                [ngClass]="{'text-white': attendanceData.status === 'absent', 'text-red-500': attendanceData.status !== 'absent'}"></i>
+              Absent
+            </button>
+            <button type="button" (click)="attendanceData.status = 'late'" [class]="
+                  attendanceData.status === 'late'
+                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/30 ring-2 ring-amber-500 ring-offset-2 dark:ring-offset-slate-900'
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                "
+              class="px-4 py-3 rounded-xl font-bold transition-all text-sm flex sm:flex-col items-center justify-center gap-2 active:scale-95">
+              <i class="fas fa-clock"
+                [ngClass]="{'text-white': attendanceData.status === 'late', 'text-amber-500': attendanceData.status !== 'late'}"></i>
+              Late
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="pt-4 flex flex-col-reverse sm:flex-row gap-3">
+          <button type="button" (click)="closeModal()"
+            class="w-full sm:w-auto flex-1 px-6 py-3 sm:py-2.5 rounded-xl font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all">
+            Cancel
+          </button>
+          <button type="submit"
+            class="w-full sm:w-auto flex-[2] px-6 py-3 sm:py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg shadow-purple-500/20 active:scale-95">
+            {{ isEditMode ? "Update Record" : "Save Attendance" }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 }
 
 <!-- Bulk Upload Modal -->
 @if (isBulkModalOpen) {
-  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-    <div
-      class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm"
-      (click)="closeBulkModal()"
-    ></div>
+<div class="fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" (click)="closeBulkModal()"></div>
+
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
     <div
-      class="relative w-full max-w-lg bg-surface border border-main rounded-[2rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
-    >
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-main">Bulk Attendance Import</h3>
-          <button
-            (click)="closeBulkModal()"
-            class="text-muted hover:text-main p-2"
-          >
-            <i class="fas fa-times"></i>
-          </button>
+      class="inline-block align-bottom bg-white dark:bg-slate-900 rounded-3xl text-left overflow-hidden shadow-2xl shadow-purple-900/20 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full animate-in zoom-in-95 duration-200 border border-white/50 dark:border-slate-700">
+
+      <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 flex justify-between items-center">
+        <div>
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fas fa-file-csv"></i>
+            Bulk Import
+          </h3>
+          <p class="text-purple-100 text-sm mt-1">Upload records via CSV/Excel.</p>
+        </div>
+        <button (click)="closeBulkModal()" class="text-white/70 hover:text-white transition-colors">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6">
+        <div
+          class="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-xl p-4 flex gap-3">
+          <i class="fas fa-info-circle text-indigo-500 mt-0.5"></i>
+          <p class="text-sm text-indigo-900 dark:text-indigo-200 font-medium leading-relaxed">
+            Please upload an Excel or CSV file containing records of student emails and their attendance status.
+          </p>
         </div>
 
-        <div class="space-y-6">
-          <div
-            class="bg-brand-purple/10 border border-brand-purple/20 rounded-2xl p-4 flex gap-3"
-          >
-            <i class="fas fa-info-circle text-brand-purple text-lg mt-0.5"></i>
-            <p class="text-sm text-main font-medium leading-relaxed">
-              Please upload an Excel or CSV file containing records of student
-              emails and their attendance status.
-            </p>
-          </div>
-
-          <div>
-            <label class="block text-sm font-bold text-muted mb-2"
-              >Upload Attendance File</label
-            >
-            <div class="relative group">
-              <input
-                type="file"
-                (change)="onBulkFileSelected($event)"
-                required
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-              />
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">Upload
+            File</label>
+          <div class="relative group">
+            <input type="file" (change)="onBulkFileSelected($event)" required
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+            <div
+              class="border-2 border-dashed border-slate-300 dark:border-slate-600 group-hover:border-purple-500 dark:group-hover:border-purple-400 group-hover:bg-purple-50 dark:group-hover:bg-purple-900/10 rounded-xl p-6 sm:p-8 transition-all text-center">
               <div
-                class="border-2 border-dashed border-main group-hover:border-brand-purple group-hover:bg-brand-purple/5 rounded-2xl p-8 transition-all text-center"
-              >
-                <div
-                  class="w-12 h-12 bg-brand-purple/10 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-purple"
-                >
-                  <i class="fas fa-cloud-upload-alt text-xl"></i>
-                </div>
-                <div class="text-sm font-bold text-main mb-1">
-                  {{
-                    selectedBulkFile
-                      ? selectedBulkFile.name
-                      : "Click or drag file to upload"
-                  }}
-                </div>
-                <div class="text-xs text-muted font-medium">
-                  Excel, CSV files accepted
-                </div>
+                class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3 text-purple-600 dark:text-purple-400">
+                <i class="fas fa-cloud-upload-alt text-xl"></i>
+              </div>
+              <div class="text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">
+                {{ selectedBulkFile ? selectedBulkFile.name : "Click or drag file to upload" }}
+              </div>
+              <div class="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                Excel, CSV files accepted
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="pt-4 flex gap-3">
-            <button
-              type="button"
-              (click)="closeBulkModal()"
-              class="flex-1 px-6 py-4 rounded-2xl font-bold text-muted bg-app border border-main hover:bg-brand-purple/5 transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              (click)="onBulkSubmit()"
-              [disabled]="!selectedBulkFile"
-              class="flex-[2] px-6 py-4 rounded-2xl font-bold text-white bg-brand-purple hover:opacity-90 shadow-lg shadow-brand-purple/20 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
-            >
-              Import Records
-            </button>
-          </div>
+        <div class="pt-2 flex flex-col-reverse sm:flex-row gap-3">
+          <button type="button" (click)="closeBulkModal()"
+            class="w-full sm:w-auto flex-1 px-6 py-3 sm:py-2.5 rounded-xl font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all">
+            Cancel
+          </button>
+          <button (click)="onBulkSubmit()" [disabled]="!selectedBulkFile"
+            class="w-full sm:w-auto flex-[2] px-6 py-3 sm:py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+            Import Records
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 }
