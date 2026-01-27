@@ -30,4 +30,7 @@ export class UsersService {
   DeleteUser(userId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/users/${userId}`)
   }
+  GetUserDasgboard(): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/users/dashboard`)
+  }
 }

@@ -25,23 +25,72 @@
 
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-        @for (metric of metrics; track metric.label) {
         <div
             class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all group">
             <div class="flex justify-between items-start mb-6">
-                <div [class]="metric.iconBg + ' ' + metric.iconColor"
-                    class="p-3 rounded-xl w-12 h-12 flex items-center justify-center shadow-inner ring-1 ring-inset ring-black/5 dark:ring-white/5">
-                    <i [class]="metric.iconClass" class="text-lg"></i>
+                <div
+                    class="p-3 rounded-xl w-12 h-12 flex items-center justify-center shadow-inner ring-1 ring-inset ring-black/5 dark:ring-white/5 bg-brand-purple/10 text-brand-purple">
+                    <i class="fas fa-graduation-cap text-lg"></i>
                 </div>
-                <span [class]="metric.trendBg + ' ' + metric.trendColor"
-                    class="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-black/5 dark:border-white/5">
-                    <i class="fas fa-arrow-trend-up"></i> {{ metric.trend }}
+                <span
+                    class="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-black/5 dark:border-white/5 bg-emerald-50 text-emerald-500">
+                    <i class="fas fa-arrow-trend-up"></i> +0.2
                 </span>
             </div>
-            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-1">{{ metric.label }}</p>
-            <h3 class="text-3xl font-bold text-slate-800 dark:text-slate-100">{{ metric.value }}</h3>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-1">GPA</p>
+            <h3 class="text-3xl font-bold text-slate-800 dark:text-slate-100">{{ UserDashboardList.gpa }}</h3>
         </div>
-        }
+
+        <div
+            class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all group">
+            <div class="flex justify-between items-start mb-6">
+                <div
+                    class="p-3 rounded-xl w-12 h-12 flex items-center justify-center shadow-inner ring-1 ring-inset ring-black/5 dark:ring-white/5 bg-blue-50 text-blue-500">
+                    <i class="fas fa-calendar-check text-lg"></i>
+                </div>
+                <span
+                    class="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-black/5 dark:border-white/5 bg-emerald-50 text-emerald-500">
+                    <i class="fas fa-arrow-trend-up"></i> +2%
+                </span>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-1">Attendance</p>
+            <h3 class="text-3xl font-bold text-slate-800 dark:text-slate-100">{{ UserDashboardList.attendance_rate }}%
+            </h3>
+        </div>
+
+        <div
+            class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all group">
+            <div class="flex justify-between items-start mb-6">
+                <div
+                    class="p-3 rounded-xl w-12 h-12 flex items-center justify-center shadow-inner ring-1 ring-inset ring-black/5 dark:ring-white/5 bg-amber-50 text-amber-500">
+                    <i class="fas fa-tasks text-lg"></i>
+                </div>
+                <span
+                    class="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-black/5 dark:border-white/5 bg-rose-50 text-rose-500">
+                    <i class="fas fa-arrow-trend-up"></i> -2
+                </span>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-1">Pending Tasks</p>
+            <h3 class="text-3xl font-bold text-slate-800 dark:text-slate-100">{{
+                UserDashboardList.task_stats?.submitted_but_pending }}</h3>
+        </div>
+
+        <div
+            class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 transition-all group">
+            <div class="flex justify-between items-start mb-6">
+                <div
+                    class="p-3 rounded-xl w-12 h-12 flex items-center justify-center shadow-inner ring-1 ring-inset ring-black/5 dark:ring-white/5 bg-indigo-50 text-indigo-500">
+                    <i class="fas fa-clock text-lg"></i>
+                </div>
+                <span
+                    class="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-black/5 dark:border-white/5 bg-emerald-50 text-emerald-500">
+                    <i class="fas fa-arrow-trend-up"></i> +4h
+                </span>
+            </div>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm mb-1">Joined at</p>
+            <h3 class="text-3xl font-bold text-slate-800 dark:text-slate-100">{{ UserDashboardList.joined_at | date:
+                "mediumDate" }}</h3>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8">
@@ -82,7 +131,7 @@
             class="xl:col-span-4 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 dark:border-slate-800 flex flex-col">
             <div class="flex justify-between items-center mb-6 sm:mb-8">
                 <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">My Tasks</h3>
-                <a routerLink="/Student/Tasks"
+                <a routerLink="/Delegates/Tasks"
                     class="text-purple-600 dark:text-purple-400 text-sm font-bold hover:text-purple-700 dark:hover:text-purple-300 transition-colors">View
                     All</a>
             </div>

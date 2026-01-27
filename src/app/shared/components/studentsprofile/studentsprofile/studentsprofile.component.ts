@@ -1,6 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { IUserProfile } from '../../../interfaces/iuser-profile';
 // Interface for type safety
 interface UserProfile {
   name: string;
@@ -17,77 +19,21 @@ interface UserProfile {
   styleUrl: './studentsprofile.component.scss'
 })
 export class StudentsprofileComponent implements OnInit {
-  // Using signals for reactive state management (optional, but modern Angular)
-  // or standard properties for simplicity with the provided HTML
-
-  userProfile: UserProfile = {
-    name: '',
-    email: '',
-    role: '',
-    bio: '',
-    avatarUrl: ''
-  };
-
-  isLoading = false;
-  isSaving = false;
-
+  private readonly authService = inject(AuthService);
+  UserProfileList: IUserProfile = {} as IUserProfile;
   constructor() { }
 
   ngOnInit(): void {
-    this.loadProfile();
+    this.GetProfile();
   }
 
-  /**
-   * Simulates fetching user data from an API
-   */
-  loadProfile() {
-    this.isLoading = true;
+  GetProfile(): void {
+    this.authService.GetMe().subscribe({
+      next: (res) => {
+        this.UserProfileList = res.data;
+        console.log('User Profile Data:', this.UserProfileList);
 
-    // Simulate API delay
-    setTimeout(() => {
-      this.userProfile = {
-        name: 'Marwan Ahmed',
-        email: 'marwan.ahmed98@example.com',
-        role: 'Backend Development Council',
-        bio: 'Passionate about building scalable APIs and cloud architecture. Always learning new technologies.',
-        avatarUrl: '' // The HTML handles the avatar generation via UI Avatars API based on the name
-      };
-      this.isLoading = false;
-    }, 500);
+      }
+    })
   }
-
-  /**
-   * Handles form submission
-   */
-  saveProfile() {
-    this.isSaving = true;
-
-    // Simulate API call to save data
-    setTimeout(() => {
-      console.log('Profile Saved:', this.userProfile);
-
-      // You would typically show a toast notification here
-      // e.g., this.toastService.success('Profile updated successfully!');
-
-      this.isSaving = false;
-      alert('Changes saved successfully!'); // Simple feedback for now
-    }, 1000);
-  }
-
-  /**
-   * Placeholder for file upload logic
-   */
-  onUploadPhoto() {
-    // Logic to open file selector and upload image would go here
-    console.log('Open file dialog');
-  }
-
-  /**
-   * Placeholder for removing photo
-   */
-  onRemovePhoto() {
-    // Logic to revert to default avatar or delete custom image
-    console.log('Remove photo');
-  }
-
 }

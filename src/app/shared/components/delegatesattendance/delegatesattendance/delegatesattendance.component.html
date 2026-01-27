@@ -17,8 +17,8 @@
                 class="w-full lg:w-auto flex items-center gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-5 py-3 rounded-2xl shadow-sm">
                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Overall
                     Rate:</span>
-                <span class="text-xl font-black text-purple-600 dark:text-purple-400">{{ attendancePercentage()
-                    }}%</span>
+                <span
+                    class="text-xl font-black text-purple-600 dark:text-purple-400">{{UserDashboardList.attendance_rate}}%</span>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Total
                             Sessions</p>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ totalSessions() }}</h3>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{UserDashboardList.total_classes}}</h3>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Attended
                         </p>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ presentCount() }}</h3>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{UserDashboardList.present_count}}</h3>
                     </div>
                 </div>
             </div>
@@ -64,8 +64,7 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">Missed
                         </p>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ totalSessions() -
-                            presentCount() }}</h3>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{UserDashboardList.absent_count}}</h3>
                     </div>
                 </div>
             </div>
