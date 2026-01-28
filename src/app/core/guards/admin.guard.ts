@@ -12,6 +12,13 @@ export const adminGuard: CanActivateFn = (route, state) => {
         return false;
     }
 
+    // Check if token is expired
+    if (authService.isTokenExpired()) {
+        authService.clearUserData();
+        router.navigate(['/Login']);
+        return false;
+    }
+
     // Check if user has admin role
     if (authService.isAdmin()) {
         return true;

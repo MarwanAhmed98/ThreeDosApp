@@ -6,8 +6,15 @@ export const loginGuard: CanActivateFn = (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    // If user is already authenticated, redirect to appropriate dashboard
+    // Check if user is authenticated
     if (authService.isAuthenticated()) {
+        // Check if token is expired - if so, clear it and allow login
+        if (authService.isTokenExpired()) {
+            authService.clearUserData();
+            return true; // Allow access to login page
+        }
+
+        // Token is valid, redirect to appropriate dashboard
         if (authService.isAdmin()) {
             router.navigate(['/Admin']);
         } else {

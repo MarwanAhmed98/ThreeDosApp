@@ -17,7 +17,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     // Check if token is expired
     if (authService.isTokenExpired()) {
         toastr.warning('Your session has expired. Please log in again.', 'Session Expired');
-        authService.forceLogout();
+        authService.clearUserData();
         router.navigate(['/Login'], { queryParams: { returnUrl: state.url } });
         return false;
     }

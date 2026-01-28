@@ -44,20 +44,29 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     }, 5 * 60 * 1000); // 5 minutes
 
-    // Also check on user activity (mouse move, click, keypress)
+    // Also check on user activity (with debouncing to prevent excessive checks)
     this.addActivityListeners();
   }
 
-  private addActivityListeners(): void {
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+  private lastActivityCheck = 0;
+  private activityCheckDebounce = 60000; // Check at most once per minute
 
-    events.forEach(event => {
-      document.addEventListener(event, () => {
-        // Check token expiration on user activity
+  private addActivityListeners(): void {
+    const events = ['mousedown', 'keypress', 'click'];
+
+    const checkTokenExpiration = () => {
+      const now = Date.now();
+      // Only check if enough time has passed since last check
+      if (now - this.lastActivityCheck > this.activityCheckDebounce) {
+        this.lastActivityCheck = now;
         if (this.authService.isAuthenticated() && this.authService.isTokenExpired()) {
           this.logoutService.forceLogout('Your session has expired. Please log in again.');
         }
-      }, { passive: true });
+      }
+    };
+
+    events.forEach(event => {
+      document.addEventListener(event, checkTokenExpiration, { passive: true });
     });
   }
 }

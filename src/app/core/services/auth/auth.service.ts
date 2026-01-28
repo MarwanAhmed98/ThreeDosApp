@@ -99,13 +99,28 @@ export class AuthService {
     if (!token) return true;
 
     try {
+      // Check if token has JWT format (3 parts separated by dots)
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        // Not a JWT token, assume it's valid (server will validate)
+        return false;
+      }
+
       // If the token is JWT, we can decode and check expiration
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = JSON.parse(atob(parts[1]));
+      
+      // Check if exp field exists
+      if (!payload.exp) {
+        // No expiration in token, assume it's valid
+        return false;
+      }
+
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < currentTime;
-    } catch {
-      // If token is not JWT or can't be decoded, assume it's valid
+    } catch (error) {
+      // If token can't be decoded or parsed, assume it's valid
       // The server will handle validation
+      console.warn('Token validation error:', error);
       return false;
     }
   }
