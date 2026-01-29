@@ -20,6 +20,7 @@ export interface User {
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+  StudentId: string = '';
 
   constructor(private httpClient: HttpClient) {
     this.loadUserFromStorage();
@@ -108,7 +109,7 @@ export class AuthService {
 
       // If the token is JWT, we can decode and check expiration
       const payload = JSON.parse(atob(parts[1]));
-      
+
       // Check if exp field exists
       if (!payload.exp) {
         // No expiration in token, assume it's valid
@@ -160,12 +161,14 @@ export class AuthService {
               id: response.data.id,
               email: response.data.email
             };
+            this.StudentId = response.data.id;
             this.currentUserSubject.next(updatedUser);
           }
         }
       })
     );
   }
+  
 
   ForgetPassword(email: string): Observable<any> {
     return this.httpClient.post(`${environments.baseUrl}/forget-password`, { email });

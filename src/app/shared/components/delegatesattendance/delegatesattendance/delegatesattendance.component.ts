@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../../../core/services/users/users.service';
 import { IUserDahboard } from '../../../interfaces/iuser-dahboard';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { AttendancesService } from '../../../../core/services/attendances/attendances.service';
+import { IstudentAttendance } from '../../../interfaces/istudent-attendance';
 @Component({
   selector: 'app-delegatesattendance',
   imports: [CommonModule, FormsModule],
@@ -11,26 +14,22 @@ import { IUserDahboard } from '../../../interfaces/iuser-dahboard';
 })
 export class DelegatesattendanceComponent implements OnInit {
   private readonly usersService = inject(UsersService)
+  private readonly authService = inject(AuthService)
+  private readonly attendancesService = inject(AttendancesService)
   UserDashboardList: IUserDahboard = {} as IUserDahboard;
+  UserAttendanceList: IstudentAttendance[] = []
   text = '';
-  currentPage = 1;
-  lastPage = 1;
-  // Personal Attendance Records
-  attendanceRecords = signal([
-    { id: 1, session: 'Intro to Angular 19', date: new Date('2024-01-20'), status: 'present' },
-    { id: 2, session: 'UI/UX Design Systems', date: new Date('2024-01-18'), status: 'late' },
-    { id: 3, session: 'State Management Workshop', date: new Date('2024-01-15'), status: 'absent' },
-    { id: 4, session: 'Git & GitHub Advanced', date: new Date('2024-01-10'), status: 'present' },
-    { id: 5, session: 'Tailwind CSS Mastery', date: new Date('2024-01-05'), status: 'present' },
-  ]);
-
-  // Computed stats for the summary cards
-  totalSessions = computed(() => this.attendanceRecords().length);
-  presentCount = computed(() => this.attendanceRecords().filter(r => r.status === 'present' || r.status === 'late').length);
-  attendancePercentage = computed(() => Math.round((this.presentCount() / this.totalSessions()) * 100));
+  currentPage: number = 1;
+  lastpage: number = 1;
+  perPages: number = 1;
 
   ngOnInit(): void {
-    this.GetDashboardData();
+    this.authService.GetMe().subscribe({
+      next: () => {
+        this.GetDashboardData();
+        this.GetStudentAttendanceRecords();
+      }
+    });
   }
   getStatusClass(status: string) {
     switch (status) {
@@ -40,10 +39,6 @@ export class DelegatesattendanceComponent implements OnInit {
       default: return 'bg-slate-50 text-slate-600';
     }
   }
-
-  changePage(page: number) {
-    this.currentPage = page;
-  }
   GetDashboardData(): void {
     this.usersService.GetUserDasgboard().subscribe({
       next: (res) => {
@@ -52,5 +47,20 @@ export class DelegatesattendanceComponent implements OnInit {
 
       }
     })
+  }
+  GetStudentAttendanceRecords(): void {
+    this.attendancesService.GetUserAttendance(this.currentPage, 10, this.authService.StudentId).subscribe({
+      next: (res) => {
+        this.UserAttendanceList = res.data.data;
+        console.log(this.UserAttendanceList);
+        console.log(this.authService.StudentId);
+      }
+    })
+  }
+  changePage(page: number) {
+    if (page >= 1 && page <= this.lastpage) {
+      this.currentPage = page;
+      this.GetStudentAttendanceRecords();
+    }
   }
 }

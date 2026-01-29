@@ -49,6 +49,7 @@ export class AttendanceComponent implements OnInit {
   GetAttendances(): void {
     this.attendanceService.GetAttendanceList(this.currentPage).subscribe({
       next: (res) => {
+        console.log(res);
         this.AttendanceList = res.data.data;
         this.lastPage = res.data.pagination.last_page;
       }

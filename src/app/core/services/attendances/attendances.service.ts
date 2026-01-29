@@ -35,4 +35,7 @@ export class AttendancesService {
   DeleteAttendance(attendanceId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/attendances/${attendanceId}`)
   }
+  GetUserAttendance(pageIndex: number, pageSize: number = 10, userId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/attendances?pageIndex=${pageIndex}&pageSize=${pageSize}&user_id=${userId}`)
+  }
 }

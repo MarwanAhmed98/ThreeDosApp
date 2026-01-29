@@ -1,21 +1,24 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
 import { CouncilsService } from '../../../../core/services/councils/councils.service';
 import { ISession } from '../../../interfaces/isession';
-import { Icouncils } from '../../../interfaces/icouncils';
 import { SearchsessionsPipe } from '../../../pipes/searchsessions/searchsessions.pipe';
 import Swal from 'sweetalert2';
+import { Icouncils } from '../../../interfaces/icouncils';
+
 @Component({
   selector: 'app-sessions',
+  standalone: true,
   imports: [CommonModule, FormsModule, DatePipe, SearchsessionsPipe],
   templateUrl: './sessions.component.html',
   styleUrl: './sessions.component.scss'
 })
-export class SessionsComponent implements AfterViewInit {
+export class SessionsComponent implements OnInit, AfterViewInit {
   private readonly sessionsService = inject(SessionsService);
   private readonly councilsService = inject(CouncilsService);
+
   SessionList: ISession[] = [];
   CouncilList: Icouncils[] = [];
   text: string = "";
@@ -24,12 +27,10 @@ export class SessionsComponent implements AfterViewInit {
   perPages: number = 1;
   totalCouncils: number = 1;
 
-  // Modal State
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
   selectedSessionId: string | null = null;
 
-  // Form Data
   sessionData = {
     title: '',
     date: '',
@@ -37,10 +38,12 @@ export class SessionsComponent implements AfterViewInit {
     material: '',
     council_id: ''
   };
+
   ngOnInit(): void {
     this.GetSessionsList();
     this.GetCouncils();
   }
+
   GetCouncils(): void {
     this.councilsService.GetCouncilList().subscribe({
       next: (res) => {
@@ -48,17 +51,18 @@ export class SessionsComponent implements AfterViewInit {
       }
     });
   }
+
   GetSessionsList(): void {
     this.sessionsService.GetSessionlList(this.currentPage).subscribe({
       next: (res) => {
-        console.log(res.data);
         this.SessionList = res.data.data;
         this.perPages = res.data.pagination.per_page;
         this.lastpage = res.data.pagination.last_page;
         this.totalCouncils = res.data.pagination.total;
       }
-    })
+    });
   }
+
   changePage(page: number) {
     if (page >= 1 && page <= this.lastpage) {
       this.currentPage = page;
@@ -76,12 +80,25 @@ export class SessionsComponent implements AfterViewInit {
   openEditModal(session: ISession): void {
     this.isEditMode = true;
     this.selectedSessionId = session.id;
+
+    // تحويل التاريخ لصيغة YYYY-MM-DDTHH:mm لكي يظهر في الـ input
+    let formattedDate = '';
+    if (session.date) {
+      const d = new Date(session.date);
+      formattedDate = d.getFullYear() + '-' +
+        String(d.getMonth() + 1).padStart(2, '0') + '-' +
+        String(d.getDate()).padStart(2, '0') + 'T' +
+        String(d.getHours()).padStart(2, '0') + ':' +
+        String(d.getMinutes()).padStart(2, '0');
+    }
+
     this.sessionData = {
       title: session.title,
-      date: session.date,
+      date: formattedDate,
       description: session.description,
       material: session.material,
-      council_id: session.council
+      // نستخدم council_id لضمان اختيار الـ Option الصحيح في الـ Select
+      council_id: session.council_id ? session.council_id.toString() : ''
     };
     this.isModalOpen = true;
   }
@@ -96,6 +113,7 @@ export class SessionsComponent implements AfterViewInit {
         next: () => {
           this.GetSessionsList();
           this.closeModal();
+          Swal.fire('Updated!', 'Session has been updated.', 'success');
         }
       });
     } else {
@@ -103,6 +121,7 @@ export class SessionsComponent implements AfterViewInit {
         next: () => {
           this.GetSessionsList();
           this.closeModal();
+          Swal.fire('Created!', 'Session has been created.', 'success');
         }
       });
     }
@@ -128,17 +147,5 @@ export class SessionsComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    // Initialization logic can be added here if needed
-  }
-
-  sortSessionsByDate(): ISession[] {
-    return this.SessionList.sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA; // Sort from newest to oldest
-    });
-  }
-
-
+  ngAfterViewInit(): void { }
 }
