@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { TeamsService } from '../../../../core/services/teams/teams.service';
 import { CouncilsService } from '../../../../core/services/councils/councils.service';
 import { UsersService } from '../../../../core/services/users/users.service';
@@ -10,11 +11,12 @@ import { ITeam, ITeamMember } from '../../../interfaces/iteams';
 import { Icouncils } from '../../../interfaces/icouncils';
 import { Iusers } from '../../../interfaces/iusers';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-teams',
   standalone: true,
-  imports: [CommonModule, FormsModule, SearchteamsPipe],
+  imports: [CommonModule, FormsModule, SearchteamsPipe, NgSelectModule],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss'
 })
@@ -46,7 +48,7 @@ export class TeamsComponent implements OnInit {
 
   memberData = {
     team_id: '',
-    user_id: '',
+    user_ids: [] as string[],
     role: 'member' as 'member' | 'leader' | 'co-leader',
     task: '',
     rate: 0
@@ -61,6 +63,7 @@ export class TeamsComponent implements OnInit {
   GetTeams(): void {
     this.teamsService.GetTeamsList().subscribe({
       next: (res) => {
+        console.log(res);
         this.TeamsList = res.data || res;
       },
       error: () => {
@@ -146,7 +149,8 @@ export class TeamsComponent implements OnInit {
   GetTeamMembers(teamId: string): void {
     this.teamsService.GetTeamMembers(teamId).subscribe({
       next: (res) => {
-        this.SelectedTeamMembers = res.data?.team_members || [];
+        // Using spread syntax to ensure Angular detects a new array reference
+        this.SelectedTeamMembers = [...(res.data?.team_members || [])];
       },
       error: () => {
         this.toastr.error('Failed to load team members', 'Error');
@@ -163,7 +167,7 @@ export class TeamsComponent implements OnInit {
 
     this.memberData = {
       team_id: teamId,
-      user_id: '',
+      user_ids: [],
       role: 'member',
       task: '',
       rate: 0
@@ -176,26 +180,47 @@ export class TeamsComponent implements OnInit {
   }
 
   onAddMember(): void {
-    if (!this.memberData.user_id) {
-      this.toastr.error('Please select a user', 'Validation Error');
+    if (!this.memberData.user_ids || this.memberData.user_ids.length === 0) {
+      this.toastr.error('Please select at least one user', 'Validation Error');
       return;
     }
 
-    this.teamsService.AddTeamMember(this.memberData).subscribe({
+    // Prepare requests for all selected users
+    const requests = this.memberData.user_ids.map(userId => {
+      const payload = {
+        team_id: this.memberData.team_id,
+        user_id: userId,
+        role: this.memberData.role,
+        task: this.memberData.task,
+        rate: this.memberData.rate
+      };
+      return this.teamsService.AddTeamMember(payload);
+    });
+
+    // Execute requests in parallel
+    forkJoin(requests).subscribe({
       next: () => {
-        this.toastr.success('Member added successfully', 'Success');
+        this.toastr.success(`${this.memberData.user_ids.length} Member(s) added successfully`, 'Success');
+
+        // REFRESH LOGIC:
+        // 1. Refresh the members list inside the modal to show new users immediately
         if (this.selectedTeamId) {
           this.GetTeamMembers(this.selectedTeamId);
         }
+
+        // 2. Refresh the main teams list to update the member count on the cards
+        this.GetTeams();
+
         this.closeMemberModal();
+
+        // Reset selection
+        this.memberData.user_ids = [];
       },
       error: (error) => {
-        let errorMessage = 'Failed to add member';
+        console.error(error);
+        let errorMessage = 'Failed to add some or all members';
         if (error.error && error.error.message) {
           errorMessage = error.error.message;
-        } else if (error.error && error.error.errors) {
-          const validationErrors = Object.values(error.error.errors).flat();
-          errorMessage = validationErrors.join(', ');
         }
         this.toastr.error(errorMessage, 'Addition Error');
       }
@@ -244,7 +269,10 @@ export class TeamsComponent implements OnInit {
           this.teamsService.DeleteTeamMember(memberId).subscribe({
             next: () => {
               this.toastr.success('Member removed successfully', 'Success');
+
+              // Refresh both lists after deletion as well
               this.GetTeamMembers(this.selectedTeamId!);
+              this.GetTeams();
             },
             error: () => {
               this.toastr.error('Failed to remove member', 'Error');
@@ -254,7 +282,6 @@ export class TeamsComponent implements OnInit {
       });
     }
   }
-
 
   getRoleClass(role: string) {
     switch (role?.toLowerCase()) {

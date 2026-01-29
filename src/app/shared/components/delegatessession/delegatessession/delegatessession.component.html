@@ -1,6 +1,5 @@
 <div class="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-3 sm:p-6 lg:p-8 font-sans transition-colors duration-300">
     <div class="animate-in fade-in duration-500">
-
         <!-- Header -->
         <div class="mb-6 md:mb-8">
             <h1
@@ -8,7 +7,7 @@
                 My Sessions
             </h1>
             <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm sm:text-base font-medium">
-                Browse available sessions, join live workshops, and download study materials.
+                Browse available sessions and download study materials.
             </p>
         </div>
 
@@ -147,28 +146,18 @@
                                         <span>Details</span>
                                     </button>
 
-                                    <!-- Registration Button -->
+                                    <!-- Add to Calendar Button -->
                                     @if (isSessionCompleted(session.status)) {
                                     <button disabled
                                         class="flex items-center justify-center gap-2 text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 cursor-not-allowed">
                                         <i class="fas fa-ban"></i>
                                         <span>Ended</span>
                                     </button>
-                                    } @else if (session.isJoined) {
-                                    <button disabled
-                                        class="flex items-center justify-center gap-2 text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 px-4 py-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800 cursor-not-allowed">
-                                        <i class="fas fa-check-double"></i>
-                                        <span>Registered</span>
-                                    </button>
                                     } @else {
-                                    <button (click)="joinSession(session.id)" [disabled]="loading()"
-                                        class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-500/20 hover:scale-105 hover:from-purple-700 hover:to-indigo-700 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                        @if (loading()) {
-                                        <i class="fas fa-spinner fa-spin"></i>
-                                        } @else {
-                                        <i class="fas fa-user-plus"></i>
-                                        }
-                                        <span>Join Session</span>
+                                    <button (click)="addToCalendar(session)"
+                                        class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-purple-500/20 hover:scale-105 hover:from-purple-700 hover:to-indigo-700 transition-all active:scale-95">
+                                        <i class="fas fa-calendar-plus"></i>
+                                        <span>Add to Calendar</span>
                                     </button>
                                     }
                                 </div>
@@ -278,8 +267,7 @@
                             <label
                                 class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Council</label>
                             <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{{
-                                sessionDetails().council?.name ||
-                                selectedSession()?.council }}</p>
+                                sessionDetails().council?.name || selectedSession()?.council }}</p>
                         </div>
                         <div>
                             <label
@@ -292,22 +280,6 @@
                                     }}</span>
                                 }
                             </p>
-                        </div>
-                        <div>
-                            <label
-                                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Registration
-                                Status</label>
-                            @if (selectedSession()?.isJoined) {
-                            <span
-                                class="text-emerald-600 dark:text-emerald-400 text-sm font-bold flex items-center gap-1.5">
-                                <i class="fas fa-check-circle"></i> Registered
-                            </span>
-                            } @else {
-                            <span
-                                class="text-amber-600 dark:text-amber-400 text-sm font-bold flex items-center gap-1.5">
-                                <i class="fas fa-clock"></i> Not Registered
-                            </span>
-                            }
                         </div>
                     </div>
 
@@ -404,15 +376,11 @@
                     Close
                 </button>
 
-                @if (selectedSession() && !selectedSession()?.isJoined && !isSessionCompleted(selectedSession()?.status
-                || '')) {
-                <button (click)="joinSession(selectedSession()?.id || ''); closeSessionDetails()" [disabled]="loading()"
-                    class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all font-bold text-sm shadow-md shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                    @if (loading()) {
-                    <i class="fas fa-spinner fa-spin"></i>
-                    }
-                    <i class="fas fa-user-plus"></i>
-                    Join Session
+                @if (selectedSession() && !isSessionCompleted(selectedSession()?.status || '')) {
+                <button (click)="addToCalendar(selectedSession()!); closeSessionDetails()"
+                    class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all font-bold text-sm shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+                    <i class="fas fa-calendar-plus"></i>
+                    Add to Calendar
                 </button>
                 }
             </div>

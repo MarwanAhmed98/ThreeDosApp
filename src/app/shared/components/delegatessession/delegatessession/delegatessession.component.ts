@@ -2,16 +2,13 @@ import { Component, signal, computed, inject, OnInit, ChangeDetectionStrategy } 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SessionsService } from '../../../../core/services/sessions/sessions.service';
-import { AttendancesService } from '../../../../core/services/attendances/attendances.service';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ISession } from '../../../interfaces/isession';
 
 interface SessionWithStatus extends ISession {
   status: 'LIVE' | 'UPCOMING' | 'COMPLETED';
-  isJoined: boolean;
   time?: string;
-  attendance_count?: number;
   council_id?: string;
 }
 
@@ -24,11 +21,9 @@ interface SessionWithStatus extends ISession {
 })
 export class DelegatessessionComponent implements OnInit {
   private readonly sessionsService = inject(SessionsService);
-  private readonly attendancesService = inject(AttendancesService);
   private readonly authService = inject(AuthService);
   private readonly toastr = inject(ToastrService);
 
-  // Signals for state management
   sessions = signal<SessionWithStatus[]>([]);
   loading = signal(false);
   text = signal('');
@@ -39,7 +34,6 @@ export class DelegatessessionComponent implements OnInit {
   sessionDetails = signal<any>(null);
   loadingDetails = signal(false);
 
-  // Computed filtered sessions
   filteredSessions = computed(() => {
     const search = this.text().toLowerCase();
     return this.sessions().filter(session =>
@@ -57,22 +51,20 @@ export class DelegatessessionComponent implements OnInit {
     this.loading.set(true);
     this.sessionsService.GetSessionlList(this.currentPage()).subscribe({
       next: (response) => {
+        console.log(response);
         if (response.status === 'success') {
           const sessionsData = response.data.data;
           this.totalPages.set(response.data.pagination?.last_page || 1);
 
-          // Transform sessions and determine status
           const transformedSessions: SessionWithStatus[] = sessionsData.map((session: any) => ({
             ...session,
             status: this.determineSessionStatus(session.date),
-            isJoined: false, // Will be updated when we load attendance data
             time: this.extractTimeFromDate(session.date),
-            council: session.council?.name || 'Unknown Council',
+            council: session.council || 'Unknown Council',
             council_id: session.council?.id || session.council_id
           }));
 
           this.sessions.set(transformedSessions);
-          this.loadAttendanceStatus();
         }
         this.loading.set(false);
       },
@@ -83,37 +75,10 @@ export class DelegatessessionComponent implements OnInit {
     });
   }
 
-  private loadAttendanceStatus(): void {
-    // Load user's attendance records to determine which sessions they've joined
-    this.attendancesService.GetAttendanceList(1, 100).subscribe({
-      next: (response) => {
-        if (response.status === 'success') {
-          const attendances = response.data.data;
-          const currentUser = this.authService.getCurrentUser();
-
-          if (currentUser) {
-            // Update sessions with attendance status
-            const updatedSessions = this.sessions().map(session => ({
-              ...session,
-              isJoined: attendances.some((attendance: any) =>
-                attendance.council_session_id === session.id &&
-                attendance.user_id === currentUser.id.toString()
-              )
-            }));
-            this.sessions.set(updatedSessions);
-          }
-        }
-      },
-      error: () => {
-        // Silently fail - attendance status is not critical
-      }
-    });
-  }
-
   private determineSessionStatus(dateString: string): 'LIVE' | 'UPCOMING' | 'COMPLETED' {
     const sessionDate = new Date(dateString);
     const now = new Date();
-    const sessionEndTime = new Date(sessionDate.getTime() + (2 * 60 * 60 * 1000)); // Assume 2-hour sessions
+    const sessionEndTime = new Date(sessionDate.getTime() + (2 * 60 * 60 * 1000));
 
     if (now >= sessionDate && now <= sessionEndTime) {
       return 'LIVE';
@@ -137,50 +102,59 @@ export class DelegatessessionComponent implements OnInit {
     }
   }
 
-  joinSession(sessionId: string): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      this.toastr.error('Please log in to join sessions', 'Authentication Required');
-      return;
+  // Generates and downloads an ICS file for the session
+  addToCalendar(session: SessionWithStatus): void {
+    const title = session.title;
+    const description = session.description || 'Session details';
+
+    // Create Date object for Start Time
+    let startDate = new Date(session.date);
+
+    if (session.time && session.time !== 'TBD') {
+      const timeParts = session.time.match(/(\d+):(\d+)\s*(AM|PM)?/i);
+      if (timeParts) {
+        let hours = parseInt(timeParts[1], 10);
+        const minutes = parseInt(timeParts[2], 10);
+        const meridian = timeParts[3];
+
+        if (meridian) {
+          if (meridian.toUpperCase() === 'PM' && hours < 12) hours += 12;
+          if (meridian.toUpperCase() === 'AM' && hours === 12) hours = 0;
+        }
+
+        startDate.setHours(hours, minutes, 0);
+      }
     }
 
-    const session = this.sessions().find(s => s.id === sessionId);
-    if (!session) {
-      this.toastr.error('Session not found', 'Error');
-      return;
-    }
-
-    if (session.isJoined) {
-      this.toastr.info('You are already registered for this session', 'Already Registered');
-      return;
-    }
-
-    this.loading.set(true);
-
-    // Create an attendance record to represent "joining" the session
-    const attendanceData = {
-      user_id: currentUser.id.toString(),
-      council_session_id: sessionId,
-      status: 'Registered', // Custom status for pre-registration
-      council_id: currentUser.council_id || session.council_id || ''
+    // Format dates for ICS (YYYYMMDDTHHmmssZ)
+    const formatICSDate = (date: Date) => {
+      return date.toISOString().replace(/-|:|\.\d+/g, '');
     };
 
-    this.attendancesService.AddAttendance(attendanceData).subscribe({
-      next: () => {
-        // Update the session status locally
-        const updatedSessions = this.sessions().map(s =>
-          s.id === sessionId ? { ...s, isJoined: true } : s
-        );
-        this.sessions.set(updatedSessions);
+    // We calculate the formatted string once
+    const timeString = formatICSDate(startDate);
 
-        this.toastr.success('Successfully registered for the session!', 'Registration Confirmed');
-        this.loading.set(false);
-      },
-      error: (error) => {
-        this.toastr.error('Failed to register for session. Please try again.', 'Registration Failed');
-        this.loading.set(false);
-      }
-    });
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      `DTSTART:${timeString}`,
+      `DTEND:${timeString}`, // CRITICAL CHANGE: Set End Time exactly equal to Start Time
+      `SUMMARY:${title}`,
+      `DESCRIPTION:${description}`,
+      // 'LOCATION:Online',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `${title.replace(/\s+/g, '_')}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    this.toastr.success('Calendar event downloaded', 'Success');
   }
 
   onSearchChange(event: Event): void {
@@ -232,7 +206,6 @@ export class DelegatessessionComponent implements OnInit {
     return status === 'COMPLETED';
   }
 
-  // Session details methods
   openSessionDetails(session: SessionWithStatus): void {
     this.selectedSession.set(session);
     this.isDetailsModalOpen.set(true);

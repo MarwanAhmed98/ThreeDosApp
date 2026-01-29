@@ -1,9 +1,13 @@
 @import 'ngx-toastr/toastr';
+@import "@ng-select/ng-select/themes/default.theme.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------------------------------------- */
+/*                                 VARIABLES                                  */
+/* -------------------------------------------------------------------------- */
 :root {
   --bg-color: #F9FAFB;
   --surface-color: #FFFFFF;
@@ -11,6 +15,7 @@
   --text-secondary: #6B7280;
   --border-color: #F1F5F9;
   --accent-color: #7C69EF;
+  --accent-rgb: 124, 105, 239;
 }
 
 .dark {
@@ -20,6 +25,7 @@
   --text-secondary: #9F9F9F;
   --border-color: #565657;
   --accent-color: #7F4797;
+  --accent-rgb: 127, 71, 151;
 }
 
 body {
@@ -28,7 +34,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom classes using variables */
+/* Custom classes */
 .bg-app {
   background-color: var(--bg-color);
 }
@@ -55,4 +61,67 @@ body {
 
 .bg-accent {
   background-color: var(--accent-color);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                     NG-SELECT GLOBAL DARK FIX                              */
+/* -------------------------------------------------------------------------- */
+
+.ng-dropdown-panel {
+  background-color: #252429 !important;
+  border: 1px solid #565657 !important;
+  border-radius: 1rem !important;
+  margin-top: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  z-index: 9999 !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: #252429 !important;
+  color: #F4F4F4 !important;
+  border-bottom: 1px solid #565657 !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+  background-color: #19191C !important;
+  color: #FFFFFF !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background-color: #19191C !important;
+  color: #7F4797 !important;
+  font-weight: bold;
+}
+
+.custom-ng-select.ng-select .ng-select-container {
+  background-color: #252429 !important;
+  border: 1px solid #565657 !important;
+  border-radius: 1rem !important;
+  min-height: 3.5rem !important;
+  align-items: center;
+}
+
+.custom-ng-select.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  color: #F4F4F4 !important;
+}
+.custom-ng-select.ng-select .ng-value-container .ng-value {
+  background-color: rgba(127, 71, 151, 0.15) !important;
+  color: #7F4797 !important;
+  border: 1px solid rgba(127, 71, 151, 0.2) !important;
+  border-radius: 0.75rem !important;
+  margin-right: 0.5rem;
+  padding: 0.25rem 0.75rem !important;
+}
+
+.custom-ng-select.ng-select .ng-value-container .ng-value .ng-value-icon {
+  color: #7F4797 !important;
+  border-left: 1px solid rgba(127, 71, 151, 0.2);
+}
+
+.custom-ng-select.ng-select .ng-value-container .ng-value .ng-value-icon:hover {
+  background-color: transparent !important;
+  font-weight: bold;
 }

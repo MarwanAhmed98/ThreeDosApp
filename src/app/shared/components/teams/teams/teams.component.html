@@ -1,6 +1,6 @@
 <div class="animate-in fade-in duration-500">
   <div class="max-w-7xl mx-auto">
-    <!-- Enhanced Header with Gradient Background -->
+    <!-- Enhanced Header -->
     <div
       class="relative mb-8 p-8 bg-gradient-to-br from-brand-purple/10 via-brand-purple/5 to-transparent rounded-3xl border border-brand-purple/20 overflow-hidden">
       <!-- Background Pattern -->
@@ -125,7 +125,7 @@
                 </h3>
                 <div class="flex items-center gap-1.5 mt-1">
                   <i class="fas fa-building text-xs text-brand-purple"></i>
-                  <span class="text-sm font-medium text-muted">{{ getCouncilName(team.council_id) }}</span>
+                  <span class="text-sm font-medium text-muted">{{ team.council_name }}</span>
                 </div>
               </div>
             </div>
@@ -146,7 +146,7 @@
                 <i class="fas fa-users text-brand-purple text-sm"></i>
                 <span class="text-xs font-bold text-muted uppercase tracking-wider">Members</span>
               </div>
-              <div class="text-lg font-bold text-main mt-1">{{ team.member_count || 0 }}</div>
+              <div class="text-lg font-bold text-main mt-1">{{ team.team_members.length }}</div>
             </div>
             <div class="bg-app rounded-xl p-3 border border-main">
               <div class="flex items-center gap-2">
@@ -265,8 +265,9 @@
         <div class="relative flex justify-between items-center">
           <div class="flex items-center gap-4">
             <div
-              class="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-purple/80 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/25">
-              <span class="font-bold text-xl">#{{ selectedTeamNumber }}</span>
+              class="h-16 min-w-[4rem] px-4 bg-gradient-to-br from-brand-purple to-brand-purple/80 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/25 whitespace-nowrap">
+              <!-- Adjusted Text: Reduced size slightly to text-lg for better fit -->
+              <span class="font-bold text-lg">#{{ selectedTeamNumber }}</span>
             </div>
             <div>
               <h3 class="text-3xl font-bold text-main">Team {{ selectedTeamNumber }}</h3>
@@ -379,11 +380,11 @@
 
               <!-- Actions -->
               <div class="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button
+                <!-- <button
                   class="p-3 text-muted hover:text-brand-purple hover:bg-brand-purple/10 rounded-xl transition-all"
                   title="Edit Member">
                   <i class="fas fa-edit"></i>
-                </button>
+                </button> -->
                 <button (click)="member.id && deleteMember(member.id)"
                   class="p-3 text-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                   title="Remove Member">
@@ -431,20 +432,38 @@
     <!-- Enhanced Modal Body -->
     <div class="p-8">
       <form (ngSubmit)="onAddMember()" class="space-y-6">
-        <!-- Student Selection -->
+        <!-- Student Selection (Corrected ng-select) -->
         <div>
           <label class="block text-sm font-bold text-main mb-3">
             <i class="fas fa-user text-brand-purple mr-2"></i>
-            Select Student *
+            Select Student(s) *
           </label>
-          <select [(ngModel)]="memberData.user_id" name="user_id" required
-            class="w-full px-4 py-4 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all font-medium text-main shadow-sm">
-            <option value="" disabled>Choose a student to add to the team</option>
-            @for (user of UserList; track user.id) {
-            <option [value]="user.id">{{ user.name }} - {{ user.email }}</option>
-            }
-          </select>
-          <p class="text-xs text-muted mt-2">Select from available students in your organization</p>
+
+          <ng-select [items]="UserList" [multiple]="true" [closeOnSelect]="false" bindLabel="name" bindValue="id"
+            placeholder="Choose students to add to the team" [(ngModel)]="memberData.user_ids" name="user_ids"
+            class="custom-ng-select" appendTo="body" required>
+
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="flex items-center gap-3 py-1">
+                <div
+                  class="w-8 h-8 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple text-xs font-bold border border-brand-purple/20">
+                  {{ item.name.charAt(0) }}
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-bold text-sm">{{item.name}}</span>
+                  <span class="text-xs text-muted">{{item.email}}</span>
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <span class="ng-value-label">{{item.name}}</span>
+              <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+            </ng-template>
+
+          </ng-select>
+
+          <p class="text-xs text-muted mt-2">Select one or more students from your organization</p>
         </div>
 
         <!-- Role and Rating Grid -->
