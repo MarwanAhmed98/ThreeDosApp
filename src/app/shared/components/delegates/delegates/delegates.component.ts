@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-delegates',
-  imports: [CommonModule, RouterModule , RouterLink],
+  imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './delegates.component.html',
   styleUrl: './delegates.component.scss'
 })
@@ -26,6 +26,8 @@ export class DelegatesComponent {
     { label: 'Sessions', route: '/Delegates/Delegatessession', iconClass: 'fas fa-calendar-alt' },
     { label: 'Attendance', route: '/Delegates/DelegateAttendance', iconClass: 'fas fa-user-check' },
     { label: 'Tasks', route: '/Delegates/Tasks', iconClass: 'fas fa-tasks' },
+    { label: 'Teams', route: '/Delegates/Teams', iconClass: 'fas fa-users-cog' },
+
   ];
 
   ngOnInit(): void {

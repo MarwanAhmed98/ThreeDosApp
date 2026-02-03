@@ -1,0 +1,236 @@
+<div class="animate-in fade-in duration-500">
+    <!-- Adjusted padding for mobile: p-4 instead of p-8 -->
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <!-- Enhanced Header -->
+        <div
+            class="relative mb-6 md:mb-8 p-6 md:p-8 bg-gradient-to-br from-brand-purple/10 via-brand-purple/5 to-transparent rounded-3xl border border-brand-purple/20 overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-5">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-purple rounded-full -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-brand-purple rounded-full -ml-24 -mb-24"></div>
+            </div>
+
+            <div class="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="w-10 h-10 md:w-12 md:h-12 bg-brand-purple rounded-2xl flex items-center justify-center shadow-lg shadow-brand-purple/20 flex-shrink-0">
+                            <i class="fas fa-users-rectangle text-white text-lg md:text-xl"></i>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-main">
+                            My Teams
+                        </h1>
+                    </div>
+                    <p class="text-muted text-sm md:text-base lg:text-lg max-w-2xl">
+                        View the councils and teams you are currently assigned to and check your teammates.
+                    </p>
+                    <div class="flex items-center gap-6 mt-4 text-xs md:text-sm text-muted">
+                        <span class="flex items-center gap-2">
+                            <i class="fas fa-layer-group text-brand-purple"></i>
+                            {{ TeamsList.length }} Active Teams
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Student Profile Card -->
+                @if (studentInfo) {
+                <div
+                    class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 animate-in slide-in-from-right-8 duration-700">
+                    <!-- Added w-full sm:w-auto to adapt to screen width -->
+                    <div
+                        class="bg-surface/80 backdrop-blur-md p-4 md:p-5 rounded-2xl border border-brand-purple/20 shadow-lg flex items-center gap-4 w-full sm:w-auto min-w-0">
+                        <div class="relative flex-shrink-0">
+                            <div
+                                class="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-brand-purple to-brand-purple/80 rounded-full flex items-center justify-center text-white text-lg md:text-xl font-bold shadow-md">
+                                {{ studentInfo.name?.charAt(0) || 'U' }}
+                            </div>
+                            <div
+                                class="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-green-500 border-4 border-surface rounded-full">
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-[10px] md:text-xs text-muted font-bold uppercase tracking-wider mb-0.5">
+                                Logged in as</p>
+                            <h3 class="font-bold text-main text-base md:text-lg leading-tight truncate">{{
+                                studentInfo.name }}</h3>
+                            <p class="text-xs text-muted truncate max-w-[150px] md:max-w-[200px]">{{ studentInfo.email
+                                }}</p>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mb-6 md:mb-8 p-4 md:p-6 bg-surface rounded-2xl border border-main shadow-sm">
+            <div class="flex flex-col xl:flex-row items-stretch xl:items-center gap-4">
+                <div class="relative flex-1">
+                    <div class="absolute inset-y-0 left-4 flex items-center text-muted">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input [(ngModel)]="text" type="text" placeholder="Search by Team Number ..."
+                        class="w-full pl-12 pr-4 py-3 bg-app border border-main rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple transition-all shadow-sm text-main placeholder-muted text-sm md:text-base" />
+                    @if (text) {
+                    <button (click)="text = ''"
+                        class="absolute inset-y-0 right-4 flex items-center text-muted hover:text-main transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Teams Grid -->
+        @if (TeamsList.length === 0) {
+        <!-- Empty State -->
+        <div class="text-center py-12 md:py-16">
+            <div
+                class="w-24 h-24 md:w-32 md:h-32 mx-auto mb-6 bg-gradient-to-br from-brand-purple/10 to-brand-purple/5 rounded-full flex items-center justify-center border border-brand-purple/20">
+                <i class="fas fa-folder-open text-3xl md:text-4xl text-brand-purple/60"></i>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold text-main mb-3">No Teams Found</h3>
+            <p class="text-muted text-sm md:text-base max-w-md mx-auto mb-8">
+                You haven't been assigned to any teams yet.
+            </p>
+        </div>
+        } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            @for (team of TeamsList | delegatesteams:text; track team.id) {
+            <div
+                class="group bg-surface rounded-3xl border border-main p-5 md:p-6 hover:shadow-2xl hover:shadow-brand-purple/10 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+
+                <!-- Background Decoration -->
+                <div
+                    class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-brand-purple/10 to-brand-purple/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-500">
+                </div>
+
+                <div class="relative">
+                    <!-- Team Header -->
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex items-center gap-4">
+                            <!-- Icon -->
+                            <div
+                                class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-purple to-brand-purple/80 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/25 text-lg md:text-xl font-bold group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                                #{{ team.team_number }}
+                            </div>
+                            <div class="min-w-0">
+                                <h3
+                                    class="text-lg md:text-xl font-bold text-main group-hover:text-brand-purple transition-colors duration-300 truncate">
+                                    Team {{ team.team_number }}
+                                </h3>
+                                <div class="flex items-center gap-1.5 mt-1 text-sm text-muted">
+                                    <i class="fas fa-building text-xs text-brand-purple flex-shrink-0"></i>
+                                    <span class="truncate">{{ team.council_name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Stats -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span
+                            class="px-3 py-1 bg-app border border-main rounded-lg text-xs font-bold text-muted uppercase tracking-wider flex items-center gap-2">
+                            <i class="fas fa-users text-brand-purple"></i>
+                            {{ team.team_members.length }} Members
+                        </span>
+
+                        @if(team.task_link) {
+                        <a [href]="team.task_link" target="_blank"
+                            class="px-3 py-1 bg-brand-purple/10 border border-brand-purple/20 rounded-lg text-xs font-bold text-brand-purple uppercase tracking-wider hover:bg-brand-purple/20 transition-colors">
+                            <i class="fas fa-link mr-1"></i> Task Link
+                        </a>
+                        }
+                    </div>
+
+                    <!-- Action Button -->
+                    <button (click)="openViewTeamModal(team)"
+                        class="w-full py-3 md:py-3.5 bg-gradient-to-r from-brand-purple to-brand-purple/90 text-white rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-brand-purple/25 transition-all flex items-center justify-center gap-2 group/btn">
+                        <i class="fas fa-info-circle group-hover/btn:scale-110 transition-transform"></i>
+                        View Members
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+        }
+    </div>
+</div>
+
+<!-- View Team Details Modal -->
+@if (isViewTeamModalOpen && selectedTeam) {
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" (click)="closeViewTeamModal()"></div>
+    <!-- Adjusted max-h and padding for better mobile view -->
+    <div
+        class="relative w-full max-w-2xl bg-surface border border-main rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 flex flex-col max-h-[85vh] md:max-h-[90vh]">
+
+        <!-- Modal Header -->
+        <div
+            class="relative p-5 md:p-8 border-b border-main bg-gradient-to-br from-brand-purple/5 to-transparent flex-shrink-0">
+            <div
+                class="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 bg-brand-purple/5 rounded-full -mr-16 -mt-16 md:-mr-24 md:-mt-24">
+            </div>
+            <div class="relative flex justify-between items-center gap-4">
+                <div class="flex items-center gap-3 md:gap-4 min-w-0">
+                    <div
+                        class="h-12 w-12 md:h-16 md:w-16 bg-gradient-to-br from-brand-purple to-brand-purple/80 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/25 text-xl md:text-2xl font-bold flex-shrink-0">
+                        {{ selectedTeam.team_number }}
+                    </div>
+                    <div class="min-w-0">
+                        <h3 class="text-xl md:text-2xl font-bold text-main truncate">Team {{ selectedTeam.team_number }}
+                        </h3>
+                        <p class="text-muted text-sm md:text-base font-medium truncate">{{ selectedTeam.council_name }}
+                        </p>
+                    </div>
+                </div>
+                <button (click)="closeViewTeamModal()"
+                    class="w-8 h-8 md:w-10 md:h-10 bg-surface border border-main rounded-xl flex items-center justify-center text-muted hover:text-main transition-all shadow-sm flex-shrink-0">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Body (Scrollable) -->
+        <div class="p-5 md:p-8 overflow-y-auto">
+            <h4 class="text-base md:text-lg font-bold text-main mb-4 flex items-center gap-2">
+                <i class="fas fa-users text-brand-purple"></i>
+                Team Members
+            </h4>
+
+            <div class="space-y-3 md:space-y-4">
+                @for (member of selectedTeam.team_members; track member.id) {
+                <div class="flex items-center justify-between p-3 md:p-4 bg-app border border-main rounded-2xl gap-3">
+                    <div class="flex items-center gap-3 md:gap-4 min-w-0">
+                        <div
+                            class="w-8 h-8 md:w-10 md:h-10 bg-brand-purple/10 rounded-full flex items-center justify-center text-brand-purple font-bold flex-shrink-0 text-sm md:text-base">
+                            {{ member.name.charAt(0) }}
+                        </div>
+                        <div class="min-w-0">
+                            <p class="font-bold text-main text-sm md:text-base truncate">{{ member.name }}</p>
+                            <!-- Added truncate to handle long emails -->
+                            <p class="text-[10px] md:text-xs text-muted truncate">{{ member.email }}</p>
+                        </div>
+                    </div>
+                    <!-- Added whitespace-nowrap and flex-shrink-0 -->
+                    <span
+                        class="px-2 md:px-3 py-1 bg-surface border border-main rounded-lg text-[10px] md:text-xs font-bold text-muted uppercase whitespace-nowrap flex-shrink-0">
+                        {{ member.role }}
+                    </span>
+                </div>
+                }
+            </div>
+
+            @if(selectedTeam.task_link) {
+            <div class="mt-6 pt-6 border-t border-main">
+                <h4 class="text-xs md:text-sm font-bold text-muted uppercase tracking-wider mb-2">Task Submission</h4>
+                <a [href]="selectedTeam.task_link" target="_blank"
+                    class="text-sm md:text-base text-brand-purple hover:underline break-all block">
+                    {{ selectedTeam.task_link }}
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+}

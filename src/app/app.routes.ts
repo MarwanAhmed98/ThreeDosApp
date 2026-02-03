@@ -18,6 +18,7 @@ import { delegateGuard } from './core/guards/delegate.guard';
 import { loginGuard } from './core/guards/login.guard';
 import { DelegateTasksComponent } from './shared/components/delegate-tasks/delegate-tasks.component';
 import { StudentsprofileComponent } from './shared/components/studentsprofile/studentsprofile/studentsprofile.component';
+import { DelegatesteamsComponent } from './shared/components/delegatesteams/delegatesteams/delegatesteams.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -51,7 +52,8 @@ export const routes: Routes = [
         canActivate: [delegateGuard],
         children: [
             { path: 'DelegateDashboard', component: DelegatesdashboardComponent, title: 'Dashboard' },
-            { path: 'Tasks', component: DelegateTasksComponent, title: 'Task Management' },
+            { path: 'Tasks', component: DelegateTasksComponent, title: 'Task' },
+            { path: 'Teams', component: DelegatesteamsComponent, title: 'Teams' },
             { path: 'Delegatessession', component: DelegatessessionComponent, title: 'Sessions' },
             { path: 'Submissions', component: TaskSubmissionsComponent, title: 'Task Submissions' },
             { path: 'Submissions/:taskId', component: TaskSubmissionsComponent, title: 'Task Submissions' },
