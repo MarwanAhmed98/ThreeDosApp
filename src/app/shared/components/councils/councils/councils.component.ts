@@ -28,7 +28,7 @@ export class CouncilsComponent {
   councilData = {
     name: '',
     description: '',
-    head_id: ''
+    // head_id: ''
   };
   ngOnInit(): void {
     this.GetCouncils();
@@ -52,7 +52,7 @@ export class CouncilsComponent {
     // this.GetHeads();
     this.isEditMode = false;
     this.selectedCouncilId = null;
-    this.councilData = { name: '', description: '', head_id: '' };
+    this.councilData = { name: '', description: '' };
     this.isModalOpen = true;
   }
 
@@ -63,7 +63,7 @@ export class CouncilsComponent {
     this.councilData = {
       name: council.name,
       description: council.description,
-      head_id: council.head
+      // head_id: council.head
     };
     this.isModalOpen = true;
   }
