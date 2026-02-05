@@ -36,7 +36,7 @@ export class TaskSubmissionsComponent implements OnInit {
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
   selectedSubmissionId: string | null = null;
-  selectedFile: File | null = null;
+  submissionUrl: string = ''; // Replaced selectedFile with submissionUrl
 
   // Form Data
   submissionData = {
@@ -87,14 +87,10 @@ export class TaskSubmissionsComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
-
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedSubmissionId = null;
-    this.selectedFile = null;
+    this.submissionUrl = ''; // Reset URL
     this.submissionData = { task_id: '', user_id: '', status: '', grade: '' };
     this.isModalOpen = true;
   }
@@ -121,16 +117,40 @@ export class TaskSubmissionsComponent implements OnInit {
         next: () => {
           this.GetSubmissions();
           this.closeModal();
+          Swal.fire('Success', 'Submission updated successfully', 'success');
+        },
+        error: (err) => {
+           Swal.fire('Error', 'Failed to update submission', 'error');
         }
       });
     } else {
-      if (this.selectedFile && this.submissionData.task_id) {
-        this.submissionsService.AddSubmission(this.submissionData.task_id, this.selectedFile).subscribe({
+      if (this.submissionUrl && this.submissionData.task_id) {
+        // Construct the payload matching what AddSubmissionWithUrl expects (and what backend likely needs)
+        const fileId = this.extractFileIdFromUrl(this.submissionUrl);
+        const fileType = this.getFileTypeFromUrl(this.submissionUrl);
+        const cleanUrl = this.submissionUrl.trim();
+
+        const newSubmission = {
+            task_id: this.submissionData.task_id,
+            user_id: this.submissionData.user_id, // Include user_id from the dropdown
+            file: cleanUrl,
+            file_id: fileId,
+            file_type: fileType,
+            status: 'pending'
+        };
+
+        this.submissionsService.AddSubmissionWithUrl(newSubmission).subscribe({
           next: () => {
             this.GetSubmissions();
             this.closeModal();
+            Swal.fire('Success', 'Submission added successfully', 'success');
+          },
+          error: (err) => {
+             Swal.fire('Error', 'Failed to add submission. ' + (err.error?.message || ''), 'error');
           }
         });
+      } else {
+        Swal.fire('Warning', 'Please fill in all required fields.', 'warning');
       }
     }
   }
@@ -166,5 +186,40 @@ export class TaskSubmissionsComponent implements OnInit {
       case 'rejected': return 'bg-red-50 text-red-600';
       default: return 'bg-gray-50';
     }
+  }
+
+  // --- Helpers for URL parsing (Identical to DelegateTasksComponent logic) ---
+
+  extractFileIdFromUrl(url: string): string | null {
+    if (!url) return null;
+    if (url.includes('github.com')) return url; // GitHub URLs are their own ID for now
+
+    const cleanUrl = url.split('?')[0].split('#')[0];
+    const patterns = [
+        /\/file\/d\/([a-zA-Z0-9-_]{25,})/,
+        /\/document\/d\/([a-zA-Z0-9-_]{25,})/,
+        /\/spreadsheets\/d\/([a-zA-Z0-9-_]{25,})/,
+        /\/presentation\/d\/([a-zA-Z0-9-_]{25,})/,
+        /[?&]id=([a-zA-Z0-9-_]{25,})/,
+        /\/open\?id=([a-zA-Z0-9-_]{25,})/,
+        /\/file\/d\/([a-zA-Z0-9-_]{25,})\/(?:view|edit)/,
+        /drive\.google\.com\/.*\/([a-zA-Z0-9-_]{25,})/,
+        /docs\.google\.com\/.*\/([a-zA-Z0-9-_]{25,})/
+    ];
+
+    for (let pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) return match[1];
+    }
+    return null;
+  }
+
+  getFileTypeFromUrl(url: string): string {
+    if (url.includes('github.com')) return 'GitHub Link';
+    if (url.includes('docs.google.com/document')) return 'Google Docs';
+    if (url.includes('docs.google.com/spreadsheets')) return 'Google Sheets';
+    if (url.includes('docs.google.com/presentation')) return 'Google Slides';
+    if (url.includes('drive.google.com')) return 'Google Drive File';
+    return 'Link';
   }
 }

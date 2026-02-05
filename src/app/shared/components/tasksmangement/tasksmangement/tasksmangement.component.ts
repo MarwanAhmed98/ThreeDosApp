@@ -10,6 +10,8 @@ import { SearchtasksPipe } from '../../../pipes/searchtasks/searchtasks.pipe';
 import { RouterModule } from '@angular/router';
 import { DelegateTasksComponent } from '../../delegate-tasks/delegate-tasks.component';
 import Swal from 'sweetalert2';
+import { UsersService } from '../../../../core/services/users/users.service';
+import { Iusers } from '../../../interfaces/iusers';
 
 @Component({
   selector: 'app-tasksmangement',
@@ -21,7 +23,6 @@ export class TasksmangementComponent implements OnInit {
   private readonly tasksService = inject(TasksService);
   private readonly sessionsService = inject(SessionsService);
   private readonly authService = inject(AuthService);
-
   // Check if user is delegate
   isDelegate = computed(() => this.authService.isDelegate());
 
@@ -76,6 +77,7 @@ export class TasksmangementComponent implements OnInit {
   GetTasksList(): void {
     this.tasksService.GetTaskList(this.currentPage).subscribe({
       next: (res) => {
+        console.log(res);
         this.TasksList = res.data.data;
         this.perPages = res.data.pagination.per_page;
         this.lastpage = res.data.pagination.last_page;
@@ -83,7 +85,6 @@ export class TasksmangementComponent implements OnInit {
       }
     })
   }
-
   changePage(page: number) {
     if (page >= 1 && page <= this.lastpage) {
       this.currentPage = page;
