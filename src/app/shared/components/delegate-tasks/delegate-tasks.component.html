@@ -206,12 +206,12 @@
                         </div>
                     </div>
 
-                    <!-- Google Drive Link Input -->
+                    <!-- Google Drive/GitHub Link Input -->
                     <div>
                         <label
                             class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
-                            <i class="fab fa-google-drive text-blue-600 dark:text-blue-400 mr-1.5"></i>
-                            Google Drive Link <span class="text-red-500">*</span>
+                            <i class="fas fa-link text-blue-600 dark:text-blue-400 mr-1.5"></i>
+                            Google Drive or GitHub Link <span class="text-red-500">*</span>
                         </label>
 
                         @if (!submissionUrl()) {
@@ -221,19 +221,19 @@
                             <div class="flex flex-col items-center space-y-3">
                                 <div
                                     class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <i class="fab fa-google-drive text-xl text-blue-600 dark:text-blue-400"></i>
+                                    <i class="fas fa-cloud text-xl text-blue-600 dark:text-blue-400"></i>
                                 </div>
                                 <div>
-                                    <p class="text-slate-700 dark:text-slate-200 font-bold text-sm">Paste your Google
-                                        Drive link below</p>
-                                    <p class="text-slate-400 dark:text-slate-500 text-xs mt-1 font-medium">Google Docs,
-                                        Sheets, Slides, or Drive files</p>
+                                    <p class="text-slate-700 dark:text-slate-200 font-bold text-sm">Paste your Link
+                                        below</p>
+                                    <p class="text-slate-400 dark:text-slate-500 text-xs mt-1 font-medium">Google Drive
+                                        files or GitHub Repositories</p>
                                 </div>
                             </div>
 
                             <div class="mt-4">
                                 <input type="url" formControlName="driveUrl" (input)="onUrlChange($event)"
-                                    placeholder="https://drive.google.com/file/d/..."
+                                    placeholder="https://drive.google.com/... or https://github.com/..."
                                     class="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all text-sm" />
 
                                 @if (submissionForm.get('driveUrl')?.touched &&
@@ -242,18 +242,21 @@
                                     @if (submissionForm.get('driveUrl')?.errors?.['required']) {
                                     <p
                                         class="text-red-500 dark:text-red-400 text-xs font-medium flex items-center gap-1">
-                                        <i class="fas fa-exclamation-circle"></i> Google Drive link is required</p>
+                                        <i class="fas fa-exclamation-circle"></i> Link is required
+                                    </p>
                                     }
                                     @if (submissionForm.get('driveUrl')?.errors?.['invalidUrl']) {
                                     <p
                                         class="text-red-500 dark:text-red-400 text-xs font-medium flex items-center gap-1">
-                                        <i class="fas fa-exclamation-circle"></i> Please enter a valid URL</p>
+                                        <i class="fas fa-exclamation-circle"></i> Please enter a valid URL
+                                    </p>
                                     }
-                                    @if (submissionForm.get('driveUrl')?.errors?.['notGoogleDrive']) {
+                                    @if (submissionForm.get('driveUrl')?.errors?.['invalidDomain']) {
                                     <p
                                         class="text-red-500 dark:text-red-400 text-xs font-medium flex items-center gap-1">
                                         <i class="fas fa-exclamation-circle"></i> Please enter a valid Google Drive or
-                                        Docs URL</p>
+                                        GitHub URL
+                                    </p>
                                     }
                                 </div>
                                 }
@@ -267,8 +270,7 @@
                                 <div class="flex items-center space-x-3 overflow-hidden">
                                     <div
                                         class="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <i
-                                            [class]="getDriveIcon(submissionUrl()) + ' text-blue-600 dark:text-blue-400'"></i>
+                                        <i [class]="getDriveIcon(submissionUrl())"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-sm font-bold text-slate-700 dark:text-slate-200 truncate">{{
@@ -311,7 +313,7 @@
                         <i class="fas fa-spinner fa-spin"></i>
                         Submitting...
                         } @else {
-                        <i class="fab fa-google-drive"></i>
+                        <i class="fas fa-paper-plane"></i>
                         Submit Task
                         }
                     </button>
