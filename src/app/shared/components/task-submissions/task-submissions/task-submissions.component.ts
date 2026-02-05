@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { TaskSubmissionsService } from '../../../../core/services/task-submissions/task-submissions.service';
 import { TasksService } from '../../../../core/services/tasks/tasks.service';
 import { UsersService } from '../../../../core/services/users/users.service';
-import { ITaskSubmission } from '../../../interfaces/itask-submission';
 import { Itask } from '../../../interfaces/itask';
 import { Iusers } from '../../../interfaces/iusers';
 import { SearchsubmissionsPipe } from '../../../pipes/searchsubmissions/searchsubmissions.pipe';
@@ -36,7 +35,7 @@ export class TaskSubmissionsComponent implements OnInit {
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
   selectedSubmissionId: string | null = null;
-  submissionUrl: string = ''; // Replaced selectedFile with submissionUrl
+  submissionUrl: string = ''; // Using URL string instead of File object
 
   // Form Data
   submissionData = {
@@ -90,7 +89,7 @@ export class TaskSubmissionsComponent implements OnInit {
   openAddModal(): void {
     this.isEditMode = false;
     this.selectedSubmissionId = null;
-    this.submissionUrl = ''; // Reset URL
+    this.submissionUrl = '';
     this.submissionData = { task_id: '', user_id: '', status: '', grade: '' };
     this.isModalOpen = true;
   }
@@ -124,17 +123,19 @@ export class TaskSubmissionsComponent implements OnInit {
         }
       });
     } else {
-      if (this.submissionUrl && this.submissionData.task_id) {
-        // Construct the payload matching what AddSubmissionWithUrl expects (and what backend likely needs)
+      // Logic for adding submission via URL
+      if (this.submissionUrl && this.submissionData.task_id && this.submissionData.user_id) {
+        
         const fileId = this.extractFileIdFromUrl(this.submissionUrl);
         const fileType = this.getFileTypeFromUrl(this.submissionUrl);
+        // Ensure URL is clean string
         const cleanUrl = this.submissionUrl.trim();
 
         const newSubmission = {
             task_id: this.submissionData.task_id,
-            user_id: this.submissionData.user_id, // Include user_id from the dropdown
+            user_id: this.submissionData.user_id,
             file: cleanUrl,
-            file_id: fileId,
+            file_id: fileId, // Can be null or specific ID
             file_type: fileType,
             status: 'pending'
         };
@@ -146,7 +147,8 @@ export class TaskSubmissionsComponent implements OnInit {
             Swal.fire('Success', 'Submission added successfully', 'success');
           },
           error: (err) => {
-             Swal.fire('Error', 'Failed to add submission. ' + (err.error?.message || ''), 'error');
+             const msg = err.error?.message || 'Failed to add submission';
+             Swal.fire('Error', msg, 'error');
           }
         });
       } else {
@@ -168,11 +170,7 @@ export class TaskSubmissionsComponent implements OnInit {
         this.submissionsService.DeleteSubmission(id).subscribe({
           next: () => {
             this.GetSubmissions();
-            Swal.fire(
-              'Deleted!',
-              'The submission has been deleted successfully.',
-              'success'
-            );
+            Swal.fire('Deleted!', 'The submission has been deleted successfully.', 'success');
           }
         });
       }
@@ -188,13 +186,19 @@ export class TaskSubmissionsComponent implements OnInit {
     }
   }
 
-  // --- Helpers for URL parsing (Identical to DelegateTasksComponent logic) ---
+  // Helper to ensure links open correctly
+  formatUrl(url: string): string {
+    if (!url) return '#';
+    if (!/^https?:\/\//i.test(url)) {
+      return 'https://' + url;
+    }
+    return url;
+  }
 
   extractFileIdFromUrl(url: string): string | null {
     if (!url) return null;
-    if (url.includes('github.com')) return url; // GitHub URLs are their own ID for now
+    if (url.includes('github.com')) return url; 
 
-    const cleanUrl = url.split('?')[0].split('#')[0];
     const patterns = [
         /\/file\/d\/([a-zA-Z0-9-_]{25,})/,
         /\/document\/d\/([a-zA-Z0-9-_]{25,})/,
@@ -202,9 +206,7 @@ export class TaskSubmissionsComponent implements OnInit {
         /\/presentation\/d\/([a-zA-Z0-9-_]{25,})/,
         /[?&]id=([a-zA-Z0-9-_]{25,})/,
         /\/open\?id=([a-zA-Z0-9-_]{25,})/,
-        /\/file\/d\/([a-zA-Z0-9-_]{25,})\/(?:view|edit)/,
-        /drive\.google\.com\/.*\/([a-zA-Z0-9-_]{25,})/,
-        /docs\.google\.com\/.*\/([a-zA-Z0-9-_]{25,})/
+        /\/file\/d\/([a-zA-Z0-9-_]{25,})\/(?:view|edit)/
     ];
 
     for (let pattern of patterns) {

@@ -69,7 +69,7 @@
             <th
               class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">
               Status</th>
-            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">File
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Link
             </th>
             <th
               class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
@@ -117,10 +117,11 @@
               </span>
             </td>
             <td class="px-6 py-4">
-              <a [href]="submission.file_path" target="_blank"
+              <!-- Helper method fixes missing protocol -->
+              <a [href]="formatUrl(submission.file || submission.file_path)" target="_blank"
                 class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-bold text-sm transition-colors group-hover:underline decoration-purple-300 underline-offset-2">
-                <i class="fas fa-file-download"></i>
-                Link
+                <i class="fas fa-external-link-alt"></i>
+                Open Link
               </a>
             </td>
             <td class="px-6 py-4 text-right">
@@ -185,9 +186,9 @@
               <span class="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-0.5">Grade</span>
               <span class="font-bold text-slate-800 dark:text-slate-100 text-sm">{{ submission.grade || '-' }}</span>
             </div>
-            <a [href]="submission.file_path" target="_blank"
+            <a [href]="formatUrl(submission.file || submission.file_path)" target="_blank"
               class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-bold text-purple-600 dark:text-purple-300 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
-              <i class="fas fa-file-download"></i> View File
+              <i class="fas fa-external-link-alt"></i> Open Link
             </a>
           </div>
         </div>
@@ -280,7 +281,6 @@
           <label
             class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1.5">Student</label>
           <div class="relative">
-            <!-- ADDED: [(ngModel)] and name attribute -->
             <select [(ngModel)]="submissionData.user_id" name="user_id" required
               class="block w-full px-3 py-2.5 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 border rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all sm:text-sm font-medium appearance-none">
               <option value="" disabled>Select Student</option>
@@ -298,7 +298,7 @@
         </div>
 
         <div>
-          <!-- CHANGED: Replaced File Input with URL Input -->
+          <!-- Submission Link Input -->
           <label
             class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">Submission
             Link</label>
