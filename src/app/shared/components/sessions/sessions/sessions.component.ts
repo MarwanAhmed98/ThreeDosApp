@@ -55,6 +55,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
   GetSessionsList(): void {
     this.sessionsService.GetSessionlList(this.currentPage).subscribe({
       next: (res) => {
+        console.log(res);
         this.SessionList = res.data.data;
         this.perPages = res.data.pagination.per_page;
         this.lastpage = res.data.pagination.last_page;

@@ -19,6 +19,7 @@ import { loginGuard } from './core/guards/login.guard';
 import { DelegateTasksComponent } from './shared/components/delegate-tasks/delegate-tasks.component';
 import { StudentsprofileComponent } from './shared/components/studentsprofile/studentsprofile/studentsprofile.component';
 import { DelegatesteamsComponent } from './shared/components/delegatesteams/delegatesteams/delegatesteams.component';
+import { UserdetailsComponent } from './shared/components/Userdetails/userdetails/userdetails.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -43,6 +44,7 @@ export const routes: Routes = [
             { path: 'Submissions/:taskId', component: TaskSubmissionsComponent, title: 'Task Submissions' },
             { path: 'Attendance', component: AttendanceComponent, title: 'Attendance Management' },
             { path: 'Teams', component: TeamsComponent, title: 'Team Management' },
+            { path: 'UserDetails/:userId', component: UserdetailsComponent, title: 'User Details' },
             { path: '', redirectTo: 'Dashboard', pathMatch: 'full' }
         ]
     },

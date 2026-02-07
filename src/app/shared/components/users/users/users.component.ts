@@ -10,10 +10,11 @@ import { Icouncils } from '../../../interfaces/icouncils';
 import { IRole } from '../../../interfaces/iroles';
 import { SearchuserPipe } from '../../../pipes/searchuser/searchuser.pipe';
 import Swal from 'sweetalert2';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, FormsModule, SearchuserPipe],
+  imports: [CommonModule, FormsModule, SearchuserPipe, RouterLink],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
