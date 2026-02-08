@@ -27,6 +27,7 @@ export class DelegatesComponent {
     { label: 'Attendance', route: '/Delegates/DelegateAttendance', iconClass: 'fas fa-user-check' },
     { label: 'Tasks', route: '/Delegates/Tasks', iconClass: 'fas fa-tasks' },
     { label: 'Teams', route: '/Delegates/Teams', iconClass: 'fas fa-users-cog' },
+    {label: 'ThreeDOS AI Mentor', route: '/Delegates/AI-Assistant', iconClass: 'fas fa-robot' },
 
   ];
 

@@ -20,6 +20,7 @@ import { DelegateTasksComponent } from './shared/components/delegate-tasks/deleg
 import { StudentsprofileComponent } from './shared/components/studentsprofile/studentsprofile/studentsprofile.component';
 import { DelegatesteamsComponent } from './shared/components/delegatesteams/delegatesteams/delegatesteams.component';
 import { UserdetailsComponent } from './shared/components/Userdetails/userdetails/userdetails.component';
+import { AiAssistantComponent } from './shared/components/ai-assistant/ai-assistant.component';
 export const routes: Routes = [
     {
         path: '', redirectTo: 'Login', pathMatch: 'full'
@@ -61,6 +62,7 @@ export const routes: Routes = [
             { path: 'Submissions/:taskId', component: TaskSubmissionsComponent, title: 'Task Submissions' },
             { path: 'DelegateAttendance', component: DelegatesattendanceComponent, title: 'Attendance' },
             { path: 'StudentsProfile', component: StudentsprofileComponent, title: 'Students Profile' },
+            { path: 'AI-Assistant', component: AiAssistantComponent, title: 'AI Assistant' },
             { path: '', redirectTo: 'DelegateDashboard', pathMatch: 'full' }
         ]
     }

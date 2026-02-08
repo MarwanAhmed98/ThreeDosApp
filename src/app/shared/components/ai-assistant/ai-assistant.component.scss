@@ -1,0 +1,72 @@
+// Typing indicator animation
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    animation: typing 1.4s infinite;
+    
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+// Ensure accent responsiveness
+.text-accent {
+  color: var(--accent-color);
+}
+
+
+// Smooth transitions
+textarea {
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Button hover effects
+button {
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Prose styling for AI responses
+.prose {
+  p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+}
