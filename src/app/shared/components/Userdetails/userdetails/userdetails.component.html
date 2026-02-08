@@ -101,9 +101,19 @@
                                     </p>
                                 </div>
                             </div>
-                            <span
-                                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 border border-green-200 dark:border-green-500/20">
-                                <span class="w-1.5 h-1.5 rounded-full bg-green-600 mr-2"></span> {{Attendance.status}}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border"
+                                [ngClass]="{
+        'bg-green-100 text-green-700 border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20': (Attendance.status | lowercase) === 'present',
+        'bg-red-100 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20': (Attendance.status | lowercase) === 'absent',
+        'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20': (Attendance.status | lowercase) === 'late'
+    }">
+                                <span class="w-1.5 h-1.5 rounded-full mr-2" [ngClass]="{
+            'bg-green-600': (Attendance.status | lowercase) === 'present',
+            'bg-red-600': (Attendance.status | lowercase) === 'absent',
+            'bg-amber-600': (Attendance.status | lowercase) === 'late'
+        }">
+                                </span>
+                                {{ Attendance.status | titlecase }}
                             </span>
                         </div>
                         }
@@ -151,50 +161,28 @@
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Assignments</h3>
                     </div>
                     <div class="p-6">
-                        <!-- Progress Header -->
-                        <div class="flex justify-between items-end mb-2">
-                            <span class="text-sm font-bold text-slate-600 dark:text-slate-300">Completion</span>
-                            <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">80%</span>
-                        </div>
-                        <!-- Progress Bar -->
-                        <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 mb-6">
-                            <div class="bg-gradient-to-r from-purple-700 to-indigo-600 h-3 rounded-full shadow-lg shadow-purple-500/30"
-                                style="width: 80%"></div>
-                        </div>
-
                         <div class="space-y-4">
                             <!-- Assignment Item -->
+                            @for (Assignment of AssignmentsList; track Assignment.id) {
                             <div class="flex items-start gap-3">
-                                <div class="mt-1 w-2 h-2 rounded-full bg-green-500"></div>
+                                <!-- Updated dot with dynamic ngClass logic -->
+                                <div class="mt-1 w-2 h-2 rounded-full" [ngClass]="{
+            'bg-amber-400': (Assignment.status | lowercase) === 'submitted',
+            'bg-green-500': (Assignment.status | lowercase) === 'graded',
+            'bg-slate-300': (Assignment.status | lowercase) !== 'submitted' && (Assignment.status | lowercase) !== 'graded'
+         }">
+                                </div>
                                 <div>
                                     <p
                                         class="text-sm font-bold text-slate-800 dark:text-slate-200 decoration-slate-400">
-                                        Angular Components
+                                        {{Assignment.task}}
                                     </p>
-                                    <p class="text-xs text-slate-500">Submitted yesterday</p>
+                                    <p class="text-xs text-slate-500 capitalize">{{Assignment.status}} at
+                                        {{Assignment.created_at | date:'EEEE, MMM d, y'}}</p>
                                 </div>
                             </div>
-                            <!-- Assignment Item -->
-                            <div class="flex items-start gap-3">
-                                <div class="mt-1 w-2 h-2 rounded-full bg-green-500"></div>
-                                <div>
-                                    <p
-                                        class="text-sm font-bold text-slate-800 dark:text-slate-200 decoration-slate-400">
-                                        Tailwind Grid Layout
-                                    </p>
-                                    <p class="text-xs text-slate-500">Submitted 2 days ago</p>
-                                </div>
-                            </div>
-                            <!-- Assignment Item (Pending) -->
-                            <div class="flex items-start gap-3">
-                                <div class="mt-1 w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
-                                <div>
-                                    <p class="text-sm font-bold text-slate-800 dark:text-slate-200">
-                                        API Integration
-                                    </p>
-                                    <p class="text-xs text-amber-600 dark:text-amber-500 font-medium">Due in 2 days</p>
-                                </div>
-                            </div>
+                            }
+
                         </div>
 
                     </div>

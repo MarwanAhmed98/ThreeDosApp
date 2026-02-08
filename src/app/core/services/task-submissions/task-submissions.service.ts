@@ -97,9 +97,10 @@ export class TaskSubmissionsService {
     return this.httpClient.get(`${environments.baseUrl}/task-submissions/${submissionId}`);
   }
 
-  AddSubmission(taskId: string, file: File): Observable<any> {
+  AddSubmission(taskId: string, userId: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('task_id', taskId);
+    formData.append('user_id', userId);
     formData.append('file', file, file.name);
 
     return this.httpClient.post(`${environments.baseUrl}/task-submissions`, formData);
@@ -109,10 +110,11 @@ export class TaskSubmissionsService {
     const formData = new FormData();
     formData.append('task_id', submissionData.task_id);
 
+    // FIX: Add the user_id here so the backend knows which student this is for
+    formData.append('user_id', submissionData.user_id);
+
     // FIX: Append the URL string directly.
     // Do NOT wrap it in new Blob() or new File().
-    // This ensures it is sent as a text field in the multipart/form-data payload,
-    // satisfying the "file field must be a string" validation error.
     formData.append('file', submissionData.file);
 
     // Add other fields if they exist
@@ -135,5 +137,8 @@ export class TaskSubmissionsService {
 
   DeleteSubmission(submissionId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/task-submissions/${submissionId}`);
+  }
+  GetAssignmentsByUserId(userId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/task-submissions?pageIndex=1&pageSize=10&user_id=${userId}`);
   }
 }
