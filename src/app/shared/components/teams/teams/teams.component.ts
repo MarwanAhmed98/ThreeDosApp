@@ -36,9 +36,11 @@ export class TeamsComponent implements OnInit {
   isTeamModalOpen: boolean = false;
   isMemberModalOpen: boolean = false;
   isViewMembersModalOpen: boolean = false;
+  isEditMemberModalOpen: boolean = false;
 
   selectedTeamId: string | null = null;
   selectedTeamNumber: string | null = null;
+  editingMemberId: string | null = null;
 
   // Form Data
   teamData = {
@@ -54,6 +56,15 @@ export class TeamsComponent implements OnInit {
     rate: 0
   };
 
+  editMemberData = {
+    name: '',
+    role: 'member' as 'member' | 'leader' | 'co-leader',
+    task: '',
+    rate: 0,
+    team_id: '',
+    user_id: ''
+  };
+
   ngOnInit(): void {
     this.GetTeams();
     this.GetCouncils();
@@ -63,7 +74,6 @@ export class TeamsComponent implements OnInit {
   GetTeams(): void {
     this.teamsService.GetTeamsList().subscribe({
       next: (res) => {
-        console.log(res);
         this.TeamsList = res.data || res;
       },
       error: () => {
@@ -93,6 +103,8 @@ export class TeamsComponent implements OnInit {
       }
     });
   }
+
+  // --- Team Creation Logic ---
 
   openTeamModal(): void {
     this.teamData = { team_number: '', council_id: '' };
@@ -128,6 +140,8 @@ export class TeamsComponent implements OnInit {
     });
   }
 
+  // --- View Members Logic ---
+
   openViewMembersModal(team: ITeam): void {
     if (!team.id) {
       this.toastr.error('Team ID is missing', 'Error');
@@ -149,7 +163,6 @@ export class TeamsComponent implements OnInit {
   GetTeamMembers(teamId: string): void {
     this.teamsService.GetTeamMembers(teamId).subscribe({
       next: (res) => {
-        // Using spread syntax to ensure Angular detects a new array reference
         this.SelectedTeamMembers = [...(res.data?.team_members || [])];
       },
       error: () => {
@@ -158,6 +171,8 @@ export class TeamsComponent implements OnInit {
       }
     });
   }
+
+  // --- Add Member Logic ---
 
   openMemberModal(teamId: string): void {
     if (!teamId) {
@@ -185,7 +200,6 @@ export class TeamsComponent implements OnInit {
       return;
     }
 
-    // Prepare requests for all selected users
     const requests = this.memberData.user_ids.map(userId => {
       const payload = {
         team_id: this.memberData.team_id,
@@ -197,23 +211,14 @@ export class TeamsComponent implements OnInit {
       return this.teamsService.AddTeamMember(payload);
     });
 
-    // Execute requests in parallel
     forkJoin(requests).subscribe({
       next: () => {
         this.toastr.success(`${this.memberData.user_ids.length} Member(s) added successfully`, 'Success');
-
-        // REFRESH LOGIC:
-        // 1. Refresh the members list inside the modal to show new users immediately
         if (this.selectedTeamId) {
           this.GetTeamMembers(this.selectedTeamId);
         }
-
-        // 2. Refresh the main teams list to update the member count on the cards
         this.GetTeams();
-
         this.closeMemberModal();
-
-        // Reset selection
         this.memberData.user_ids = [];
       },
       error: (error) => {
@@ -226,6 +231,72 @@ export class TeamsComponent implements OnInit {
       }
     });
   }
+
+  // --- Edit Member Logic ---
+
+  openEditMemberModal(member: ITeamMember): void {
+    if (!member.id) {
+      this.toastr.error('Invalid member ID', 'Error');
+      return;
+    }
+
+    this.editingMemberId = member.id;
+
+    // Store data. IMPORTANT: Capturing team_id and user_id is crucial for the update
+    this.editMemberData = {
+      name: member.name || 'Unknown',
+      role: (member.role?.toLowerCase() as any) || 'member',
+      task: member.task || '',
+      rate: member.rate || 0,
+      team_id: member.team_id || '',
+      user_id: member.user_id || ''
+    };
+
+    this.isEditMemberModalOpen = true;
+  }
+
+  closeEditMemberModal(): void {
+    this.isEditMemberModalOpen = false;
+    this.editingMemberId = null;
+  }
+
+  onUpdateMember(): void {
+    if (!this.editingMemberId) return;
+
+    // FIX: Including team_id and user_id in the payload. 
+    // The backend policy error suggests it might be failing to resolve the model 
+    // from just the ID, or it requires these fields to be present in the request body.
+    const payload = {
+      role: this.editMemberData.role,
+      task: this.editMemberData.task,
+      rate: Number(this.editMemberData.rate),
+      team_id: this.editMemberData.team_id,
+      user_id: this.editMemberData.user_id
+    };
+
+    console.log('Sending Update Payload:', payload); // Debugging log
+
+    this.teamsService.UpdateTeamMember(this.editingMemberId, payload).subscribe({
+      next: () => {
+        this.toastr.success('Member updated successfully', 'Success');
+        if (this.selectedTeamId) {
+          this.GetTeamMembers(this.selectedTeamId);
+        }
+        this.GetTeams();
+        this.closeEditMemberModal();
+      },
+      error: (error) => {
+        console.error('Update Error:', error);
+        let errorMessage = 'Failed to update member';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        this.toastr.error(errorMessage, 'Update Error');
+      }
+    });
+  }
+
+  // --- Deletion Logic ---
 
   deleteTeam(id: string): void {
     Swal.fire({
@@ -269,8 +340,6 @@ export class TeamsComponent implements OnInit {
           this.teamsService.DeleteTeamMember(memberId).subscribe({
             next: () => {
               this.toastr.success('Member removed successfully', 'Success');
-
-              // Refresh both lists after deletion as well
               this.GetTeamMembers(this.selectedTeamId!);
               this.GetTeams();
             },
@@ -282,6 +351,8 @@ export class TeamsComponent implements OnInit {
       });
     }
   }
+
+  // --- Helpers ---
 
   getRoleClass(role: string) {
     switch (role?.toLowerCase()) {

@@ -138,7 +138,7 @@ export class TaskSubmissionsService {
   DeleteSubmission(submissionId: string): Observable<any> {
     return this.httpClient.delete(`${environments.baseUrl}/task-submissions/${submissionId}`);
   }
-  GetAssignmentsByUserId(userId: string): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/task-submissions?pageIndex=1&pageSize=10&user_id=${userId}`);
+  GetAssignmentsByUserId(userId: string, page: number = 1): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/task-submissions?pageIndex=${page}&pageSize=3&user_id=${userId}`);
   }
 }

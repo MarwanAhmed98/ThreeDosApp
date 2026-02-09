@@ -59,6 +59,7 @@ export class AttendanceComponent implements OnInit {
   GetSessions(): void {
     this.sessionsService.GetSessionlList(1).subscribe({
       next: (res) => {
+        console.log(res , 'Sessions');
         this.SessionList = res.data.data;
       }
     });

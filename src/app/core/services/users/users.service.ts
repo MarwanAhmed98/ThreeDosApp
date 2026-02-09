@@ -33,4 +33,8 @@ export class UsersService {
   GetUserDasgboard(): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/users/dashboard`)
   }
+  GetUserDetailsById(userId: string): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/users/dashboard?user_id=${userId}`)
+  }
+
 }

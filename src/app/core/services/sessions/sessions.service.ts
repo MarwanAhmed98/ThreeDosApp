@@ -9,8 +9,8 @@ import { environments } from '../../../shared/environments';
 export class SessionsService {
 
   constructor(private httpClient: HttpClient) { }
-  GetSessionlList(pagenumber: number): Observable<any> {
-    return this.httpClient.get(`${environments.baseUrl}/sessions?pageIndex=${pagenumber}&pageSize=5&search=`)
+  GetSessionlList(pagenumber: number = 1): Observable<any> {
+    return this.httpClient.get(`${environments.baseUrl}/sessions?pageIndex=${pagenumber}&pageSize=10&search=`)
   }
   GetSessionById(sessionId: string): Observable<any> {
     return this.httpClient.get(`${environments.baseUrl}/sessions/${sessionId}`)
