@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     if (this.LoginForm.valid) {
       this.isLoading = true;
 
-      this.handleRememberMe();
+      // this.handleRememberMe();
 
       this.authService.SendLoginForm(this.LoginForm.value).subscribe({
         next: (res) => {
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userToken', res.data.access_token);
             localStorage.setItem('UserName', res.data.user_name);
             localStorage.setItem('UserRole', res.data.role);
-            if (res.data.role === 'Head' || res.data.role === 'Instructor' || res.data.role === 'VicePresident') {
+            if (res.data.role === 'Head' || res.data.role === 'Instructor' || res.data.role === 'VicePresident'|| res.data.role === 'President'|| res.data.role === 'HR') {
               this.router.navigate(['/Admin']);
             }
             else {
@@ -71,19 +71,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  handleRememberMe(): void {
-    if (typeof localStorage !== 'undefined') {
-      const rememberMe = this.LoginForm.get('rememberMe')?.value;
+  // handleRememberMe(): void {
+  //   if (typeof localStorage !== 'undefined') {
+  //     const rememberMe = this.LoginForm.get('rememberMe')?.value;
 
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', this.LoginForm.get('email')?.value);
-        localStorage.setItem('rememberedPassword', this.LoginForm.get('password')?.value);
-        localStorage.setItem('rememberMe', 'true');
-      } else {
-        localStorage.removeItem('rememberedEmail');
-        localStorage.removeItem('rememberedPassword');
-        localStorage.removeItem('rememberMe');
-      }
-    }
-  }
+  //     if (rememberMe) {
+  //       localStorage.setItem('rememberedEmail', this.LoginForm.get('email')?.value);
+  //       localStorage.setItem('rememberedPassword', this.LoginForm.get('password')?.value);
+  //       localStorage.setItem('rememberMe', 'true');
+  //     } else {
+  //       localStorage.removeItem('rememberedEmail');
+  //       localStorage.removeItem('rememberedPassword');
+  //       localStorage.removeItem('rememberMe');
+  //     }
+  //   }
+  // }
 }

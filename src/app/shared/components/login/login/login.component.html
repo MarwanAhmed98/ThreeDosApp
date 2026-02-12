@@ -1,12 +1,15 @@
 <div class="min-h-screen bg-app flex items-center justify-center p-6 font-sans transition-colors duration-300">
   <app-login-navbar></app-login-navbar>
-  <div class="w-full max-w-[480px] bg-surface rounded-[40px] shadow-2xl p-10 md:p-14 transition-colors duration-300">
+  <div class="w-full mt-16 max-w-[480px] bg-surface rounded-[40px] shadow-2xl p-10 md:p-14 transition-colors duration-300">
     <!-- Header -->
     <div class="flex flex-col items-center mb-8">
+      <div
+        class="w-40 h-40 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-[#7C69EF]/20 overflow-hidden mb-8">
+        <img src="/images/ThreeDos Logo.jpeg" alt="ThreeDOS Logo" class="w-full h-full object-cover" />
+      </div>
       <h2 class="text-2xl font-bold text-main mb-2">Log in to your account</h2>
       <p class="text-muted text-sm">Welcome back! Please enter your details.</p>
     </div>
-
     <form [formGroup]="LoginForm" class="space-y-5" (ngSubmit)="LoginFormSubmit()">
       <!-- Email Field -->
       <div>
