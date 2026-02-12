@@ -71,19 +71,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // handleRememberMe(): void {
-  //   if (typeof localStorage !== 'undefined') {
-  //     const rememberMe = this.LoginForm.get('rememberMe')?.value;
+  handleRememberMe(): void {
+    if (typeof localStorage !== 'undefined') {
+      const rememberMe = this.LoginForm.get('rememberMe')?.value;
 
-  //     if (rememberMe) {
-  //       localStorage.setItem('rememberedEmail', this.LoginForm.get('email')?.value);
-  //       localStorage.setItem('rememberedPassword', this.LoginForm.get('password')?.value);
-  //       localStorage.setItem('rememberMe', 'true');
-  //     } else {
-  //       localStorage.removeItem('rememberedEmail');
-  //       localStorage.removeItem('rememberedPassword');
-  //       localStorage.removeItem('rememberMe');
-  //     }
-  //   }
-  // }
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', this.LoginForm.get('email')?.value);
+        localStorage.setItem('rememberedPassword', this.LoginForm.get('password')?.value);
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberedPassword');
+        localStorage.removeItem('rememberMe');
+      }
+    }
+  }
 }
