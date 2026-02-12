@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userToken', res.data.access_token);
             localStorage.setItem('UserName', res.data.user_name);
             localStorage.setItem('UserRole', res.data.role);
-            if (res.data.role === 'Head' || res.data.role === 'Instructor' || res.data.role === 'VicePresident'|| res.data.role === 'President'|| res.data.role === 'HR') {
+            if (res.data.role === 'Head' || res.data.role === 'Instructor' || res.data.role === 'VicePresident' || res.data.role === 'President' || res.data.role === 'HR') {
               this.router.navigate(['/Admin']);
             }
             else {

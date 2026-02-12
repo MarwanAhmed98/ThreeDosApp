@@ -190,9 +190,9 @@ export class AuthService {
     if (!currentUser) {
       // Fallback to localStorage
       const role = localStorage.getItem('UserRole');
-      return role === 'Head' || role === 'Instructor' || role === 'VicePresident';
+      return role === 'Head' || role === 'Instructor' || role === 'VicePresident' || role === 'President' || role === 'HR';
     }
-    return currentUser.role === 'Head' || currentUser.role === 'Instructor' || currentUser.role === 'VicePresident';
+    return currentUser.role === 'Head' || currentUser.role === 'Instructor' || currentUser.role === 'VicePresident' || currentUser.role === 'President' || currentUser.role === 'HR';
   }
 
   isDelegate(): boolean {
@@ -200,9 +200,9 @@ export class AuthService {
     if (!currentUser) {
       // Fallback to localStorage
       const role = localStorage.getItem('UserRole');
-      return role !== 'Head' && role !== 'Instructor' && role !== 'VicePresident' && !!role;
+      return role !== 'Head' && role !== 'Instructor' && role !== 'VicePresident' && role !== 'President' && role !== 'HR' && !!role;
     }
-    return currentUser.role !== 'Head' && currentUser.role !== 'Instructor' && currentUser.role !== 'VicePresident';
+    return currentUser.role !== 'Head' && currentUser.role !== 'Instructor' && currentUser.role !== 'VicePresident' && currentUser.role !== 'President' && currentUser.role !== 'HR';
   }
 
   getCurrentUser(): User | null {
