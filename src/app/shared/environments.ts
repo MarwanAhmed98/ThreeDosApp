@@ -1,3 +1,3 @@
 export const environments = {
-    baseUrl : 'https://threedos-apis.up.railway.app/api'
+    baseUrl: 'threedos-apis-production.up.railway.app/api'
 }
